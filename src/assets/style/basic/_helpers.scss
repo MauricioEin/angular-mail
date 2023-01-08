@@ -1,0 +1,40 @@
+//HELPERS
+
+.text-center {
+  text-align: center;
+}
+
+
+
+.flex {
+
+  display: flex;
+
+  >*.full {
+    flex: 1;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.end {
+    justify-content: flex-end;
+  }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.align-center {
+    align-items: center;
+  }
+
+  &.space-between {
+    justify-content: space-between;
+  }
+
+  &.space-evenly {
+    justify-content: space-evenly;
+  }
+}

@@ -1,0 +1,17 @@
+<nav class="nav-container flex space-between align-center">
+    <div class="flex">
+        <a routerLinkActive="active-nav" routerLink="/home" [routerLinkActiveOptions]="{exact: true}">
+            <div class="flex align-center">
+                <span class="nav-txt">Home</span>
+            </div>
+        </a>
+        <a routerLinkActive="active-nav" routerLink="/item" [routerLinkActiveOptions]="{exact: true}">
+            <div class="flex align-center">
+                <span class="nav-txt">Items</span>
+            </div>
+        </a>
+    </div>
+    <a routerLink="/home">
+        <img src="./assets/img/logo.png" alt="app-logo" title="Go home" />
+    </a>
+</nav>

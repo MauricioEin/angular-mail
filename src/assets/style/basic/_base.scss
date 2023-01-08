@@ -1,0 +1,46 @@
+// BASE
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.6em;
+  line-height: 1;
+}
+
+h1 {
+  font-size: rem(68);
+}
+
+img {
+  width: 100%;
+}
+
+p {
+  margin: 0 0 1em;
+  max-width: 40ch;
+}
+
+pre {
+  background-color: lightgray;
+  outline: 1px solid darkgray;
+  padding: 3px;
+  font-family: 'Courier New', Courier, monospace;
+}
+button {
+  cursor: pointer;
+}
