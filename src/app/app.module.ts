@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { reducers, metaReducers } from './store/store';
 import { AppEffects } from './store/app.effects';
 
-import { AppComponent } from './root-component/index';
+import { AppComponent } from './app-root/index';
 import { HomeComponent } from './pages/home/home.component';
 import { ItemAppComponent } from './pages/item-app/item-app.component';
 
@@ -22,11 +22,11 @@ import { ItemListComponent } from './cmps/item-list/item-list.component';
 import { ItemEditComponent } from './cmps/item-edit/item-edit.component';
 import { ItemPreviewComponent } from './cmps/item-preview/item-preview.component';
 import { EmailDetailsComponent } from './pages/email-details/email-details.component';
-import { EmailEditComponent } from './pages/email-edit/email-edit.component';
 import { EmailPreviewComponent } from './cmps/email-preview/email-preview.component';
 import { EmailFilterComponent } from './cmps/email-filter/email-filter.component';
-import { SideNavComponent } from './cmps/side-nav/side-nav.component';
 import { FolderListComponent } from './cmps/folder-list/folder-list.component';
+import { EmailListComponent } from './pages/email-list/email-list.component';
+import { EmailComposeComponent } from './cmps/email-compose/email-compose.component';
 
 @NgModule({
   declarations: [
@@ -38,12 +38,11 @@ import { FolderListComponent } from './cmps/folder-list/folder-list.component';
     ItemListComponent,
     ItemPreviewComponent,
     EmailDetailsComponent,
-    EmailEditComponent,
     EmailPreviewComponent,
     EmailFilterComponent,
-    SideNavComponent,
-    FolderListComponent
-    // ItemPreviewComponent,
+    FolderListComponent,
+    EmailListComponent,
+    EmailComposeComponent
   ],
   imports: [
     BrowserModule,

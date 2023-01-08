@@ -1,0 +1,35 @@
+.main-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+    main {
+        flex-grow: 1;
+        height:calc(100vh - 120px);
+        overflow-y:auto;
+        padding-block: 30px;
+        background-color: #363636;
+        background-image: url('../../assets/img/background.jpg');
+        background-repeat: repeat;
+        background-blend-mode:multiply;
+        background-size: 100%;
+        color:rgb(218, 218, 218);
+        position: relative;
+    }
+
+    footer {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        color: rgb(169, 169, 169);
+        background-color: #151515;
+        font-size: 1em;
+        z-index: 50;
+        // text-align: center;
+        p{
+            width:100%;
+            text-align: center;
+        }
+    }
+}
