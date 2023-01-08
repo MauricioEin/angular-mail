@@ -4,6 +4,8 @@ import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ItemService } from '../services/item.service';
 import { ItemAction, SAVE_ITEM, ADDED_ITEM, UPDATED_ITEM, LOAD_ITEMS, LOADED_ITEMS, REMOVE_ITEM, REMOVED_ITEM, LOAD_ITEM, LOADED_ITEM, SET_ERROR } from './actions/item.actions';
+import { EmailService } from '../services/email.service';
+import { EmailAction, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS, REMOVE_EMAIL, REMOVED_EMAIL, LOAD_EMAIL, LOADED_EMAIL } from './actions/email.actions'; // dont forger SET_ERROR after deleting items imports
 
 // TODO: Add ItemFilter
 
@@ -98,8 +100,32 @@ export class AppEffects {
       )
     );
   })
+
+  loadEmails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LOAD_EMAILS),
+      tap(() => console.log('Effects: load emails ==> service')),
+      switchMap((action) =>
+        this.emailService.query(action.filterBy).pipe(
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer')),
+          map((emails) => ({
+            type: LOADED_EMAILS,
+            emails,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      )
+    );
+  });
   constructor(
-    private actions$: Actions<ItemAction>,
-    private itemService: ItemService
+    private actions$: Actions<ItemAction|EmailAction>,
+    private itemService: ItemService,
+    private emailService: EmailService
   ) { }
 }

@@ -6,6 +6,8 @@ import { pluck } from 'rxjs/operators';
 import { State } from '../../store/store';
 import {LoadItem, LoadItems, RemoveItem} from '../../store/actions/item.actions';
 import { Item } from '../../models/item';
+import { Email } from 'src/app/models/email';
+import { LoadEmails } from 'src/app/store/actions/email.actions';
 
 @Component({
   selector: 'email-app',
@@ -15,6 +17,8 @@ import { Item } from '../../models/item';
 export class EmailAppComponent implements OnInit {
   items$: Observable<Item[]>;
   item$: Observable<Item | null>;
+  emails$: Observable<Email[]>;
+  email$: Observable<Email | null>;
   isLoading$: Observable<boolean>;
   error$: Observable<string>;
   addingNew = false;
@@ -24,6 +28,8 @@ export class EmailAppComponent implements OnInit {
   constructor(private store: Store<State>) {
     this.items$ = this.store.select('itemState').pipe(pluck('items'));
     this.item$ = this.store.select('itemState').pipe(pluck('item'));
+    this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
+    this.email$ = this.store.select('emailState').pipe(pluck('email'));
     this.isLoading$ = this.store.select('itemState').pipe(pluck('isLoading'));
     this.error$ = this.store.select('itemState').pipe(pluck('error'));
   }
@@ -31,6 +37,7 @@ export class EmailAppComponent implements OnInit {
   ngOnInit(): void {
     console.log('emailApp: dispatching LoadItems => effects');
     this.store.dispatch(new LoadItems(this.filterBy));
+    this.store.dispatch(new LoadEmails(this.filterBy));
   }
   removeItem(itemId :string) {
     console.log('emailApp: dispatching remove');
