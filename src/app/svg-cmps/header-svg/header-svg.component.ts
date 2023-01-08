@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 
 @Component({
   selector: 'header-svg',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./header-svg.component.scss']
 })
 export class HeaderSvgComponent {
-
+@Input() icon!:string
 }
