@@ -10,6 +10,17 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
+
+  .full-height {
+    height: 100%;
+  }
+
+  .app-root{
+    min-height: 100vh;
+  }
+
+
 }
 
 h1,
@@ -41,6 +52,7 @@ pre {
   padding: 3px;
   font-family: 'Courier New', Courier, monospace;
 }
+
 button {
   cursor: pointer;
 }
