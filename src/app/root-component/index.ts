@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   template: `
   <section class="app-root">
     <router-outlet></router-outlet>
-
   </section>
             `,
   styles: [':host {height:1200px;}']
