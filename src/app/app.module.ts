@@ -21,6 +21,12 @@ import { AppHeaderComponent } from './cmps/app-header/app-header.component';
 import { ItemListComponent } from './cmps/item-list/item-list.component';
 import { ItemEditComponent } from './cmps/item-edit/item-edit.component';
 import { ItemPreviewComponent } from './cmps/item-preview/item-preview.component';
+import { EmailDetailsComponent } from './pages/email-details/email-details.component';
+import { EmailEditComponent } from './pages/email-edit/email-edit.component';
+import { EmailPreviewComponent } from './cmps/email-preview/email-preview.component';
+import { EmailFilterComponent } from './cmps/email-filter/email-filter.component';
+import { SideNavComponent } from './cmps/side-nav/side-nav.component';
+import { FolderListComponent } from './cmps/folder-list/folder-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,13 @@ import { ItemPreviewComponent } from './cmps/item-preview/item-preview.component
     ItemAppComponent,
     ItemEditComponent,
     ItemListComponent,
-    ItemPreviewComponent
+    ItemPreviewComponent,
+    EmailDetailsComponent,
+    EmailEditComponent,
+    EmailPreviewComponent,
+    EmailFilterComponent,
+    SideNavComponent,
+    FolderListComponent
     // ItemPreviewComponent,
   ],
   imports: [
