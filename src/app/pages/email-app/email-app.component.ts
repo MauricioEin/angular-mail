@@ -8,11 +8,11 @@ import {LoadItem, LoadItems, RemoveItem} from '../../store/actions/item.actions'
 import { Item } from '../../models/item';
 
 @Component({
-  selector: 'item-app',
-  templateUrl: './item-app.component.html',
-  styleUrls: ['./item-app.component.scss'],
+  selector: 'email-app',
+  templateUrl: './email-app.component.html',
+  styleUrls: ['./email-app.component.scss'],
 })
-export class ItemAppComponent implements OnInit {
+export class EmailAppComponent implements OnInit {
   items$: Observable<Item[]>;
   item$: Observable<Item | null>;
   isLoading$: Observable<boolean>;
@@ -29,15 +29,15 @@ export class ItemAppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('itemApp: dispatching LoadItems => effects');
+    console.log('emailApp: dispatching LoadItems => effects');
     this.store.dispatch(new LoadItems(this.filterBy));
   }
   removeItem(itemId :string) {
-    console.log('itemApp: dispatching remove');
+    console.log('emailApp: dispatching remove');
     this.store.dispatch(new RemoveItem(itemId));
   }
   editItem(itemId :string) {
-    console.log('itemApp: dispatching load item (for edit)');
+    console.log('emailApp: dispatching load item (for edit)');
     this.store.dispatch(new LoadItem(itemId));
   }  
 }

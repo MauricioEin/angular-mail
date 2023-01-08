@@ -15,7 +15,7 @@ import { AppEffects } from './store/app.effects';
 
 import { AppComponent } from './app-root/index';
 import { HomeComponent } from './pages/home/home.component';
-import { ItemAppComponent } from './pages/item-app/item-app.component';
+import { EmailAppComponent } from './pages/email-app/email-app.component';
 
 import { AppHeaderComponent } from './cmps/app-header/app-header.component';
 import { ItemListComponent } from './cmps/item-list/item-list.component';
@@ -33,7 +33,7 @@ import { EmailComposeComponent } from './cmps/email-compose/email-compose.compon
     AppComponent,
     HomeComponent,
     AppHeaderComponent,
-    ItemAppComponent,
+    EmailAppComponent,
     ItemEditComponent,
     ItemListComponent,
     ItemPreviewComponent,
