@@ -25,7 +25,6 @@ import { EmailDetailsComponent } from './pages/email-details/email-details.compo
 import { EmailEditComponent } from './pages/email-edit/email-edit.component';
 import { EmailPreviewComponent } from './cmps/email-preview/email-preview.component';
 import { EmailFilterComponent } from './cmps/email-filter/email-filter.component';
-import { SideNavComponent } from './cmps/side-nav/side-nav.component';
 import { FolderListComponent } from './cmps/folder-list/folder-list.component';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { FolderListComponent } from './cmps/folder-list/folder-list.component';
     EmailEditComponent,
     EmailPreviewComponent,
     EmailFilterComponent,
-    SideNavComponent,
     FolderListComponent
     // ItemPreviewComponent,
   ],

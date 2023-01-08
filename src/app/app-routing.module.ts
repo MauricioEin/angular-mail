@@ -4,9 +4,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { ItemAppComponent } from './pages/item-app/item-app.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'item', component: ItemAppComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+ 
 ];
 
 @NgModule({
