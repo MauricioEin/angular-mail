@@ -27,6 +27,8 @@ import { EmailFilterComponent } from './cmps/email-filter/email-filter.component
 import { FolderListComponent } from './cmps/folder-list/folder-list.component';
 import { EmailListComponent } from './pages/email-list/email-list.component';
 import { EmailComposeComponent } from './cmps/email-compose/email-compose.component';
+import { SearchInputComponent } from './cmps/search-input/search-input.component';
+import { HeaderSvgComponent } from './svg-cmps/header-svg/header-svg.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,10 @@ import { EmailComposeComponent } from './cmps/email-compose/email-compose.compon
     EmailFilterComponent,
     FolderListComponent,
     EmailListComponent,
-    EmailComposeComponent
+    EmailComposeComponent,
+    SearchInputComponent,
+    HeaderSvgComponent,
+   
   ],
   imports: [
     BrowserModule,

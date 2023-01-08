@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
     <router-outlet></router-outlet>
   </section>
             `,
-  styles: [':host {height:1200px;}']
 })
 export class AppComponent {
   title = 'baba';

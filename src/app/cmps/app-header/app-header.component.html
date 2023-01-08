@@ -1,17 +1,14 @@
-<nav class="nav-container flex space-between align-center">
-    <div class="flex">
-        <a routerLinkActive="active-nav" routerLink="/home" [routerLinkActiveOptions]="{exact: true}">
-            <div class="flex align-center">
-                <span class="nav-txt">Home</span>
-            </div>
-        </a>
-        <a routerLinkActive="active-nav" routerLink="/item" [routerLinkActiveOptions]="{exact: true}">
-            <div class="flex align-center">
-                <span class="nav-txt">Items</span>
-            </div>
-        </a>
+<section class="app-header flex space-between align-center">
+    <div class="sub1 full-height flex align-center">
+        <div class="hum-wrapper">
+            <i class="fa-solid fa-bars fa-lg"></i>
+        </div>
+    
+        <img class="" src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="">
     </div>
-    <a routerLink="/home">
-        <img src="./assets/img/logo.png" alt="app-logo" title="Go home" />
-    </a>
-</nav>
+
+    <div class="sub2 grow">
+       <search-input></search-input>
+    </div>
+  
+</section>

@@ -1,31 +1,30 @@
-.nav-container {
-  background-color: rgba(255, 255, 255, 0.166);
-  width: 100%;
-  padding: 10px;
-  background-color: rgb(51, 54, 219);
+.app-header {
+  height: 64px;
+  padding: 8px;
+  // background-color: lightcoral;
 
-  a {
-    text-decoration: none;
-    color: rgb(172, 172, 172);
-    font-size: 1.3rem;
 
-    &:not(:first-child) {
-      margin-left: 10px;
+  .sub1 {
+    width: 208px;
+    padding-inline-end: 30px;
+
+    .hum-wrapper {
+      padding: 12px;
+      margin: 0 4px;
+      i{
+        color:#5f6368
+      }
     }
+
+    img {
+      width: 109px;
+      height: 40px;
+    }
+
   }
 
-  .nav-txt {
-    font-size: 1rem;
-    margin-left: 5px;
-  }
-
-  .active-nav {
-    color: white;
-    cursor: auto;
-  }
-
-  img {
-    max-width: 35px;
-    cursor: pointer;
-  }
+  // wrapper of the search input cmp
+  //   .sub2{
+  //  
+  //   }
 }
