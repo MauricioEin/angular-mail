@@ -1,7 +1,12 @@
 <section class="flex column">
     <app-header></app-header>
-
-    <section class="main-content grow">
+    <main>
+        <folder-list></folder-list>
+        <section class="main-container">
+            <router-outlet></router-outlet>
+        </section>
+    </main>
+    <!-- <section class="main-content grow">
 
         <div class="error-msg" *ngIf="error$ | async">{{error$ | async}} </div>
         <p *ngIf="isLoading$ | async">⏱ Loading...</p>
@@ -11,5 +16,5 @@
         <section *ngIf="addingNew || (item$ | async)">
             <item-edit (saved)="addingNew=false"></item-edit>
         </section>
-    </section>
+    </section> -->
 </section>

@@ -1,15 +1,5 @@
-:host{
-  height: 100%;
-}
-
-.item-app-container {
-  padding: 20px;
-}
-
-.error-msg {
-  background-color: rgb(245, 206, 214);
-  padding: 5px;
-  position: absolute;
-  top: 0;
-  right: 10px;
+main{
+  display: flex;
+  gap:30px;
+  padding:20px;
 }

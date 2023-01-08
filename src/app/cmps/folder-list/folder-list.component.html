@@ -1,1 +1,64 @@
-<p>folder-list works!</p>
+<section class="email-folder-list flex column">
+    <div class="compose-wrapper flex ">
+        <div class="compose flex align-center center">
+            <!-- @click="composeEmail()"> -->
+            <div class="compose-icon">
+                <!-- v-html="getMailSvg('pencil')"> -->
+            </div>
+            <span class="com-text">Compose</span>
+        </div>
+    </div>
+
+    <section class="folders-nav">
+        <!-- @click="setTab('inbox')" -->
+        <div>
+            <!-- <img style="width:20px; height:20px" src="" alt="" /> -->
+            <!-- :src=getMailSvg('inbox') -->
+            <span class="f-text">Inbox</span>
+        </div>
+
+        <div>
+            <!-- @click="setTab('star')"> -->
+            <!-- <img style="width:20px; height:20px" :src="getMailSvg('star')" alt="" /> -->
+            <span class="f-text"> Starred</span>
+        </div>
+        <div>
+            <!-- @click="setTab('important')"> -->
+            <!-- <img style="width:20px; height:20px" :src="getMailSvg('important')" alt="" /> -->
+            <span class="f-text">Important</span>
+        </div>
+        <div>
+            <!-- @click="setTab('sent')"> -->
+            <!-- <img style="width:20px; height:20px" :src="getMailSvg('sent')" alt="" /> -->
+            <span class="f-text">Sent</span>
+        </div>
+
+        <div>
+            <!-- @click="setTab('trash')"> -->
+            <!-- <div v-html="getMailSvg('trash')"></div> -->
+
+            <span class="f-text">Trash</span>
+        </div>
+
+        <div>
+            <!-- @click="setTab('draft')"> -->
+            <!-- <img style="width:20px; height:20px" :src="getMailSvg('draft')" alt="" /> -->
+            <span class="f-text">Drafts</span>
+        </div>
+
+        <div>
+            <!-- @click="isAddLabel=true" class="labels"> -->
+            <header class="label-header flex space-between align-center">
+                <h4>Labels</h4>
+                <!-- <img  style="width:20px; height:20px" :src="getMailSvg('addLabel')" alt="" /> -->
+            </header>
+        </div>
+
+        <!-- <div @click="navToLabel(label)" v-if="labels" v-for="label in labels" :key="label">
+        <img style="width:20px; height:20px" :src="getMailSvg('folderLabel')" />
+        <span class="f-text">{{label}}</span>
+        </div> -->
+
+        <!-- <add-label v-if="isAddLabel"></add-label> -->
+    </section>
+</section>
