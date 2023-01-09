@@ -15,8 +15,6 @@ import { LoadEmails } from 'src/app/store/actions/email.actions';
   styleUrls: ['./email-app.component.scss'],
 })
 export class EmailAppComponent implements OnInit {
-  items$: Observable<Item[]>;
-  item$: Observable<Item | null>;
   emails$: Observable<Email[]>;
   email$: Observable<Email | null>;
   isLoading$: Observable<boolean>;
@@ -26,8 +24,6 @@ export class EmailAppComponent implements OnInit {
   filterBy: string = '';
 
   constructor(private store: Store<State>) {
-    this.items$ = this.store.select('itemState').pipe(pluck('items'));
-    this.item$ = this.store.select('itemState').pipe(pluck('item'));
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.email$ = this.store.select('emailState').pipe(pluck('email'));
     this.isLoading$ = this.store.select('itemState').pipe(pluck('isLoading'));
@@ -36,7 +32,6 @@ export class EmailAppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('emailApp: dispatching LoadItems => effects');
-    this.store.dispatch(new LoadItems(this.filterBy));
     this.store.dispatch(new LoadEmails(this.filterBy));
   }
   removeItem(itemId :string) {

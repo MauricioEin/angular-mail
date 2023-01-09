@@ -15,6 +15,4 @@ export class EmailListComponent {
   constructor(private store: Store<State>) {
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
   }
-
-
 }

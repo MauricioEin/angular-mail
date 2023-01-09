@@ -23,7 +23,6 @@ export class EmailService {
     // })
 
     // If empty - load test data to storage
-    // const emails = demoMails
     const emails = JSON.parse(localStorage.getItem(ENTITY) || 'null' );
     console.log('emails:',emails)
     if (!emails || emails.length === 0) {

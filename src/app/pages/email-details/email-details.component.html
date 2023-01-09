@@ -1,1 +1,61 @@
-<p>email-details works!</p>
+<section className="email-details full-height flex column">
+    <section  class="action-bar flex align-center">
+        <!-- <img style="width:20px; height:20px" @click="backToList" :src="getMailSvg('back')" alt="" />
+        <div  @click="setTabToTrash('trash')" v-html="getMailSvg('trash')"></div>
+        <img style="width:20px; height:20px" @click="toggleStarTab()" :src="getMailSvg('star')" alt="" />
+        <img style="width:20px; height:20px" @click="toggleReadProp()" :src="getMailSvg('readStat')" alt="" /> -->
+    </section>
+
+    <section class="details-content">
+        <section class="labels-bar flex align-center">
+           <h2>{{email.subject}}</h2> 
+           <div  class="labels-det flex align-center">
+               <span *ngFor="let label in email.labels">
+                   {{label}}
+                </span>
+            </div>
+        </section>
+        <header class="flex">
+            <h4> 
+                <span>{{email.from.split('@')[0]}}</span> 
+                <span class="small"> &lt;{{email.from}}&gt;</span></h4>
+            <!-- //todo more detailed date format -->
+            <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>
+        </header>
+        <p>{{email.body}}</p>
+    </section>
+    
+    <footer>
+        <button>Replay</button>
+        <button>Forward</button>
+    </footer>
+
+
+
+    <!-- <main>
+        <h1>{{email.subject}}<span class="btn" ><img class="importance-label"
+            src="assets/img/label-important.svg" [class.labelImportant]="email.isImportant"
+            /></span>
+           // @click="onImportant" // 
+        </h1>
+        <div class="email-info flex justify-between">
+            <div class="flex">
+                <h2 class="capitalized">{{email.from.split('@')[0]}}</h2>
+                <p>&lt;{{email.from}}></p>
+            </div>
+            <div class="flex">
+                <p>{{email.sentAt|date:'MMM dd, yyyy'}}</p>
+                <span class="btn"><input class="star" type="checkbox"
+                    [checked]="email.isStarred"></span>
+                   // @change="onStar"//
+
+                <span class="btn">Reply</span>
+                <span class="btn">More</span>
+            </div>
+        </div>
+        <p>{{email.body}}</p>
+        <button class="pill blocked">↩ Reply</button>
+        <button class="pill blocked">↪ Forward</button>
+    </main>
+    <main class="empty"></main> -->
+</section>
