@@ -19,7 +19,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
   switch (action.type) {
     case SET_LOADING: {
       const { isLoading } = action;
-      console.log(`Reducer: Setting isLoading to ${isLoading}`);
+      // console.log(`Reducer: Setting isLoading to ${isLoading}`);
       return { ...state, isLoading, error: '' };
     }
     case SET_ERROR: {
@@ -29,7 +29,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case LOADED_EMAILS: {
       const { emails } = action;
-      console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
+      // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
       return { ...state, emails, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {

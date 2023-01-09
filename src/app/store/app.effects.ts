@@ -3,11 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { EmailService } from '../services/email.service';
-import { EmailAction,SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS, REMOVE_EMAIL, REMOVED_EMAIL, LOAD_EMAIL, LOADED_EMAIL } from './actions/email.actions'; // dont forger SET_ERROR after deleting items imports
+import { EmailAction,SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS, REMOVE_EMAIL, REMOVED_EMAIL, LOAD_EMAIL, LOADED_EMAIL } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
 
-// TODO: Add ItemFilter
 
-// Nice way to test error handling? localStorage.clear() after items are presented 
+// Nice way to test error handling? localStorage.clear() after emails are presented 
 @Injectable()
 export class AppEffects {
 
@@ -33,6 +32,31 @@ export class AppEffects {
       )
     );
   });
+
+  removemail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(REMOVE_EMAIL),
+      switchMap((action) =>
+        this.emailService.remove(action.emailId).pipe(
+          tap(() => console.log('Effects: email removed by service ===> Reducer')),
+          map(() => ({
+            type: REMOVED_EMAIL,
+            emailId: action.emailId,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      ),
+    );
+  })
+  
+  
+
   constructor(
     private actions$: Actions<EmailAction>,
     private emailService: EmailService
