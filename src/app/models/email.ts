@@ -19,7 +19,7 @@
 
 export interface Email{
   _id:string,
-  tab:Array<string>,
+  tabs:Array<string>,
   name:string,
   subject:string,
   body:string,

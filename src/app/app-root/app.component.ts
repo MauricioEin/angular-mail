@@ -8,5 +8,5 @@ export class AppComponent {
   title = 'angular-bitcoin'
 
   ngOnInit() {
-  }
+  } 
 }

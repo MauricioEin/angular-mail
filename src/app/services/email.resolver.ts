@@ -15,7 +15,6 @@ export class EmailResolver implements Resolve<Email> {
   constructor(private emailService: EmailService, private router:Router) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Email> {
     const emailId = route.params['id']
-    console.log('resolving email:',emailId)
     return this.emailService.getById(emailId)
   }
 }

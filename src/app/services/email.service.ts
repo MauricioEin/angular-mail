@@ -10,6 +10,7 @@ import { UtilService } from './util.service';
 // import * as demoMails from '../../assets/data/demoMails.json' 
 
 import { storageService } from './async-storage.service'
+import { FilterBy } from '../models/filterBy';
 
 const ENTITY = 'email'
 
@@ -59,7 +60,7 @@ export class EmailService {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tab: ['inbox'],
+            tabs: ['inbox'],
             name,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
@@ -74,7 +75,7 @@ export class EmailService {
 
     }
 
-    query(filterBy = ''): Observable<Email[]> {
+    query(filterBy:FilterBy = {}): Observable<Email[]> {
 
         this.store.dispatch(new LoadingEmails());
         console.log('EmailService: Return Emails ===> effect');
