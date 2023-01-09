@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
 import { State } from '../../store/store';
-import {LoadItem, LoadItems, RemoveItem} from '../../store/actions/item.actions';
-import { Item } from '../../models/item';
-import { Email } from 'src/app/models/email';
-import { LoadEmails } from 'src/app/store/actions/email.actions';
+
+import { Email } from '../../models/email';
+// import { Email } from 'src/app/models/email';
+import { LoadEmails,RemoveEmail,LoadEmail } from 'src/app/store/actions/email.actions';
 
 @Component({
   selector: 'email-app',
@@ -15,8 +15,7 @@ import { LoadEmails } from 'src/app/store/actions/email.actions';
   styleUrls: ['./email-app.component.scss'],
 })
 export class EmailAppComponent implements OnInit {
-  items$: Observable<Item[]>;
-  item$: Observable<Item | null>;
+ 
   emails$: Observable<Email[]>;
   email$: Observable<Email | null>;
   isLoading$: Observable<boolean>;
@@ -26,25 +25,23 @@ export class EmailAppComponent implements OnInit {
   filterBy: string = '';
 
   constructor(private store: Store<State>) {
-    this.items$ = this.store.select('itemState').pipe(pluck('items'));
-    this.item$ = this.store.select('itemState').pipe(pluck('item'));
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.email$ = this.store.select('emailState').pipe(pluck('email'));
-    this.isLoading$ = this.store.select('itemState').pipe(pluck('isLoading'));
-    this.error$ = this.store.select('itemState').pipe(pluck('error'));
+    this.isLoading$ = this.store.select('emailState').pipe(pluck('isLoading'));
+    this.error$ = this.store.select('emailState').pipe(pluck('error'));
   }
 
   ngOnInit(): void {
-    console.log('emailApp: dispatching LoadItems => effects');
-    this.store.dispatch(new LoadItems(this.filterBy));
+    console.log('emailApp: dispatching LoadEmails => effects');
+    
     this.store.dispatch(new LoadEmails(this.filterBy));
   }
-  removeItem(itemId :string) {
+  removeEmail(emailId :string) {
     console.log('emailApp: dispatching remove');
-    this.store.dispatch(new RemoveItem(itemId));
+    this.store.dispatch(new RemoveEmail(emailId));
   }
-  editItem(itemId :string) {
-    console.log('emailApp: dispatching load item (for edit)');
-    this.store.dispatch(new LoadItem(itemId));
+  editEmail(emailId :string) {
+    console.log('emailApp: dispatching load email (for edit)');
+    this.store.dispatch(new LoadEmail(emailId));
   }  
 }

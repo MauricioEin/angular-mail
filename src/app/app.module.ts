@@ -18,9 +18,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { EmailAppComponent } from './pages/email-app/email-app.component';
 
 import { AppHeaderComponent } from './cmps/app-header/app-header.component';
-import { ItemListComponent } from './cmps/item-list/item-list.component';
-import { ItemEditComponent } from './cmps/item-edit/item-edit.component';
-import { ItemPreviewComponent } from './cmps/item-preview/item-preview.component';
+
+
 import { EmailDetailsComponent } from './pages/email-details/email-details.component';
 import { EmailPreviewComponent } from './cmps/email-preview/email-preview.component';
 import { EmailFilterComponent } from './cmps/email-filter/email-filter.component';
@@ -36,9 +35,7 @@ import { HeaderSvgComponent } from './svg-cmps/header-svg/header-svg.component';
     HomeComponent,
     AppHeaderComponent,
     EmailAppComponent,
-    ItemEditComponent,
-    ItemListComponent,
-    ItemPreviewComponent,
+    
     EmailDetailsComponent,
     EmailPreviewComponent,
     EmailFilterComponent,

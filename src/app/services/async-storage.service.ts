@@ -9,7 +9,7 @@ export const storageService = {
 }
 
 interface Entity {
-    id?: string
+    _id?: string
 }
 
 async function query(entityType: string, delay = 1000): Promise<Entity[]> {
@@ -22,13 +22,13 @@ async function query(entityType: string, delay = 1000): Promise<Entity[]> {
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
     const entities = await query(entityType)
-    const entity = entities.find(entity => entity.id === entityId)
+    const entity = entities.find(entity => entity._id === entityId)
     if (!entity) throw new Error(`Cannot get, Item ${entityId} of type: ${entityType} does not exist`)
     return entity;
 }
 
 async function post(entityType: string, newEntity: Entity): Promise<Entity> {
-    newEntity = {...newEntity, id: makeId()}
+    newEntity = {...newEntity, _id: makeId()}
     const entities = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -37,16 +37,16 @@ async function post(entityType: string, newEntity: Entity): Promise<Entity> {
 
 async function put(entityType: string, updatedEntity : Entity): Promise<Entity> {
     const entities = await query(entityType)
-    const idx = entities.findIndex(entity => entity.id === updatedEntity.id)
-    entities[idx] = updatedEntity
+    const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
+    entities[_idx] = updatedEntity
     _save(entityType, entities)
     return updatedEntity
 }
 
 async function remove(entityType: string, entityId: string) : Promise<boolean> {
     const entities = await query(entityType)
-    const idx = entities.findIndex(entity => entity.id === entityId)
-    if (idx !== -1)  entities.splice(idx, 1)
+    const _idx = entities.findIndex(entity => entity._id === entityId)
+    if (_idx !== -1)  entities.splice(_idx, 1)
     else throw new Error(`Cannot remove, item ${entityId} of type: ${entityType} does not exist`)
     _save(entityType, entities)
     return true;

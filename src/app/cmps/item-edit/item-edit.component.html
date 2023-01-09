@@ -1,9 +1,0 @@
-<section class="item-edit">
-    <h2>Item {{itemEditState}}</h2>
-    <form (submit)="$event.preventDefault();saveItem()">
-        <input type="text" name="txt" [(ngModel)]="item.txt" placeholder="Item name" />
-        <button>{{itemEditState}}</button>
-    </form>
-    <hr/>
-    <pre>{{item | json}}</pre>
-</section>

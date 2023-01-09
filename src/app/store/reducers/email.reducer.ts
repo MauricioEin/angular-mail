@@ -34,14 +34,14 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case LOADED_EMAIL: {
       const { email } = action;
-      console.log(`Reducer: Setting loaded email ${email.id}`);
+      console.log(`Reducer: Setting loaded email ${email._id}`);
       return { ...state, email, error: '' };
 
     }
     case REMOVED_EMAIL: {
       const { emailId } = action;
       console.log('Reducer: Removing email:', emailId);
-      const emails = state.emails.filter(email => email.id !== emailId)
+      const emails = state.emails.filter(email => email._id !== emailId)
       return { ...state, emails, error: '' };
 
     }
@@ -54,7 +54,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     case UPDATED_EMAIL: {
       const { email } = action;
       console.log('Reducer: Updating email:', email);
-      const emails = state.emails.map(currEmail => (currEmail.id === email.id) ? email : currEmail)
+      const emails = state.emails.map(currEmail => (currEmail._id === email.id) ? email : currEmail)
       return { ...state, emails, email: null, error: '' };
     }
     default:
