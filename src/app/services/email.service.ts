@@ -67,7 +67,7 @@ export class EmailService {
             sentAt: Date.now(),
             from: `${name}@gmail.com`,
             to: this.loggedinUser.email,
-            labels:[]
+            labels: []
 
         }
         return email

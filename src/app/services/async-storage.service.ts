@@ -15,8 +15,8 @@ interface Entity {
 async function query(entityType: string, delay = 1000): Promise<Entity[]> {
     const entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     if (delay) {
-        return new Promise((resolve)=>setTimeout(resolve, delay, entities))
-    }  
+        return new Promise((resolve) => setTimeout(resolve, delay, entities))
+    }
     return entities
 }
 
@@ -35,7 +35,7 @@ async function post(entityType: string, newEntity: Entity): Promise<Entity> {
     return newEntity
 }
 
-async function put(entityType: string, updatedEntity : Entity): Promise<Entity> {
+async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
     const entities = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
     entities[_idx] = updatedEntity
@@ -43,7 +43,7 @@ async function put(entityType: string, updatedEntity : Entity): Promise<Entity> 
     return updatedEntity
 }
 
-async function remove(entityType: string, entityId: string) : Promise<boolean> {
+async function remove(entityType: string, entityId: string): Promise<boolean> {
     const entities = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === entityId)
     if (_idx !== -1)  entities.splice(_idx, 1)
@@ -53,7 +53,7 @@ async function remove(entityType: string, entityId: string) : Promise<boolean> {
 }
 
 
-function _save(entityType: string, entities : Entity[]) {
+function _save(entityType: string, entities: Entity[]) {
     localStorage.setItem(entityType, JSON.stringify(entities))
 }
 
