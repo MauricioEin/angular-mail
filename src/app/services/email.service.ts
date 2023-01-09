@@ -35,7 +35,7 @@ export class EmailService {
         // If empty - load test data to storage
         // const emails = demoMails
         const emails = JSON.parse(localStorage.getItem(ENTITY) || 'null');
-        console.log('emails:', emails)
+        
         if (!emails || emails.length === 0) {
             console.log('BUU');
             localStorage.setItem(ENTITY, JSON.stringify(this.createEmails()))
@@ -78,13 +78,13 @@ export class EmailService {
     query(filterBy:FilterBy = {}): Observable<Email[]> {
 
         this.store.dispatch(new LoadingEmails());
-        console.log('EmailService: Return Emails ===> effect');
+        // console.log('EmailService: Return Emails ===> effect');
         return from(storageService.query(ENTITY) as Promise<Email[]>)
         // return new Observable((observer) => observer.next(emails));
     }
 
     getById(emailId: string): Observable<Email> {
-        console.log('EmailService: Return Email ===> effect');
+        // console.log('EmailService: Return Email ===> effect');
         return from(storageService.get(ENTITY, emailId) as Promise<Email>)
         // return from(axios.get(URL + emailId) as Promise<Email>)
     }

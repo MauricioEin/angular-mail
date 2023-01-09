@@ -1,4 +1,10 @@
-<section class="email-list">
-    
-    <email-preview *ngFor="let email of (emails$|async)" [email]="email"></email-preview>
+<section class="email-list flex column">
+    <section *ngIf="selectedEmail" class="list-header">
+        <h2 (click)="onRemoveEmail()">Remove</h2>
+    </section>
+    <section class="grow">
+        <email-preview (toggleCheckbox)="toggleCheckbox($event)" *ngFor="let email of (emails$|async)"
+            [email]="email"></email-preview>
+
+    </section>
 </section>

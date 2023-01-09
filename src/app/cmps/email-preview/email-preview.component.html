@@ -1,8 +1,13 @@
-<article routerLink="/email/{{email!._id}}" class="email-preview flex justify-between" [class.unread]="email!.isRead" [class.cheked]="">
-    <span class="btn"><input class="checkbox" type="checkbox" title="Select"></span>
-    <span class="btn"><input class="star" type="checkbox" ></span>
-    <span class="btn"><img class="importance-label" src="assets/img/label-important.svg" /></span>
-    <div class="capitalized" >{{email!.from}}</div>
+<article routerLink="/email/{{email!._id}}" class="email-preview flex justify-between" [class.unread]="email!.isRead"
+    [class.cheked]="">
+
+    <span class="btn">
+        <input (click)="$event.stopPropagation()" (change)="onToggleCheckbox($event)" class="checkbox" type="checkbox" title="Select">
+    </span>
+    <span class="btn">S</span>
+
+    <span class="btn">I</span>
+    <div class="capitalized">{{email!.from}}</div>
     <div>{{email!.subject}}</div>
     <div>📎</div>
     <div>{{email!.sentAt|date:'MMM dd'}}</div>
