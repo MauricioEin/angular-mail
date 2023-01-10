@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, from } from 'rxjs';
+import { Observable, from, filter } from 'rxjs';
 import { Email } from '../models/email';
 import { LoadingEmails } from '../store/actions/email.actions';
 import { EmailState } from '../store/reducers/email.reducer';
@@ -52,15 +52,12 @@ export class EmailService {
             emails.push(this._createEmail())
         }
         return emails
-        // return demoMails
-        // return ['Vue', 'Angular', 'React', 'Redux', 'NGRX', 'Vuex']
-        //   .map(txt => ({id: storageService.makeId(), txt}))
     }
     private _createEmail(): Email {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: ['inbox'],
+            tabs: Math.random()>.5? ['Drafts','Important']: ['Spam'],
             name,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
@@ -76,10 +73,9 @@ export class EmailService {
     }
 
     query(filterBy:FilterBy = {}): Observable<Email[]> {
-
         this.store.dispatch(new LoadingEmails());
         // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(ENTITY) as Promise<Email[]>)
+        return from(storageService.query(ENTITY, filterBy) as Promise<Email[]>)
         // return new Observable((observer) => observer.next(emails));
     }
 

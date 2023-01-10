@@ -16,10 +16,15 @@ export class EmailListComponent {
   emails$: Observable<Email[]>;
 
   selectedEmail!: selectedEmail | null
+  tab!:string
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
+  }
+
+  ngOnInit(){
+    this.tab=this.route.snapshot.data['tab']
   }
 
   toggleCheckbox(payload: selectedEmail): void {

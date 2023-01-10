@@ -1,3 +1,5 @@
+import { Email } from "../models/email"
+import { FilterBy } from "../models/filterBy"
 
 export const storageService = {
     query,
@@ -12,12 +14,20 @@ interface Entity {
     _id?: string
 }
 
-async function query(entityType: string, delay = 1000): Promise<Entity[]> {
+async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
+    console.log('sService: filterBy', filterBy)
     const entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
+    const filtered = entities.filter((entity: Email) => {
+        if (filterBy.tab) return entity.tabs?.includes(filterBy.tab)
+        if (filterBy.notTab) return ((filterBy.to ? filterBy.to === entity.to : filterBy.from === entity.from)
+            && !filterBy.notTab?.some(tab => entity.tabs?.includes(tab)))
+        return true
+    })
+    console.log(filtered)
     if (delay) {
-        return new Promise((resolve) => setTimeout(resolve, delay, entities))
+        return new Promise((resolve) => setTimeout(resolve, delay, filtered))
     }
-    return entities
+    return filtered
 }
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
@@ -28,7 +38,7 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
 }
 
 async function post(entityType: string, newEntity: Entity): Promise<Entity> {
-    newEntity = {...newEntity, _id: makeId()}
+    newEntity = { ...newEntity, _id: makeId() }
     const entities = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -46,7 +56,7 @@ async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
 async function remove(entityType: string, entityId: string): Promise<boolean> {
     const entities = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === entityId)
-    if (_idx !== -1)  entities.splice(_idx, 1)
+    if (_idx !== -1) entities.splice(_idx, 1)
     else throw new Error(`Cannot remove, item ${entityId} of type: ${entityType} does not exist`)
     _save(entityType, entities)
     return true;

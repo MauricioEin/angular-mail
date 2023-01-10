@@ -5,7 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FilterBy } from '../models/filterBy';
 import { LoadEmails } from '../store/actions/email.actions';
 import { State } from '../store/store';
@@ -18,11 +18,16 @@ export class TabResolver implements Resolve<boolean> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const filterBy: FilterBy = {}
     const tab = route.params['tab']
-    if (tab === 'Inbox') filterBy.to = 'user@mail.com'
-    else if (tab === 'Sent') filterBy.from = 'user@mail.com'
+    if (tab === 'Inbox') {
+      filterBy.to = 'user@gmail.com'
+      filterBy.notTab = ['Spam', 'Trash']
+    }
+    else if (tab === 'Sent') {
+      filterBy.from = 'user@gmail.com'
+      filterBy.notTab = ['Draft', 'Trash']
+    }
     else filterBy.tab = tab
-    console.log('resolver FilterBy:', filterBy)
     this.store.dispatch(new LoadEmails(filterBy));
-    return of(true);
+    return of(tab);
   }
 }

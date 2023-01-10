@@ -4,7 +4,7 @@
     </section>
     <section class="grow">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" *ngFor="let email of (emails$|async)"
-            [email]="email"></email-preview>
+            [email]="email" [tab]="tab"></email-preview>
 
     </section>
 </section>
