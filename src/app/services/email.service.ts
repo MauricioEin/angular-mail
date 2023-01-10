@@ -56,7 +56,7 @@ export class EmailService {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: Math.random()>.5? ['Drafts','Important']: ['Spam'],
+            tabs: Math.random()>.5? ['drafts','important']: ['spam','starred'],
             name,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
@@ -86,11 +86,12 @@ export class EmailService {
 
     remove(emailId: string): Observable<boolean> {
 
-        console.log('EmailService: Removing Email ===> effect');
+        // throw new Error('Baba Ji')
+        // console.log('EmailService: Removing Email ===> effect');
         return from(storageService.remove(ENTITY, emailId))
     }
     removeMany(emails: Email[]): Observable<Email[]> {
-        console.log('EmailService: Removing Emails ===> effect');
+        // console.log('EmailService: Removing Emails ===> effect');
         return from(storageService.removeMany(ENTITY, emails) as Promise<Email[]>)
     }
 
@@ -98,7 +99,7 @@ export class EmailService {
     save(email: Email): Observable<Email> {
         const method = (email._id) ? 'put' : 'post'
         const prmSavedEmail = storageService[method](ENTITY, email)
-        console.log('EmailService: Saving Email ===> effect');
+        // console.log('EmailService: Saving Email ===> effect');
         return from(prmSavedEmail) as Observable<Email>
     }
 

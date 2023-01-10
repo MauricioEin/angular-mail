@@ -16,17 +16,13 @@ interface Entity {
 }
 
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
-    const entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
-    const filtered = entities.filter((entity: Email) => {
-        if (filterBy.tab) return entity.tabs?.includes(filterBy.tab)
-        if (filterBy.notTab) return ((filterBy.to ? filterBy.to === entity.to : filterBy.from === entity.from)
-            && !filterBy.notTab?.some(tab => entity.tabs?.includes(tab)))
-        return true
-    })
+    let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
+    if (filterBy.tab) entities = entities.filter((entity: Email) => entity.tabs?.includes(filterBy.tab!))
+    console.log(entities)
     if (delay) {
-        return new Promise((resolve) => setTimeout(resolve, delay, filtered))
+        return new Promise((resolve) => setTimeout(resolve, delay, entities))
     }
-    return filtered
+    return entities
 }
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
