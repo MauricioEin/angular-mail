@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { SetFilter } from 'src/app/store/actions/email.actions';
+import { State } from 'src/app/store/store';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppHeaderComponent implements OnInit {
 
-  constructor() { }
-  setFilter(txt:string) {
-    console.log(txt)
+  constructor(private store: Store<State>) { }
+
+  setFilter(txt: string) {
+    console.log('setFilter:',txt)
+    this.store.dispatch(new SetFilter(txt))
   }
   ngOnInit(): void {
   }

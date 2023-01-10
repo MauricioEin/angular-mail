@@ -5,6 +5,7 @@ import { Observable, pluck, lastValueFrom } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
 import { RemoveEmail,RemoveEmails } from 'src/app/store/actions/email.actions';
+import { FilterBy } from 'src/app/models/filterBy';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { RemoveEmail,RemoveEmails } from 'src/app/store/actions/email.actions';
 })
 export class EmailListComponent {
   emails$: Observable<Email[]>;
+  filterBy$: Observable<FilterBy>;
 
   selectedEmail!: selectedEmail | null
   selectedEmails: Array<Email> = []
@@ -21,8 +23,9 @@ export class EmailListComponent {
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
-    this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
-  }
+      this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
+      this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
+    }
 
   ngOnInit(){
     this.tab=this.route.snapshot.data['tab']
