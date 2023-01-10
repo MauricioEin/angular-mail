@@ -1,4 +1,5 @@
 import { Email } from "../models/email"
+import { FilterBy } from "../models/filterBy"
 
 export const storageService = {
     query,
@@ -14,12 +15,20 @@ interface Entity {
     _id?: string
 }
 
-async function query(entityType: string, delay = 1000): Promise<Entity[]> {
+async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
+    console.log('sService: filterBy', filterBy)
     const entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
+    const filtered = entities.filter((entity: Email) => {
+        if (filterBy.tab) return entity.tabs?.includes(filterBy.tab)
+        if (filterBy.notTab) return ((filterBy.to ? filterBy.to === entity.to : filterBy.from === entity.from)
+            && !filterBy.notTab?.some(tab => entity.tabs?.includes(tab)))
+        return true
+    })
+    console.log(filtered)
     if (delay) {
-        return new Promise((resolve) => setTimeout(resolve, delay, entities))
+        return new Promise((resolve) => setTimeout(resolve, delay, filtered))
     }
-    return entities
+    return filtered
 }
 
 async function get(entityType: string, entityId: string): Promise<Entity> {

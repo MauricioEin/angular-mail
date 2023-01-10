@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, pluck, lastValueFrom } from 'rxjs';
-import { Email, selectedEmail, } from 'src/app/models/email';
+import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
 import { RemoveEmail,RemoveEmails } from 'src/app/store/actions/email.actions';
 
@@ -16,9 +17,15 @@ export class EmailListComponent {
 
   selectedEmail!: selectedEmail | null
   selectedEmails: Array<Email> = []
+  tab!:string
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<State>,
+    private route: ActivatedRoute) {
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
+  }
+
+  ngOnInit(){
+    this.tab=this.route.snapshot.data['tab']
   }
 
   toggleCheckbox(payload: selectedEmail): void {
@@ -35,7 +42,6 @@ export class EmailListComponent {
     console.log('emailList: dispatching remove');
     this.store.dispatch(new RemoveEmails(this.selectedEmails))
     this.selectedEmails=[]
-    // this.selectedEmail = null
   }
 
 }

@@ -19,7 +19,7 @@
             <h4> 
                 <span>{{email.from.split('@')[0]}}</span> 
                 <span class="small"> &lt;{{email.from}}&gt;</span></h4>
-            <!-- //todo more detailed date format -->
+            //todo more detailed date format
             <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>
         </header>
         <p>{{email.body}}</p>
@@ -34,7 +34,7 @@
 
     <!-- <main>
         <h1>{{email.subject}}<span class="btn" ><img class="importance-label"
-            src="assets/img/label-important.svg" [class.labelImportant]="email.isImportant"
+            src="assets/img/label-important.svg" [class.labelImportant]="email.tab.includes('important')"
             /></span>
            // @click="onImportant" // 
         </h1>
@@ -46,7 +46,7 @@
             <div class="flex">
                 <p>{{email.sentAt|date:'MMM dd, yyyy'}}</p>
                 <span class="btn"><input class="star" type="checkbox"
-                    [checked]="email.isStarred"></span>
+                    [checked]="email.tab.includes('starred')"></span>
                    // @change="onStar"//
 
                 <span class="btn">Reply</span>

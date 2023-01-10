@@ -9,6 +9,7 @@ import { EmailListComponent } from 'src/app/pages/email-list/email-list.componen
 })
 export class EmailPreviewComponent {
   @Input() email!: Email ;
+  @Input() tab!: string ;
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
   // constructor(private emailList: EmailListComponent) {
   // }

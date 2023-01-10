@@ -8,6 +8,7 @@ import { State } from '../../store/store';
 import { Email } from '../../models/email';
 // import { Email } from 'src/app/models/email';
 import { LoadEmails,RemoveEmail,LoadEmail } from 'src/app/store/actions/email.actions';
+import { FilterBy } from 'src/app/models/filterBy';
 
 @Component({
   selector: 'email-app',
@@ -22,7 +23,7 @@ export class EmailAppComponent implements OnInit {
   error$: Observable<string>;
   addingNew = false;
 
-  filterBy: string = '';
+  filterBy: FilterBy = {};
 
   constructor(private store: Store<State>) {
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
@@ -33,7 +34,6 @@ export class EmailAppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('emailApp: dispatching LoadEmails => effects');
-    
     this.store.dispatch(new LoadEmails(this.filterBy));
   }
   removeEmail(emailId :string) {

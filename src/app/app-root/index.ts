@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   <section class="app-root">
     <router-outlet></router-outlet>
   </section>
-            `,
+ `, 
 })
 export class AppComponent {
   title = 'baba';

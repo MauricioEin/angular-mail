@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Email } from 'src/app/models/email';
+import { FilterBy } from 'src/app/models/filterBy';
 
 export const SET_LOADING = '[email] loading';
 export const SET_ERROR = '[email] error';
@@ -19,7 +20,7 @@ export type EmailAction = LoadEmails | LoadEmail | RemoveEmail | SaveEmail
 
 export class LoadEmails implements Action {
   readonly type = LOAD_EMAILS;
-  constructor(public filterBy: string = '') {}
+  constructor(public filterBy: FilterBy = {}) {}
 }
 export class LoadEmail implements Action {
   readonly type = LOAD_EMAIL;

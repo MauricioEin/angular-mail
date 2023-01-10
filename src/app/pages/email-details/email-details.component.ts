@@ -14,10 +14,10 @@ import { Email } from 'src/app/models/email';
 export class EmailDetailsComponent {
   constructor(private route: ActivatedRoute) { 
     }
+
   email!: Email
   ngOnInit() {
     this.email = this.route.snapshot.data['email']
-    console.log('this.email',this.email)
   }
 
 }

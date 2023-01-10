@@ -1,0 +1,122 @@
+.email-folder-list {
+    background-color: #f6f8fc;
+    width: 256px;
+    width: 70px;
+}
+
+.email-folder-list>* {
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+
+.compose-wrapper {
+    height: 56px;
+
+    margin: 16px 0 16px 0;
+    padding-inline-start: 10px;
+    background: inherit;
+}
+
+.compose-icon {
+    /* margin-inline-end: 20px; */
+    height: 20px;
+}
+
+.compose {
+    width: 50px;
+
+    background-color: #c2e7ff;
+    font-size: 0.875em;
+    font-weight: 600;
+    /* padding: 0 24px 0 10px; */
+    padding: 0 10px;
+    height: 100%;
+    box-shadow: 0 1px 2px 0 #0000, 0 1px 3px 1px #0000;
+    line-height: 2em;
+    border-radius: 16px;
+}
+
+.com-text {
+    display: none;
+}
+
+.compose:hover {
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);}
+
+.folders-nav {
+    background-color: inherit;
+}
+
+.folders-nav>* {
+    display: flex;
+    align-items: center;
+    width: 240px;
+    padding: 0 12px 0 26px;
+    height: 32px;
+    font-size: 14px;
+    background-color: inherit;
+
+    &:hover {
+        background-color: #ebebeb;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    &.active {
+        background-color: #d3e3fd;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        font-weight: bold;
+        color:#001d35;
+    }
+}
+
+.f-text {
+    margin-inline-start: 24px;
+}
+
+.labels {
+    margin-top: 45px;
+
+    padding-inline-start: 25px;
+}
+
+.labels header {
+    width: 100%;
+}
+
+.labels header h4 {
+    display: none;
+}
+
+@media (min-width:800px) {
+    .email-folder-list {
+        background-color: #f6f8fc;
+        width: 256px;
+    }
+
+    .compose {
+        padding: 0 24px 0 18px;
+        width: unset;
+    }
+
+    .com-text {
+        display: inline;
+    }
+
+    .compose-icon {
+        margin-inline-end: 20px;
+    }
+
+    .labels {
+        padding-inline-start: 28px;
+    }
+
+    .labels header h4 {
+        display: block;
+    }
+
+}
