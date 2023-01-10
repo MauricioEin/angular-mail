@@ -29,6 +29,7 @@ import { EmailComposeComponent } from './cmps/email-compose/email-compose.compon
 import { SearchInputComponent } from './cmps/search-input/search-input.component';
 import { HeaderSvgComponent } from './svg-cmps/header-svg/header-svg.component';
 import { FolderListSvgComponent } from './svg-cmps/folder-list-svg/folder-list-svg.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FolderListSvgComponent } from './svg-cmps/folder-list-svg/folder-list-s
     SearchInputComponent,
     HeaderSvgComponent,
     FolderListSvgComponent,
+    CapitalizePipe,
    
   ],
   imports: [

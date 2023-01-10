@@ -7,13 +7,13 @@ import { Component } from '@angular/core';
 })
 export class FolderListComponent {
   folders=[
-    {name:'Inbox'},
-    {name:'Starred'},
-    {name:'Important'},
-    {name:'Sent'},
-    {name:'Drafts'},
-    {name:'Spam'},
-    {name:'Trash'},
+    {name:'inbox'},
+    {name:'starred'},
+    {name:'important'},
+    {name:'sent'},
+    {name:'drafts'},
+    {name:'spam'},
+    {name:'trash'},
   ]
 
   setTab=(folder:string)=>{console.log('setting tab:', folder)}

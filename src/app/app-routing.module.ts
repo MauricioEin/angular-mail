@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'email', component: EmailAppComponent, children: [
-      { path: '', redirectTo: 'Inbox', pathMatch: 'full' },
+      { path: '', redirectTo: 'inbox', pathMatch: 'full' },
       { path: ':tab', component: EmailListComponent, resolve: { tab: TabResolver } },
       { path: ':tab/:id', component: EmailDetailsComponent, resolve: { email: EmailResolver } },
     ]

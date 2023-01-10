@@ -18,11 +18,11 @@ export class TabResolver implements Resolve<boolean> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const filterBy: FilterBy = {}
     const tab = route.params['tab']
-    if (tab === 'Inbox') {
+    if (tab === 'inbox') {
       filterBy.to = 'user@gmail.com'
       filterBy.notTab = ['Spam', 'Trash']
     }
-    else if (tab === 'Sent') {
+    else if (tab === 'sent') {
       filterBy.from = 'user@gmail.com'
       filterBy.notTab = ['Draft', 'Trash']
     }
