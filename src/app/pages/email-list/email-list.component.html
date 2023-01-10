@@ -1,7 +1,21 @@
 <section class="email-list flex column">
-    <section *ngIf="selectedEmails.length" class="list-header">
-        <h2 (click)="onRemoveEmail()">Remove</h2>
-    </section>
+    <header class="list-header flex align-center space-between">
+        <div class="sub1">
+            <input type="checkbox">
+           
+        </div>
+
+        <div class="actions-list flex align-center grow" *ngIf="selectedEmails.length"> 
+            <span>list</span>
+            <span (click)="onRemoveEmails()">R</span>
+        </div>
+
+        <div class="pagging-wrapper">
+            <span>paging</span>
+        </div>
+
+    </header>
+
     <section class="grow">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" *ngFor="let email of (emails$|async)"
             [email]="email" [tab]="tab"></email-preview>
