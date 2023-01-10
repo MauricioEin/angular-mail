@@ -33,15 +33,12 @@ export class EmailAppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('emailApp: dispatching LoadEmails => effects');
     this.store.dispatch(new LoadEmails(this.filterBy));
   }
   removeEmail(emailId :string) {
-    console.log('emailApp: dispatching remove');
     this.store.dispatch(new RemoveEmail(emailId));
   }
   editEmail(emailId :string) {
-    console.log('emailApp: dispatching load email (for edit)');
     this.store.dispatch(new LoadEmail(emailId));
   }  
 }

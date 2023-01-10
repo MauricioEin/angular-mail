@@ -16,7 +16,6 @@ interface Entity {
 }
 
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
-    console.log('sService: filterBy', filterBy)
     const entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     const filtered = entities.filter((entity: Email) => {
         if (filterBy.tab) return entity.tabs?.includes(filterBy.tab)
@@ -24,7 +23,6 @@ async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000):
             && !filterBy.notTab?.some(tab => entity.tabs?.includes(tab)))
         return true
     })
-    console.log(filtered)
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, filtered))
     }

@@ -38,7 +38,7 @@ export class EmailListComponent {
     }
   }
 
-  onRemoveEmail() {
+  onRemoveEmails() {
     console.log('emailList: dispatching remove');
     this.store.dispatch(new RemoveEmails(this.selectedEmails))
     this.selectedEmails=[]

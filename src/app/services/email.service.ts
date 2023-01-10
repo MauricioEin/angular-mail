@@ -37,7 +37,6 @@ export class EmailService {
         const emails = JSON.parse(localStorage.getItem(ENTITY) || 'null');
 
         if (!emails || emails.length === 0) {
-            console.log('BUU');
             localStorage.setItem(ENTITY, JSON.stringify(this.createEmails()))
         }
 
@@ -87,7 +86,6 @@ export class EmailService {
 
     remove(emailId: string): Observable<boolean> {
 
-        // throw new Error('Baba Ji')
         console.log('EmailService: Removing Email ===> effect');
         return from(storageService.remove(ENTITY, emailId))
     }
