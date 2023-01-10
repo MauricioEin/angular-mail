@@ -56,7 +56,7 @@ export class EmailService {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: Math.random()>.5? ['drafts','important']: ['spam','starred'],
+            tabs: Math.random() > .5 ? ['drafts', 'important'] : ['spam', 'starred'],
             name,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
@@ -65,13 +65,18 @@ export class EmailService {
             from: `${name}@gmail.com`,
             to: this.loggedinUser.email,
             labels: []
-
         }
-        return email
+        if (email.to === this.loggedinUser.email
+            && !['spam', 'trash'].some(tab => email.tabs.includes(tab)))
+            email.tabs.push('inbox')
+        else if (email.from === this.loggedinUser.email
+            && !['drafts', 'trash'].some(tab => email.tabs.includes(tab)))
+            email.tabs.push('sent')
 
+        return email
     }
 
-    query(filterBy:FilterBy = {}): Observable<Email[]> {
+    query(filterBy: FilterBy = {}): Observable<Email[]> {
         this.store.dispatch(new LoadingEmails());
         // console.log('EmailService: Return Emails ===> effect');
         return from(storageService.query(ENTITY, filterBy) as Promise<Email[]>)

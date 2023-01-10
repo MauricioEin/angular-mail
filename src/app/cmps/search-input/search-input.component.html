@@ -2,7 +2,7 @@
 <div class="search-wrapper">
     <i  class="fa-solid fa-magnifying-glass"></i>
 </div>
-<input class="grow" placeholder="Search mail"  type="text">
+<input [(ngModel)]="txt" (input)="onInput()" class="grow" placeholder="Search mail"  type="text">
 
 </section>
 

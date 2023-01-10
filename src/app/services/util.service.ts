@@ -25,7 +25,7 @@ export class UtilService{
     }
     
      makeName():string {
-        const names = ['Roei', 'Ido', 'Tal', 'Bar', 'Yossi','Moshe','Ben']
+        const names = ['Roei', 'Ido', 'Tal', 'Bar', 'Yossi','Moshe','Ben', 'Adi', 'Chen', 'Adva', 'Liron', 'Atalia', 'Daniel']
         return names[Math.floor(Math.random() * names.length)]
     }
 

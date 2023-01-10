@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class AppHeaderComponent implements OnInit {
 
   constructor() { }
-
+  setFilter(txt:string) {
+    console.log(txt)
+  }
   ngOnInit(): void {
   }
 
