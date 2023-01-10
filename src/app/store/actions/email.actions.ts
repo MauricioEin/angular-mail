@@ -8,7 +8,9 @@ export const LOAD_EMAIL = '[email] load';
 export const LOADED_EMAIL = '[email] loaded';
 export const LOADED_EMAILS = '[email]s loaded';
 export const REMOVE_EMAIL = '[email] remove';
+export const REMOVE_EMAILS = '[email]s remove';
 export const REMOVED_EMAIL = '[email] removed';
+export const REMOVED_EMAILS = '[email]s removed';
 export const SAVE_EMAIL = '[email] saved';
 export const ADDED_EMAIL = '[email] added';
 export const UPDATED_EMAIL = '[email] updated';
@@ -23,13 +25,21 @@ export class LoadEmail implements Action {
   readonly type = LOAD_EMAIL;
   constructor(public emailId: string = '') {}
 }
+export class SaveEmail implements Action {
+  readonly type = SAVE_EMAIL;
+  constructor(public email: Email) {}
+}
 export class RemoveEmail implements Action {
   readonly type = REMOVE_EMAIL;
   constructor(public emailId: string) {}
 }
+export class RemoveEmails implements Action {
+  readonly type = REMOVE_EMAILS;
+  constructor(public emails: Email[]) {}
+}
 export class LoadedEmails implements Action {
   readonly type = LOADED_EMAILS;
-  constructor(public emails: Email[] = []) {}
+  constructor(public emails: Email[] ) {}
 }
 export class LoadedEmail implements Action {
   readonly type = LOADED_EMAIL;
@@ -39,10 +49,11 @@ export class RemovedEmail implements Action {
   readonly type = REMOVED_EMAIL;
   constructor(public emailId: string) {}
 }
-export class SaveEmail implements Action {
-  readonly type = SAVE_EMAIL;
-  constructor(public email: Email) {}
+export class RemovedEmails implements Action {
+  readonly type = REMOVED_EMAILS;
+  constructor(public emails: Email[]) {}
 }
+
 export class AddedEmail implements Action {
   readonly type = ADDED_EMAIL;
   constructor(public email: Email) {}

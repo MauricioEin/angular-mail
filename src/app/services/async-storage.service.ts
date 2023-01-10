@@ -1,3 +1,4 @@
+import { Email } from "../models/email"
 
 export const storageService = {
     query,
@@ -5,6 +6,7 @@ export const storageService = {
     post,
     put,
     remove,
+    removeMany,
     makeId
 }
 
@@ -28,7 +30,7 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
 }
 
 async function post(entityType: string, newEntity: Entity): Promise<Entity> {
-    newEntity = {...newEntity, _id: makeId()}
+    newEntity = { ...newEntity, _id: makeId() }
     const entities = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -46,10 +48,23 @@ async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
 async function remove(entityType: string, entityId: string): Promise<boolean> {
     const entities = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === entityId)
-    if (_idx !== -1)  entities.splice(_idx, 1)
+    if (_idx !== -1) entities.splice(_idx, 1)
     else throw new Error(`Cannot remove, item ${entityId} of type: ${entityType} does not exist`)
     _save(entityType, entities)
     return true;
+}
+async function removeMany(entityType: string, removedEntities: Email[]): Promise<Email[]> {
+    const entities = await query(entityType)
+    removedEntities.forEach(removed => {
+        const _idx = entities.findIndex(e => e._id === removed._id)
+        if (_idx !== -1) entities.splice(_idx, 1)
+        else throw new Error(`Cannot remove, item ${removed._id} of type: ${entityType} does not exist`)
+
+    })
+    _save(entityType, entities)
+    // return entities as Email[]
+    return new Promise((resolve) => resolve(entities as Email[]))
+
 }
 
 

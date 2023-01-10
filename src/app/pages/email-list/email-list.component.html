@@ -1,5 +1,5 @@
 <section class="email-list flex column">
-    <section *ngIf="selectedEmail" class="list-header">
+    <section *ngIf="selectedEmails.length" class="list-header">
         <h2 (click)="onRemoveEmail()">Remove</h2>
     </section>
     <section class="grow">

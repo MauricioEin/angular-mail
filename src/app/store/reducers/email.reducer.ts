@@ -1,4 +1,4 @@
-import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR } from '../actions/email.actions';
+import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL,REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR } from '../actions/email.actions';
 import { Email } from 'src/app/models/email';
 
 export interface EmailState {
@@ -43,8 +43,13 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       console.log('Reducer: Removing email:', emailId);
       const emails = state.emails.filter(email => email._id !== emailId)
       return { ...state, emails, error: '' };
-
     }
+    case REMOVED_EMAILS: {
+      const { emails } = action;
+      console.log('Reducer finish move of removing many')
+      return { ...state, emails, error: '' };
+    }
+
     case ADDED_EMAIL: {
       const { email } = action;
       console.log('Reducer: Adding email:', email);
