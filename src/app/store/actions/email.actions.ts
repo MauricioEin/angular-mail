@@ -41,7 +41,7 @@ export class RemoveEmails implements Action {
 }
 export class LoadedEmails implements Action {
   readonly type = LOADED_EMAILS;
-  constructor(public emails: Email[] ) {}
+  constructor(public emails: Email[] , public filterBy: FilterBy) {}
 }
 export class LoadedEmail implements Action {
   readonly type = LOADED_EMAIL;

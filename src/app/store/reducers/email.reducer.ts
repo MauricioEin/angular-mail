@@ -15,7 +15,12 @@ const initialState: EmailState = {
   email: null,
   isLoading: false,
   error: '',
-  filterBy: { txt: '' }
+  filterBy: {
+    txt: '',
+    tab: 'inbox',
+    page: 0,
+    pageSize: 5
+  }
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -26,9 +31,9 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, isLoading, error: '' };
     }
     case SET_FILTER: {
-      const  {filterBy} = action;
+      const { filterBy } = action;
       console.log(`Reducer: Setting filter`);
-      return { ...state, filterBy: {...state.filterBy, ...filterBy}, error: '' };
+      return { ...state, filterBy: { ...state.filterBy, ...filterBy }, error: '' };
     }
 
     case SET_ERROR: {
@@ -37,9 +42,9 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
-      const { emails } = action;
+      const { emails, filterBy } = action;
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
-      return { ...state, emails, isLoading: false, error: '' };
+      return { ...state, emails, filterBy, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;

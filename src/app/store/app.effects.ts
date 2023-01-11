@@ -19,10 +19,11 @@ export class AppEffects {
       tap(() => console.log('Effects: load emails ==> service')),
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
-          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer')),
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
           map((emails) => ({
             type: LOADED_EMAILS,
             emails,
+            filterBy:action.filterBy
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)
@@ -84,27 +85,27 @@ export class AppEffects {
   //   return this.actions$.pipe(
   //     ofType(SET_FILTER),
   //     switchMap((action) =>
-  //       from(action.txt).pipe(
-  //         tap(() => console.log('Effects: setting filter:', action.txt)),
+  //       this.emailService.query(action.filterBy).pipe(
+  //         tap(() => console.log('Effects: setting filter:', action.filterBy)),
   //         map(() => ({
   //           type: SET_FILTER,
-  //           txt: action.txt,
+  //           txt: action.filterBy,
   //         })),
-  //           catchError((error) => {
-  //             console.log('Effect: Caught error ===> Reducer', error)
-  //             return of({
-  //               type: SET_ERROR,
-  //               error: error.toString(),
-  //             })
+  //         catchError((error) => {
+  //           console.log('Effect: Caught error ===> Reducer', error)
+  //           return of({
+  //             type: SET_ERROR,
+  //             error: error.toString(),
   //           })
-  //         )
-  //         ),
-  //       );
+  //         })
+  //       )
+  //     ),
+  //   );
   // })
 
 
   constructor(
     private actions$: Actions<EmailAction>,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) { }
 }

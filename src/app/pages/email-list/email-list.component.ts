@@ -25,17 +25,24 @@ export class EmailListComponent {
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
+    console.log('const')
+
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
+    // this.filterBy$.subscribe(filterBy=>this.store.dispatch(new LoadEmails(filterBy)))
+
   }
 
-  ngOnInit() {
+  async ngOnInit() {  
     this.subscription = this.route.params.subscribe(async params => {
-      if (this.tab===params['tab']) return
+      if (this.tab===params['tab']) return console.log('same')
       this.tab = params['tab']
-      this.store.dispatch(new SetFilter({ txt: '', page: 0, tab: this.tab }));
+      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize:25 }))
+      // this.store.dispatch(new SetFilter({ txt: '', page: 0, tab: this.tab }))
+      // const newFilter = await lastValueFrom(this.filterBy$)
+
+
     })
-    // this.filterBy$.subscribe(filterBy=>this.store.dispatch(new LoadEmails(filterBy)))
 
     // this.tab = this.route.snapshot.data['tab']
   }
