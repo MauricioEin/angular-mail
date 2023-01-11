@@ -60,7 +60,7 @@ export class EmailService {
             name,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
-            isRead: false,
+            isRead: Math.random() > .5 ? false : true,
             sentAt: Date.now(),
             from: `${name}@gmail.com`,
             to: this.loggedinUser.email,
@@ -78,6 +78,7 @@ export class EmailService {
 
     query(filterBy: FilterBy = {}): Observable<Email[]> {
         this.store.dispatch(new LoadingEmails());
+        console.log('??????????')
         // console.log('EmailService: Return Emails ===> effect');
         return from(storageService.query(ENTITY, filterBy) as Promise<Email[]>)
         // return new Observable((observer) => observer.next(emails));
@@ -106,6 +107,11 @@ export class EmailService {
         const prmSavedEmail = storageService[method](ENTITY, email)
         // console.log('EmailService: Saving Email ===> effect');
         return from(prmSavedEmail) as Observable<Email>
+    }
+
+    updateMany(emails: Email[]): Observable<Email[]> {
+        console.log('EmailService: updated Emails ===> effect');
+        return from(storageService.putMany(ENTITY, emails) as Promise<Email[]>)
     }
 
 }

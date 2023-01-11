@@ -1,18 +1,33 @@
 <section class="email-list flex column">
+
     <header class="list-header flex align-center space-between">
-        <!-- {{filterBy$|async|json}} -->
-        
-        <div class="sub1">
+        <div class="sub1 flex align-center">
             <input type="checkbox">
-           
-        </div>
-        <div class="actions-list flex align-center grow" *ngIf="selectedEmails.length"> 
-            <span>list</span>
-            <span (click)="onRemoveEmails()">R</span>
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-rotate-right fa-sm"></i>
+            </div>
         </div>
 
-        <div class="pagging-wrapper">
-            <span>paging</span>
+        <!-- Actions bar -->
+        <div class="actions-list flex align-center grow" *ngIf="selectedEmails.length"> 
+            <div class="icon-wrapper" (click)="onRemoveEmails()">
+                <i class="fa-regular fa-trash-can"></i>
+            </div>
+            <div class="icon-wrapper"  (click)="onSetReadStat()">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+        </div>
+
+        <!-- Paging section -->
+        <div class="paging-wrapper flex align-center">
+            <span class="paging-counter">1-2 of 2</span>
+
+            <div class="icon-wrapper1">
+                <i class="fa-solid fa-chevron-left fa-xs"></i>
+            </div>
+            <div class="icon-wrapper1">
+                <i class="fa-solid fa-chevron-right fa-xs"></i>
+            </div>
         </div>
 
     </header>

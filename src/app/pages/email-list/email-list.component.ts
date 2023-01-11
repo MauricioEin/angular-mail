@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, pluck, lastValueFrom, Subscription } from 'rxjs';
+import { Observable, pluck, lastValueFrom, Subscription, async } from 'rxjs';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
-import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter } from 'src/app/store/actions/email.actions';
+import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
 
 
@@ -14,27 +15,24 @@ import { FilterBy } from 'src/app/models/filterBy';
   styleUrls: ['./email-list.component.scss']
 })
 export class EmailListComponent {
-  emails$: Observable<Email[]>;
-  filterBy$: Observable<FilterBy>;
+  emails$!: Observable<Email[]>;
+  filterBy$!: Observable<FilterBy>;
 
-  selectedEmail!: selectedEmail | null
+
   selectedEmails: Array<Email> = []
-  tab!: string
+  tab: string = ''
   subscription!: Subscription
 
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
-    console.log('const')
 
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
-    // this.filterBy$.subscribe(filterBy=>this.store.dispatch(new LoadEmails(filterBy)))
-
   }
 
-  async ngOnInit() {  
-    this.subscription = this.route.params.subscribe(async params => {
+   ngOnInit() {  
+    this.subscription = this.route.params.subscribe( params => {
       if (this.tab===params['tab']) return console.log('same')
       this.tab = params['tab']
       this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize:25 }))
@@ -53,8 +51,26 @@ export class EmailListComponent {
 
   onRemoveEmails() {
     console.log('emailList: dispatching remove');
+    // todo ask about async await for the dispatch
     this.store.dispatch(new RemoveEmails(this.selectedEmails))
     this.selectedEmails = []
   }
 
+  onSetReadStat() {
+    const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
+    // if all were read
+    if (emails.every(email => email.isRead)) {
+      emails.forEach(e => e.isRead = false)
+    } else {
+      emails.forEach(e => e.isRead = true)
+    }
+
+    this.store.dispatch(new UpdateEmails(emails))
+    this.selectedEmails = []
+
+
+  }
 }
+
+
+

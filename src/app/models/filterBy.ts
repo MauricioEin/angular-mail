@@ -4,5 +4,5 @@ export interface FilterBy {
   txt?: string
   tab?: string
   page?: number
-  pageSize?: number
+  pageSize?:number
 }

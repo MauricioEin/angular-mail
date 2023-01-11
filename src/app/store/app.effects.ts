@@ -5,7 +5,8 @@ import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { EmailService } from '../services/email.service';
 import {
   EmailAction, SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS,
-  REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER
+  REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER,
+  UPDATE_EMAILS ,UPDATED_EMAILS
 } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
 
 
@@ -81,27 +82,31 @@ export class AppEffects {
     );
   })
 
-  // setFilter$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(SET_FILTER),
-  //     switchMap((action) =>
-  //       this.emailService.query(action.filterBy).pipe(
-  //         tap(() => console.log('Effects: setting filter:', action.filterBy)),
-  //         map(() => ({
-  //           type: SET_FILTER,
-  //           txt: action.filterBy,
-  //         })),
-  //         catchError((error) => {
-  //           console.log('Effect: Caught error ===> Reducer', error)
-  //           return of({
-  //             type: SET_ERROR,
-  //             error: error.toString(),
-  //           })
-  //         })
-  //       )
-  //     ),
-  //   );
-  // })
+  updatedmails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UPDATE_EMAILS),
+      switchMap((action) =>
+        this.emailService.updateMany(action['emails']).pipe(
+          tap(() => console.log('Effects: emails updated by service ===> Reducer')),
+          map((updatedEmails) => ({
+            type: UPDATED_EMAILS,
+            updatedEmails
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      ),
+    );
+  })
+
+
+
+ 
 
 
   constructor(

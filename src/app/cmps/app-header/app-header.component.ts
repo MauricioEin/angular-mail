@@ -5,6 +5,7 @@ import { FilterBy } from 'src/app/models/filterBy';
 import { LoadEmails, SetFilter } from 'src/app/store/actions/email.actions';
 import { State } from 'src/app/store/store';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './app-header.component.html',
