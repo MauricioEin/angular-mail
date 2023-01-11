@@ -4,9 +4,43 @@
     background-color: rgba(255, 255, 255, 0.7);
     height: 100%;
 
-    .list-header{
+    .list-header {
         height: 48px;
-        
+        padding: 4px 16px;
+
+        .sub1 {
+            input {
+                margin-inline-end: 10px;
+                color: #444;
+            }
+        }
+
+        .paging-wrapper{
+            .paging-counter{
+                font-size: 12px;
+                margin-inline-end: 12px;
+            }
+        }
+    }
+
+    .icon-wrapper,
+    .icon-wrapper1 {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+            color: #444;
+        }
+    }
+
+    .icon-wrapper1 {
+        i {
+          color: #5e5e5e; 
+        }
     }
 
 }
