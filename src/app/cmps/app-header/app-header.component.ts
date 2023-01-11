@@ -15,12 +15,14 @@ export class AppHeaderComponent implements OnInit {
 
   constructor(private store: Store<State>) {
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
-   }
+  }
 
 
   setFilter(txt: string) {
-    console.log('setFilter:',txt)
-    this.store.dispatch(new SetFilter({txt}))
+    console.log('setFilter:', txt)
+    
+    this.store.dispatch(new SetFilter({ txt, page: 0 }))
+    
   }
   ngOnInit(): void {
   }

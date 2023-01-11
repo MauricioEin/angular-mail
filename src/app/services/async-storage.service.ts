@@ -8,7 +8,8 @@ export const storageService = {
     put,
     remove,
     removeMany,
-    makeId
+    makeId,
+    putMany
 }
 
 interface Entity {
@@ -18,7 +19,6 @@ interface Entity {
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     if (filterBy.tab) entities = entities.filter((entity: Email) => entity.tabs?.includes(filterBy.tab!))
-    console.log(entities)
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, entities))
     }
@@ -48,6 +48,19 @@ async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
     return updatedEntity
 }
 
+async function putMany(entityType: string, updatedEntities: Email[]): Promise<Email[]> {
+    const entities = await query(entityType)
+    const updatedEmails: Email[] = []
+    updatedEntities.forEach(updated => {
+        const _idx = entities.findIndex(e => e._id === updated._id)
+        entities[_idx] = updated
+        updatedEmails.push(updated)
+    })
+
+    _save(entityType, entities)
+    return new Promise((resolve) => resolve(updatedEmails))
+}
+
 async function remove(entityType: string, entityId: string): Promise<boolean> {
     const entities = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === entityId)
@@ -57,17 +70,17 @@ async function remove(entityType: string, entityId: string): Promise<boolean> {
     return true;
 }
 async function removeMany(entityType: string, removedEntities: Email[]): Promise<Email[]> {
-    const entities = await query(entityType)
+    var entities = await query(entityType)
+    // entities = JSON.parse(JSON.stringify(entities))
     removedEntities.forEach(removed => {
         const _idx = entities.findIndex(e => e._id === removed._id)
         if (_idx !== -1) entities.splice(_idx, 1)
         else throw new Error(`Cannot remove, item ${removed._id} of type: ${entityType} does not exist`)
 
     })
-    _save(entityType, entities)
-    // return entities as Email[]
-    return new Promise((resolve) => resolve(entities as Email[]))
 
+    _save(entityType, entities)
+    return new Promise((resolve) => resolve(entities as Email[]))
 }
 
 
