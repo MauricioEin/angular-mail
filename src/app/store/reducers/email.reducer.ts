@@ -1,4 +1,4 @@
-import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR, SET_FILTER } from '../actions/email.actions';
+import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR, SET_FILTER, SetFilter } from '../actions/email.actions';
 import { Email } from 'src/app/models/email';
 import { FilterBy } from 'src/app/models/filterBy';
 
@@ -26,9 +26,9 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, isLoading, error: '' };
     }
     case SET_FILTER: {
-      const { txt } = action;
-      console.log(`Reducer: Setting filter to ${txt}`);
-      return { ...state, filterBy: { txt }, error: '' };
+      const  {filterBy} = action;
+      console.log(`Reducer: Setting filter`);
+      return { ...state, filterBy: {...state.filterBy, ...filterBy}, error: '' };
     }
 
     case SET_ERROR: {

@@ -74,6 +74,6 @@ export class EmailError implements Action {
 }
 export class SetFilter implements Action {
   readonly type = SET_FILTER;
-  constructor(public txt: string = '') {}
+  constructor(public filterBy: FilterBy = {}) {}
 }
 
