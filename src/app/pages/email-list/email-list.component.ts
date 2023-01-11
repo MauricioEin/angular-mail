@@ -68,7 +68,6 @@ export class EmailListComponent {
     this.store.dispatch(new UpdateEmails(emails))
     this.selectedEmails = []
 
-
   }
 }
 
