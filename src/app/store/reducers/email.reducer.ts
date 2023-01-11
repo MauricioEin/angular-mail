@@ -33,7 +33,6 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     case SET_FILTER: {
       const { filterBy } = action;
       console.log(`Reducer: Setting filter`);
-      console.log(filterBy)
       return { ...state, filterBy: { ...state.filterBy, ...filterBy }, error: '' };
     }
 
@@ -43,9 +42,9 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
-      const { emails } = action;
+      const { emails, filterBy } = action;
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
-      return { ...state, emails, isLoading: false, error: '' };
+      return { ...state, emails, filterBy, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;
@@ -81,7 +80,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       const { updatedEmails } = action;
       console.log('Reducer: Updating emails:', updatedEmails);
       const emails: Email[] = JSON.parse(JSON.stringify(state.emails))
-      
+
       updatedEmails.forEach((updated: Email) => {
         const idx = emails.findIndex(e => e._id === updated._id)
         emails.splice(idx, 1, updated)

@@ -17,17 +17,17 @@ import { FilterBy } from 'src/app/models/filterBy';
 })
 export class EmailAppComponent implements OnInit {
  
-  emails$: Observable<Email[]>;
-  email$: Observable<Email | null>;
+  // emails$: Observable<Email[]>;
+  // email$: Observable<Email | null>;
   isLoading$: Observable<boolean>;
   error$: Observable<string>;
   addingNew = false;
 
-  filterBy: FilterBy = {};
+  // filterBy: FilterBy = {};
 
   constructor(private store: Store<State>) {
-    this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
-    this.email$ = this.store.select('emailState').pipe(pluck('email'));
+    // this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
+    // this.email$ = this.store.select('emailState').pipe(pluck('email'));
     this.isLoading$ = this.store.select('emailState').pipe(pluck('isLoading'));
     this.error$ = this.store.select('emailState').pipe(pluck('error'));
   }

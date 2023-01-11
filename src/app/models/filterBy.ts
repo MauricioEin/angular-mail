@@ -3,6 +3,6 @@
 export interface FilterBy {
   txt?: string
   tab?: string
-  page?: number,
+  page?: number
   pageSize?:number
 }

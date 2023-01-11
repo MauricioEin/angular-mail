@@ -20,30 +20,24 @@ export class EmailListComponent {
 
 
   selectedEmails: Array<Email> = []
-  tab: string = 'inbox'
+  tab: string = ''
   subscription!: Subscription
 
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
+
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
   }
 
-  ngOnInit() {
-
-    this.subscription = this.route.params.subscribe(async params => {
-
-      if (this.tab === params['tab']) return
+   ngOnInit() {  
+    this.subscription = this.route.params.subscribe( params => {
+      if (this.tab===params['tab']) return console.log('same')
       this.tab = params['tab']
-      this.store.dispatch(new SetFilter({ txt: '', page: 0, tab: this.tab }));
+      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize:25 }))
 
     })
-
-    // this.filterBy$.subscribe(filterBy => this.store.dispatch(new LoadEmails(filterBy)))
-    // this.filterBy$.subscribe(filterBy => console.log(filterBy))
-
-    // this.store.dispatch(new LoadEmails(filterBy)))
 
   }
 
@@ -59,6 +53,7 @@ export class EmailListComponent {
 
   onRemoveEmails() {
     console.log('emailList: dispatching remove');
+    // todo ask about async await for the dispatch
     this.store.dispatch(new RemoveEmails(this.selectedEmails))
     this.selectedEmails = []
   }

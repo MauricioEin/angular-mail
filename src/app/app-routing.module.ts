@@ -5,7 +5,7 @@ import { EmailListComponent } from './pages/email-list/email-list.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EmailAppComponent } from './pages/email-app/email-app.component';
 import { EmailResolver } from './services/email.resolver';
-import { TabResolver } from './services/tab.resolver';
+// import { TabResolver } from './services/tab.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

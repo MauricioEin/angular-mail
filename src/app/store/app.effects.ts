@@ -20,11 +20,11 @@ export class AppEffects {
       tap(() => console.log('Effects: load emails ==> service')),
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
-          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer')),
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
           map((emails) => ({
             type: LOADED_EMAILS,
             emails,
-            
+            filterBy:action.filterBy
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)
@@ -111,6 +111,6 @@ export class AppEffects {
 
   constructor(
     private actions$: Actions<EmailAction>,
-    private emailService: EmailService
+    private emailService: EmailService,
   ) { }
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { SetFilter } from 'src/app/store/actions/email.actions';
-import { State } from 'src/app/store/store';
+import { lastValueFrom, Observable, pluck, take } from 'rxjs';
 import { FilterBy } from 'src/app/models/filterBy';
-import { Observable, pluck } from 'rxjs';
+import { LoadEmails, SetFilter } from 'src/app/store/actions/email.actions';
+import { State } from 'src/app/store/store';
+
 
 @Component({
   selector: 'app-header',
@@ -11,18 +12,16 @@ import { Observable, pluck } from 'rxjs';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-  filterBy$: Observable<FilterBy>;
+  filterBy$!: Observable<FilterBy>
 
   constructor(private store: Store<State>) {
-    this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
+    this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'))
   }
 
-
   setFilter(txt: string) {
-    console.log('setFilter:', txt)
-    
-    this.store.dispatch(new SetFilter({ txt, page: 0 }))
-    
+    this.filterBy$.pipe(take(1)).subscribe(filterBy=>{
+      this.store.dispatch(new LoadEmails({...filterBy, txt }))
+    })
   }
   ngOnInit(): void {
   }
