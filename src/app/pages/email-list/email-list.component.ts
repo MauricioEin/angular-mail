@@ -38,13 +38,7 @@ export class EmailListComponent {
       if (this.tab===params['tab']) return console.log('same')
       this.tab = params['tab']
       this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize:25 }))
-      // this.store.dispatch(new SetFilter({ txt: '', page: 0, tab: this.tab }))
-      // const newFilter = await lastValueFrom(this.filterBy$)
-
-
     })
-
-    // this.tab = this.route.snapshot.data['tab']
   }
 
   toggleCheckbox(payload: selectedEmail): void {
