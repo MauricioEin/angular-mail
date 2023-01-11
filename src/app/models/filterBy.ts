@@ -1,9 +1,8 @@
 // TODO: Add Price
 
 export interface FilterBy {
-  txt?: string,
+  txt?: string
   tab?: string
-  from?: string
-  to?: string
-  notTab?: string[]
+  page?: number,
+  pageSize?:number
 }

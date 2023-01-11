@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, pluck, lastValueFrom } from 'rxjs';
+import { Observable, pluck, lastValueFrom, Subscription } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
 import { RemoveEmail,RemoveEmails } from 'src/app/store/actions/email.actions';
@@ -20,6 +20,8 @@ export class EmailListComponent {
   selectedEmail!: selectedEmail | null
   selectedEmails: Array<Email> = []
   tab!:string
+  // subscription!: Subscription
+
 
   constructor(private store: Store<State>,
     private route: ActivatedRoute) {
@@ -28,6 +30,7 @@ export class EmailListComponent {
     }
 
   ngOnInit(){
+    
     this.tab=this.route.snapshot.data['tab']
   }
 

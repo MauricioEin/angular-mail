@@ -20,7 +20,7 @@ export class AppHeaderComponent implements OnInit {
 
   setFilter(txt: string) {
     console.log('setFilter:',txt)
-    this.store.dispatch(new SetFilter(txt))
+    this.store.dispatch(new SetFilter({txt}))
   }
   ngOnInit(): void {
   }
