@@ -1,0 +1,61 @@
+@import "../../../assets/style/setup/vars";
+
+.email-compose {
+    position:fixed;
+    bottom: 0;
+    right: 70px;
+    width: 450px;
+    background-color: $clr1;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 1px -1px 5px 1px rgba(86, 86, 86, 0.242);
+    z-index: 40;
+}
+
+.email-compose header {
+    background-color: $clr2;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 10px 16px;
+    font-weight: bold;
+
+}
+
+.email-compose form * {
+    border: none;
+    outline: none;
+    padding: 1em;
+}
+
+.email-compose input {
+    box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+
+}
+
+.email-compose textarea {
+    resize: none;
+    height: 280px;
+    overflow: auto;
+}
+
+.email-compose .btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+.email-compose footer{
+    padding:10px
+}
+
+.email-compose footer .btn {
+    width: 30px;
+    height: 30px;
+}
+
+.email-compose footer .send-btn{
+    color:white;
+    background-color: rgb(37, 66, 224);
+    padding-inline-start: 30px;
+    padding-inline-end: 30px;
+    border-radius: 999px;
+}

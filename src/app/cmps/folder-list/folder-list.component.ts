@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'folder-list',
@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./folder-list.component.scss']
 })
 export class FolderListComponent {
+  @Output() compose = new EventEmitter<null>()
   folders=[
     {name:'inbox'},
     {name:'starred'},

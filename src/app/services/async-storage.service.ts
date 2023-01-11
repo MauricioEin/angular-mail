@@ -17,23 +17,11 @@ interface Entity {
     _id?: string
 }
 
-async function query(entityType: string, filterBy: FilterBy = {}, delay = 1000): Promise<Entity[]> {
-    console.log('filterBySTorage:',filterBy)
+async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): Promise<Entity[]> {
+    console.log('filterBySTorage:', filterBy)
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
-    const startIdx = filterBy.page! * filterBy.pageSize!
-    const endIdx = startIdx + filterBy.pageSize!
-    console.log('start end idx:',startIdx, endIdx)
-
-    const txtRegex = new RegExp(filterBy.txt!, 'i')
-    console.log('txtRegex:',txtRegex)
-    entities = entities.filter((entity: Email) => { 
-        return (
-        entity.tabs?.includes(filterBy.tab!) &&
-            (txtRegex.test(entity.subject) ||
-                txtRegex.test(entity.from) ||
-                txtRegex.test(entity.to))
-        )
-    }).slice(startIdx, endIdx)
+    if (Object.keys(filterBy).length)
+        entities = _filter(entities, filterBy)
     console.log(entities)
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, entities))
@@ -111,4 +99,21 @@ function makeId(length = 5) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length))
     }
     return txt
+}
+
+function _filter(entities: Email[], filterBy: FilterBy) {
+    const startIdx = filterBy.page! * filterBy.pageSize!
+    const endIdx = startIdx + filterBy.pageSize!
+    console.log('start end idx:', startIdx, endIdx)
+
+    const txtRegex = new RegExp(filterBy.txt!, 'i')
+    console.log('txtRegex:', txtRegex)
+    return entities.filter((entity: Email) => {
+        return (
+            entity.tabs?.includes(filterBy.tab!) &&
+            (txtRegex.test(entity.subject) ||
+                txtRegex.test(entity.from) ||
+                txtRegex.test(entity.to))
+        )
+    }).slice(startIdx, endIdx)
 }
