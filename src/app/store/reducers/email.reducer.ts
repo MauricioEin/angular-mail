@@ -1,18 +1,23 @@
-import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL,REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR } from '../actions/email.actions';
+import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, LOADED_EMAIL, SET_ERROR, SET_FILTER } from '../actions/email.actions';
 import { Email } from 'src/app/models/email';
+import { FilterBy } from 'src/app/models/filterBy';
 
 export interface EmailState {
   emails: Email[];
   email: Email | null;
   isLoading: boolean;
   error: string;
+  filterBy: FilterBy
 }
 
 const initialState: EmailState = {
   emails: [],
   email: null,
   isLoading: false,
-  error: ''
+  error: '',
+  filterBy: { txt: '',
+  tab:'inbox',
+  }
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -22,6 +27,12 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       // console.log(`Reducer: Setting isLoading to ${isLoading}`);
       return { ...state, isLoading, error: '' };
     }
+    case SET_FILTER: {
+      const { txt } = action;
+      console.log(`Reducer: Setting filter to ${txt}`);
+      return { ...state, filterBy: { txt }, error: '' };
+    }
+
     case SET_ERROR: {
       const { error } = action;
       console.log(`Reducer: Setting email error`, error);

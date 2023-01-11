@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { act, Actions, createEffect, ofType } from '@ngrx/effects';
+import { from, of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { EmailService } from '../services/email.service';
-import { EmailAction,SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS,
-   REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
+import {
+  EmailAction, SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS,
+  REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER
+} from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
 
 
 // Nice way to test error handling? localStorage.clear() after emails are presented 
@@ -21,6 +23,7 @@ export class AppEffects {
           map((emails) => ({
             type: LOADED_EMAILS,
             emails,
+            
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)
@@ -77,8 +80,29 @@ export class AppEffects {
       ),
     );
   })
-  
-  
+
+  // setFilter$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(SET_FILTER),
+  //     switchMap((action) =>
+  //       from(action.txt).pipe(
+  //         tap(() => console.log('Effects: setting filter:', action.txt)),
+  //         map(() => ({
+  //           type: SET_FILTER,
+  //           txt: action.txt,
+  //         })),
+  //           catchError((error) => {
+  //             console.log('Effect: Caught error ===> Reducer', error)
+  //             return of({
+  //               type: SET_ERROR,
+  //               error: error.toString(),
+  //             })
+  //           })
+  //         )
+  //         ),
+  //       );
+  // })
+
 
   constructor(
     private actions$: Actions<EmailAction>,

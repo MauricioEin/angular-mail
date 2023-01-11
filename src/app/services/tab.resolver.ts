@@ -19,6 +19,7 @@ export class TabResolver implements Resolve<boolean> {
     const filterBy: FilterBy = {}
     const tab = route.params['tab']
     filterBy.tab = tab
+
     this.store.dispatch(new LoadEmails(filterBy));
     return of(tab);
   }

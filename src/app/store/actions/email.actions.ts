@@ -4,6 +4,7 @@ import { FilterBy } from 'src/app/models/filterBy';
 
 export const SET_LOADING = '[email] loading';
 export const SET_ERROR = '[email] error';
+export const SET_FILTER = '[email] filter';
 export const LOAD_EMAILS = '[email]s load';
 export const LOAD_EMAIL = '[email] load';
 export const LOADED_EMAIL = '[email] loaded';
@@ -16,7 +17,7 @@ export const SAVE_EMAIL = '[email] saved';
 export const ADDED_EMAIL = '[email] added';
 export const UPDATED_EMAIL = '[email] updated';
 
-export type EmailAction = LoadEmails | LoadEmail | RemoveEmail | SaveEmail
+export type EmailAction = LoadEmails | LoadEmail | RemoveEmail | SaveEmail | RemoveEmails | SetFilter
 
 export class LoadEmails implements Action {
   readonly type = LOAD_EMAILS;
@@ -70,5 +71,9 @@ export class LoadingEmails implements Action {
 export class EmailError implements Action {
   readonly type = SET_ERROR;
   constructor(public error: string) {}
+}
+export class SetFilter implements Action {
+  readonly type = SET_FILTER;
+  constructor(public txt: string = '') {}
 }
 
