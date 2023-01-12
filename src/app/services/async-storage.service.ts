@@ -1,4 +1,3 @@
-import { filter } from "rxjs"
 import { Email } from "../models/email"
 import { FilterBy } from "../models/filterBy"
 
@@ -22,12 +21,11 @@ interface Res {
 }
 
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): Promise<{ entities: Entity[], totalPages: number }> {
-    console.log('filterBySTorage:', filterBy)
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     let totalPages = 0
     if (Object.keys(filterBy).length)
         [entities, totalPages] = _filter(entities, filterBy)
-    console.log(entities)
+    // console.log(entities)
 
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, { entities, totalPages }))
@@ -42,8 +40,9 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
     return entity;
 }
 
-async function post(entityType: string, newEntity: Entity): Promise<Entity> {
-    newEntity = { ...newEntity, _id: makeId() }
+async function post(entityType: string, newEntity: Email): Promise<Email> {
+    newEntity = { ...newEntity, _id: makeId(), sentAt:Date.now()}
+    console.log('StoSer newEntity:',newEntity)
     const {entities} = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -110,18 +109,18 @@ function makeId(length = 5) {
 function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
     const startIdx = filterBy.page! * filterBy.pageSize!
     const endIdx = startIdx + filterBy.pageSize!
-    console.log('start end idx:', startIdx, endIdx)
 
     const txtRegex = new RegExp(filterBy.txt!, 'i')
-    console.log('txtRegex:', txtRegex)
     entities = entities.filter((entity: Email) => {
         return (
             entity.tabs?.includes(filterBy.tab!) &&
             (txtRegex.test(entity.subject) ||
-                txtRegex.test(entity.from) ||
+                txtRegex.test(entity.from!) ||
                 txtRegex.test(entity.to))
         )
     })
+    console.log('entities:',entities)
+    console.log('pageSize:',filterBy.pageSize)
     const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
     return [entities.slice(startIdx, endIdx), totalPages]
 

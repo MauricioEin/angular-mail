@@ -1,15 +1,15 @@
 
 export interface Email{
-  _id:string,
-  tabs:Array<string>,
-  name:string,
+  _id?:string,
+  tabs?:Array<string>,
+  name?:string,
   subject:string,
   body:string,
-  isRead:boolean,
-  sentAt:number,
-  from:string,
+  isRead?:boolean,
+  sentAt?:number,
+  from?:string,
   to:string,
-  labels:Array<string>
+  labels?:Array<string>
 }
 
 

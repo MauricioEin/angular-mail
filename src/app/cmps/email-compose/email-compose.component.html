@@ -5,20 +5,26 @@
         <div>
             <span class="btn blocked" title="Minimize" (click)="isMini=!isMini">-</span>
             <span class="btn blocked" title="Full screen" (click)="isFull=!isFull;isMini=false">↕</span>
-            <span class="btn" title="Save & close" (click)="save(true)">x</span>
+            <span class="btn" title="Save & close" (click)="save(false)">x</span>
         </div>
     </header>
     <main *ngIf="!isMini">
-        <form class="flex column">
+        <form class="flex column" #form [formGroup]="composeForm" (ngSubmit)="save()">
+            <input type="email" formControlName="to" placeholder="Recipients" />
+            <input type="text" formControlName="subject" placeholder="Subject" />
+            <input class="body-input" type="text" formControlName="body" />
+            <button [disabled]="composeForm.invalid">Save</button>
+    
+<!-- 
             <input [(ngModel)]="recipients" type="text" placeholder="Recipients">
             <input [(ngModel)]="subject" type="text" placeholder="Subject">
             <textarea [(ngModel)]="body">
-        </textarea>
+        </textarea> -->
         </form>
 
         <footer class="flex space-between">
             <div>
-                <span class="btn pill send-btn" title="Send" (click)="save(false)">Send</span> <span
+                <span class="btn pill send-btn" title="Send" (click)="save()">Send</span> <span
                     class="btn blocked" title="More send options">🔽</span>
                 <span class="btn blocked" title="Formatting options">A</span>
                 <span class="btn blocked" title="Attach files">📎</span>

@@ -39,7 +39,7 @@ export class AppEffects {
     );
   });
 
-  removemail$ = createEffect(() => {
+  removeEmail$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(REMOVE_EMAIL),
       switchMap((action) =>
@@ -61,7 +61,7 @@ export class AppEffects {
     );
   })
 
-  removemails$ = createEffect(() => {
+  removeEmails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(REMOVE_EMAILS),
       switchMap((action) =>
@@ -83,7 +83,7 @@ export class AppEffects {
     );
   })
 
-  updatedmails$ = createEffect(() => {
+  updatedEmails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UPDATE_EMAILS),
       switchMap((action) =>
@@ -106,7 +106,28 @@ export class AppEffects {
   })
 
 
+  saveEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SAVE_EMAIL),
+      switchMap((action) =>
+        this.emailService.save(action.email).pipe(
+          tap(() => console.log('Effects: Item saved by service, inform the ===> Reducer')),
+          map((savedItem) => ({
+            type: (action.email._id) ? UPDATED_EMAIL : ADDED_EMAIL,
+            email: savedItem,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
 
+        )
+      )
+    );
+  })
 
 
 

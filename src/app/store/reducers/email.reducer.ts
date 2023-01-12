@@ -20,7 +20,7 @@ const initialState: EmailState = {
     txt: '',
     tab: 'inbox',
     page: 0,
-    pageSize: 5
+    pageSize: 10
   },
   totalPages: 0
 };
@@ -45,7 +45,6 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case LOADED_EMAILS: {
       const { emails, filterBy, totalPages } = action;
-      
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
       return { ...state, emails, filterBy, totalPages, isLoading: false, error: '' };
     }
