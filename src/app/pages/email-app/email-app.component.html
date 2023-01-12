@@ -1,20 +1,10 @@
 <section class="flex column">
     <app-header></app-header>
     <main>
-        <folder-list></folder-list>
+        <folder-list (compose)="isCompose=true"></folder-list>
         <section class="main-container">
             <router-outlet></router-outlet>
         </section>
     </main>
-    <!-- <section class="main-content grow">
-
-        <div class="error-msg" *ngIf="error$ | async">{{error$ | async}} </div>
-        <p *ngIf="isLoading$ | async">⏱ Loading...</p>
-        <item-list (removed)="removeItem($event)" (edited)="editItem($event)" [items]="items$ | async">
-        </item-list>
-        <button (click)="addingNew = !addingNew">Add Item...</button>
-        <section *ngIf="addingNew || (item$ | async)">
-            <item-edit (saved)="addingNew=false"></item-edit>
-        </section>
-    </section> -->
+    <email-compose *ngIf="isCompose" (close)="isCompose=false"></email-compose>
 </section>

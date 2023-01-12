@@ -6,7 +6,7 @@ import { EmailService } from '../services/email.service';
 import {
   EmailAction, SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS,
   REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER,
-  UPDATE_EMAILS ,UPDATED_EMAILS
+  UPDATE_EMAILS, UPDATED_EMAILS
 } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
 import { Email } from '../models/email';
 
@@ -21,10 +21,11 @@ export class AppEffects {
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
           tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
-          map((res) => ({
+          map(({entities:emails, totalPages}) => ({
             type: LOADED_EMAILS,
-            res,
-            filterBy:action.filterBy,
+            emails,
+            filterBy: action.filterBy,
+            totalPages,
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)
@@ -106,7 +107,7 @@ export class AppEffects {
 
 
 
- 
+
 
 
   constructor(

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, pluck, lastValueFrom, Subscription, async, take } from 'rxjs';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { Observable, pluck, Subscription, take } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
 import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UpdateEmails } from 'src/app/store/actions/email.actions';
@@ -38,7 +37,6 @@ export class EmailListComponent {
       this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 5 }))
 
     })
-
   }
 
   toggleCheckbox(payload: selectedEmail): void {

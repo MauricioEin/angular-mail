@@ -1,1 +1,36 @@
-<p>email-compose works!</p>
+<section class="email-compose fixed" [class.mini]="isMini" [class.full]="isFull">
+    <header class="flex space-between">
+        <div>New Message</div>
+
+        <div>
+            <span class="btn blocked" title="Minimize" (click)="isMini=!isMini">-</span>
+            <span class="btn blocked" title="Full screen" (click)="isFull=!isFull;isMini=false">↕</span>
+            <span class="btn" title="Save & close" (click)="save(true)">x</span>
+        </div>
+    </header>
+    <main *ngIf="!isMini">
+        <form class="flex column">
+            <input [(ngModel)]="recipients" type="text" placeholder="Recipients">
+            <input [(ngModel)]="subject" type="text" placeholder="Subject">
+            <textarea [(ngModel)]="body">
+        </textarea>
+        </form>
+
+        <footer class="flex space-between">
+            <div>
+                <span class="btn pill send-btn" title="Send" (click)="save(false)">Send</span> <span
+                    class="btn blocked" title="More send options">🔽</span>
+                <span class="btn blocked" title="Formatting options">A</span>
+                <span class="btn blocked" title="Attach files">📎</span>
+                <span class="btn blocked" title="Insert link">🔗</span>
+                <span class="btn blocked" title="Insert emoji">🙂</span>
+                <span class="btn blocked" title="Insert files using Drive">DRIVE</span>
+                <span class="btn blocked" title="Insert photo">🖼</span>
+                <span class="btn blocked" title="Toggle confidential mode">🔒</span>
+                <span class="btn blocked" title="Insert signature">🖋</span>
+                <span class="btn blocked" title="More options">more</span>
+            </div>
+            <span class="btn" (click)="close.emit()" title="Discard draft">🗑</span>
+        </footer>
+    </main>
+</section>

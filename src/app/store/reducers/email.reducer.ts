@@ -44,11 +44,10 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
-      const { res, filterBy } = action;
-      console.log(res)
-
+      const { emails, filterBy, totalPages } = action;
+      
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
-      return { ...state, emails: res[0], filterBy, totalPages: res[1], isLoading: false, error: '' };
+      return { ...state, emails, filterBy, totalPages, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;
