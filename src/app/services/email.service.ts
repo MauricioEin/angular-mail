@@ -76,10 +76,10 @@ export class EmailService {
         return email
     }
 
-    query(filterBy: FilterBy = {}): Observable<Email[]> {
+    query(filterBy: FilterBy = {}): Observable<{ entities: Email[], totalPages: number }> {
         this.store.dispatch(new LoadingEmails());
         // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(ENTITY, filterBy) as Promise<Email[]>)
+        return from(storageService.query(ENTITY, filterBy) as Promise<{ entities: Email[], totalPages: number }> )
         // return new Observable((observer) => observer.next(emails));
     }
 

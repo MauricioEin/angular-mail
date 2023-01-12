@@ -3,11 +3,12 @@ import { Email } from 'src/app/models/email';
 import { FilterBy } from 'src/app/models/filterBy';
 
 export interface EmailState {
-  emails: Email[];
-  email: Email | null;
-  isLoading: boolean;
-  error: string;
+  emails: Email[]
+  email: Email | null
+  isLoading: boolean
+  error: string
   filterBy: FilterBy
+  totalPages:number
 }
 
 const initialState: EmailState = {
@@ -20,7 +21,8 @@ const initialState: EmailState = {
     tab: 'inbox',
     page: 0,
     pageSize: 5
-  }
+  },
+  totalPages:0
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -42,9 +44,10 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
-      const { emails, filterBy } = action;
+      const { emails, filterBy, totalPages } = action;
+      console.log('action LOADED EMAILS:',action)
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
-      return { ...state, emails, filterBy, isLoading: false, error: '' };
+      return { ...state, emails, filterBy, totalPages, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;
