@@ -7,7 +7,8 @@ export interface EmailState {
   email: Email | null;
   isLoading: boolean;
   error: string;
-  filterBy: FilterBy
+  filterBy: FilterBy,
+  totalPages: number
 }
 
 const initialState: EmailState = {
@@ -20,7 +21,8 @@ const initialState: EmailState = {
     tab: 'inbox',
     page: 0,
     pageSize: 5
-  }
+  },
+  totalPages: 0
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -42,9 +44,11 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
-      const { emails, filterBy } = action;
+      const { res, filterBy } = action;
+      console.log(res)
+
       // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
-      return { ...state, emails, filterBy, isLoading: false, error: '' };
+      return { ...state, emails: res[0], filterBy, totalPages: res[1], isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;

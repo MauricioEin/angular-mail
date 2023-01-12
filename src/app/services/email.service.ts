@@ -47,7 +47,7 @@ export class EmailService {
     private createEmails(): Email[] {
 
         let emails = []
-        for (var i = 0; i < 16; i++) {
+        for (var i = 0; i < 40; i++) {
             emails.push(this._createEmail())
         }
         return emails
@@ -76,11 +76,10 @@ export class EmailService {
         return email
     }
 
-    query(filterBy: FilterBy = {}): Observable<Email[]> {
+    query(filterBy: FilterBy = {}): Observable<Array<any>> {
         this.store.dispatch(new LoadingEmails());
-        console.log('??????????')
         // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(ENTITY, filterBy) as Promise<Email[]>)
+        return from(storageService.query(ENTITY, filterBy) as Promise<Array<any>>)
         // return new Observable((observer) => observer.next(emails));
     }
 

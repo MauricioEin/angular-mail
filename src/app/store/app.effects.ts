@@ -8,7 +8,7 @@ import {
   REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER,
   UPDATE_EMAILS ,UPDATED_EMAILS
 } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
-
+import { Email } from '../models/email';
 
 // Nice way to test error handling? localStorage.clear() after emails are presented 
 @Injectable()
@@ -21,10 +21,10 @@ export class AppEffects {
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
           tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
-          map((emails) => ({
+          map((res) => ({
             type: LOADED_EMAILS,
-            emails,
-            filterBy:action.filterBy
+            res,
+            filterBy:action.filterBy,
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)

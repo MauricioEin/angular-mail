@@ -50,7 +50,8 @@ export class RemoveEmails implements Action {
 
 export class LoadedEmails implements Action {
   readonly type = LOADED_EMAILS;
-  constructor(public emails: Email[] , public filterBy: FilterBy) {}
+  // constructor(public emails: Email[], public filterBy: FilterBy,public totalPages:number) { }
+  constructor(public res:Array<any>, public filterBy: FilterBy) { }
 }
 export class LoadedEmail implements Action {
   readonly type = LOADED_EMAIL;

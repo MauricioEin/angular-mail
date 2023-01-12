@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, pluck, lastValueFrom, Subscription, async } from 'rxjs';
+import { Observable, pluck, lastValueFrom, Subscription, async, take } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
@@ -31,11 +31,11 @@ export class EmailListComponent {
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
   }
 
-   ngOnInit() {  
-    this.subscription = this.route.params.subscribe( params => {
-      if (this.tab===params['tab']) return console.log('same')
+  ngOnInit() {
+    this.subscription = this.route.params.subscribe(params => {
+      if (this.tab === params['tab']) return console.log('same')
       this.tab = params['tab']
-      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize:25 }))
+      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 5 }))
 
     })
 
@@ -70,7 +70,13 @@ export class EmailListComponent {
     this.store.dispatch(new UpdateEmails(emails))
     this.selectedEmails = []
 
+  }
 
+  setPage(diff: number) {
+    this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+      const { page } = filterBy
+
+    })
   }
 }
 

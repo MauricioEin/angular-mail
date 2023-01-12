@@ -25,7 +25,7 @@
             <div class="icon-wrapper1">
                 <i class="fa-solid fa-chevron-left fa-xs"></i>
             </div>
-            <div class="icon-wrapper1">
+            <div class="icon-wrapper1" (click)="setPage(1)">
                 <i class="fa-solid fa-chevron-right fa-xs"></i>
             </div>
         </div>
@@ -33,7 +33,8 @@
     </header>
 
     <section class="grow">
-        <email-preview (toggleCheckbox)="toggleCheckbox($event)" *ngFor="let email of (emails$|async)"
+        <email-preview (toggleCheckbox)="toggleCheckbox($event)"
+         *ngFor="let email of (emails$|async)"
             [email]="email" [tab]="tab"></email-preview>
 
     </section>
