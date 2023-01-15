@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, Subscription, take } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
-import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
+import { Actions, ofType } from '@ngrx/effects';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { FilterBy } from 'src/app/models/filterBy';
 export class EmailListComponent {
   emails$!: Observable<Email[]>;
   filterBy$!: Observable<FilterBy>;
+  totalPages$!: Observable<number>;
 
 
   selectedEmails: Array<Email> = []
@@ -24,10 +26,12 @@ export class EmailListComponent {
 
 
   constructor(private store: Store<State>,
+    private actions$: Actions,
     private route: ActivatedRoute) {
 
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
+    this.totalPages$ = this.store.select('emailState').pipe(pluck('totalPages'));
   }
 
   ngOnInit() {
@@ -51,9 +55,41 @@ export class EmailListComponent {
 
   onRemoveEmails() {
     console.log('emailList: dispatching remove');
-    // todo ask about async await for the dispatch
-    this.store.dispatch(new RemoveEmails(this.selectedEmails))
+    const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
+    //  when we wanna remove from collection
+    if (this.tab === 'trash' || this.tab === 'spam') {
+      this.store.dispatch(new RemoveEmails(emails))
+    }
+    // when we wanna change all to trash tab
+    // ['inbox','starred']
+    else {
+      emails.forEach(email => {
+        let newTabs: string[] = email.tabs!.filter((tab, idx) => {
+          return !(tab === 'inbox' || tab === 'sent')
+        })
+        newTabs.push('trash')
+
+        email.tabs = newTabs
+    
+      })
+
+      this.store.dispatch(new UpdateEmails(emails))
+      this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
+        
+        this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+          this.store.dispatch(new LoadEmails({ ...filterBy }))
+        })
+      })
+    }
+
     this.selectedEmails = []
+  }
+
+  setPage(diff: number) {
+    this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+      const { page } = filterBy
+      this.store.dispatch(new LoadEmails({ ...filterBy, page: page! + diff }))
+    })
   }
 
   onSetReadStat() {
@@ -64,18 +100,12 @@ export class EmailListComponent {
     } else {
       emails.forEach(e => e.isRead = true)
     }
-
     this.store.dispatch(new UpdateEmails(emails))
     this.selectedEmails = []
 
   }
 
-  setPage(diff: number) {
-    this.filterBy$.pipe(take(1)).subscribe(filterBy => {
-      const { page } = filterBy
 
-    })
-  }
 }
 
 

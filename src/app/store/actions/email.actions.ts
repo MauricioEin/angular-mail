@@ -63,7 +63,7 @@ export class RemovedEmail implements Action {
 }
 export class RemovedEmails implements Action {
   readonly type = REMOVED_EMAILS;
-  constructor(public emails: Email[]) { }
+  constructor(public removedEmails: Email[]) { }
 }
 export class AddedEmail implements Action {
   readonly type = ADDED_EMAIL;

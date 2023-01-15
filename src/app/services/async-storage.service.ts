@@ -25,13 +25,30 @@ async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): 
     let totalPages = 0
     if (Object.keys(filterBy).length)
         [entities, totalPages] = _filter(entities, filterBy)
-    // console.log(entities)
 
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, { entities, totalPages }))
     }
     return { entities, totalPages }
 }
+function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
+    const startIdx = filterBy.page! * filterBy.pageSize!
+    const endIdx = startIdx + filterBy.pageSize!
+
+    const txtRegex = new RegExp(filterBy.txt!, 'i')
+    entities = entities.filter((entity: Email) => {
+        return (
+            entity.tabs?.includes(filterBy.tab!) &&
+            (txtRegex.test(entity.subject) ||
+                txtRegex.test(entity.from!) ||
+                txtRegex.test(entity.to))
+        )
+    })
+    const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
+    return [entities.slice(startIdx, endIdx), totalPages]
+
+}
+
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
     const { entities } = await query(entityType)
@@ -42,7 +59,6 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
 
 async function post(entityType: string, newEntity: Email): Promise<Email> {
     newEntity = { ...newEntity, _id: makeId(), sentAt: Date.now() }
-    console.log('StoSer newEntity:', newEntity)
     const { entities } = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -80,16 +96,14 @@ async function remove(entityType: string, entityId: string): Promise<boolean> {
 }
 async function removeMany(entityType: string, removedEntities: Email[]): Promise<Email[]> {
     var { entities } = await query(entityType)
-    // entities = JSON.parse(JSON.stringify(entities))
     removedEntities.forEach(removed => {
         const _idx = entities.findIndex(e => e._id === removed._id)
         if (_idx !== -1) entities.splice(_idx, 1)
         else throw new Error(`Cannot remove, item ${removed._id} of type: ${entityType} does not exist`)
-
     })
 
     _save(entityType, entities)
-    return new Promise((resolve) => resolve(entities as Email[]))
+    return new Promise((resolve) => resolve(removedEntities as Email[]))
 }
 
 
@@ -106,20 +120,3 @@ function makeId(length = 5) {
     return txt
 }
 
-function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
-    const startIdx = filterBy.page! * filterBy.pageSize!
-    const endIdx = startIdx + filterBy.pageSize!
-
-    const txtRegex = new RegExp(filterBy.txt!, 'i')
-    entities = entities.filter((entity: Email) => {
-        return (
-            entity.tabs?.includes(filterBy.tab!) &&
-            (txtRegex.test(entity.subject) ||
-                txtRegex.test(entity.from!) ||
-                txtRegex.test(entity.to))
-        )
-    })
-    const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
-    return [entities.slice(startIdx, endIdx), totalPages]
-
-}

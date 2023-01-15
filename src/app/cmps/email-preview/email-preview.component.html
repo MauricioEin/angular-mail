@@ -7,8 +7,8 @@
     <span class="btn">S</span>
 
     <span class="btn">I</span>
-    <div class="capitalized">{{email!.from}}</div>
-    <div>{{email!.subject}}</div>
-    <div>📎</div>
-    <div>{{email!.sentAt|date:'MMM dd'}}</div>
+    <div class="capitalized">{{email!.name}}</div>
+    <h4 class="flex align-center">{{email!.subject}}</h4>
+    <!-- <div>📎</div> -->
+    <h5 class="flex align-center">{{email!.sentAt|date:'MMM dd'}}</h5>
 </article>
