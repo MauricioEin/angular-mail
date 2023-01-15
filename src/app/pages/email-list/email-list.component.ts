@@ -36,7 +36,7 @@ export class EmailListComponent {
     this.subscription = this.route.params.subscribe(params => {
       if (this.tab === params['tab']) return console.log('same')
       this.tab = params['tab']
-      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 5 }))
+      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 10 }))
 
     })
   }

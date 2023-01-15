@@ -10,14 +10,14 @@
         <section class="labels-bar flex align-center">
            <h2>{{email.subject}}</h2> 
            <div  class="labels-det flex align-center">
-               <span *ngFor="let label in email.labels">
+               <span *ngFor="let label of email.labels">
                    {{label}}
                 </span>
             </div>
         </section>
         <header class="flex">
             <h4> 
-                <span>{{email.from.split('@')[0]}}</span> 
+                <span>{{email.name}}</span> 
                 <span class="small"> &lt;{{email.from}}&gt;</span></h4>
             //todo more detailed date format
             <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>

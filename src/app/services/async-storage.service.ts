@@ -1,4 +1,3 @@
-import { filter } from "rxjs"
 import { Email } from "../models/email"
 import { FilterBy } from "../models/filterBy"
 
@@ -22,7 +21,6 @@ interface Res {
 }
 
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): Promise<{ entities: Entity[], totalPages: number }> {
-
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     let totalPages = 0
     if (Object.keys(filterBy).length)
@@ -33,25 +31,24 @@ async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): 
     }
     return { entities, totalPages }
 }
-
-
 function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
     const startIdx = filterBy.page! * filterBy.pageSize!
     const endIdx = startIdx + filterBy.pageSize!
 
     const txtRegex = new RegExp(filterBy.txt!, 'i')
     entities = entities.filter((entity: Email) => {
-       
-        return (entity.tabs?.includes(filterBy.tab!)) &&
+        return (
+            entity.tabs?.includes(filterBy.tab!) &&
             (txtRegex.test(entity.subject) ||
-                txtRegex.test(entity.from) ||
+                txtRegex.test(entity.from!) ||
                 txtRegex.test(entity.to))
-
+        )
     })
     const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
     return [entities.slice(startIdx, endIdx), totalPages]
 
 }
+
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
     const { entities } = await query(entityType)
@@ -60,8 +57,8 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
     return entity;
 }
 
-async function post(entityType: string, newEntity: Entity): Promise<Entity> {
-    newEntity = { ...newEntity, _id: makeId() }
+async function post(entityType: string, newEntity: Email): Promise<Email> {
+    newEntity = { ...newEntity, _id: makeId(), sentAt: Date.now() }
     const { entities } = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
@@ -71,7 +68,7 @@ async function post(entityType: string, newEntity: Entity): Promise<Entity> {
 async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
     const { entities } = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
-    entities[_idx] = updatedEntity
+    entities[_idx] = { ...entities[_idx], ...updatedEntity }
     _save(entityType, entities)
     return updatedEntity
 }
@@ -99,7 +96,6 @@ async function remove(entityType: string, entityId: string): Promise<boolean> {
 }
 async function removeMany(entityType: string, removedEntities: Email[]): Promise<Email[]> {
     var { entities } = await query(entityType)
-
     removedEntities.forEach(removed => {
         const _idx = entities.findIndex(e => e._id === removed._id)
         if (_idx !== -1) entities.splice(_idx, 1)

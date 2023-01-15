@@ -20,7 +20,7 @@ export class AppEffects {
       tap(() => console.log('Effects: load emails ==> service')),
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
-          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer.')),
           map(({entities:emails, totalPages}) => ({
             type: LOADED_EMAILS,
             emails,
@@ -39,7 +39,30 @@ export class AppEffects {
     );
   });
 
-  removemail$ = createEffect(() => {
+  loadEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LOAD_EMAIL),
+      tap(() => console.log('Effects: load email ==> service')),
+      switchMap((action) =>
+        this.emailService.getById(action.emailId).pipe(
+          tap(() => console.log('Effects: Got email from service ===> Reducer')),
+          map((email) => ({
+            type: LOADED_EMAIL,
+            email
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      ),
+    );
+  });
+
+  removeEmail$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(REMOVE_EMAIL),
       switchMap((action) =>
@@ -61,7 +84,7 @@ export class AppEffects {
     );
   })
 
-  removemails$ = createEffect(() => {
+  removeEmails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(REMOVE_EMAILS),
       switchMap((action) =>
@@ -83,7 +106,7 @@ export class AppEffects {
     );
   })
 
-  updatedmails$ = createEffect(() => {
+  updatedEmails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UPDATE_EMAILS),
       switchMap((action) =>
@@ -106,7 +129,28 @@ export class AppEffects {
   })
 
 
+  saveEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SAVE_EMAIL),
+      switchMap((action) =>
+        this.emailService.save(action.email).pipe(
+          tap(() => console.log('Effects: Email saved by service, inform the ===> Reducer')),
+          map((savedEmail) => ({
+            type: (action.email._id) ? UPDATED_EMAIL : ADDED_EMAIL,
+            email: savedEmail,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
 
+        )
+      )
+    );
+  })
 
 
 

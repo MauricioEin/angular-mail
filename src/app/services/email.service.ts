@@ -20,7 +20,7 @@ const ENTITY = 'email'
 export class EmailService {
     loggedinUser = {
         email: 'user@gmail.com',
-        fullname: 'Mahatma Appsus'
+        fullname: 'Best User'
     }
 
     constructor(private store: Store<EmailState>,
@@ -53,17 +53,18 @@ export class EmailService {
         return emails
     }
     private _createEmail(): Email {
+        const isIncoming = Math.random() > .5 ? true : false
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: Math.random() > .5 ? ['drafts', 'important'] : ['spam', 'starred'],
-            name,
+            tabs: Math.random() > .5 ? ['important'] : ['spam', 'starred'],
+            name: isIncoming ? name : this.loggedinUser.fullname,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
-            isRead: Math.random() > .5 ? false : true,
+            isRead: (Math.random() > .5 && isIncoming) ? false : true,
             sentAt: Date.now(),
-            from: `${name}@gmail.com`,
-            to: this.loggedinUser.email,
+            from: isIncoming ? `${name.split(' ')[0].toLowerCase()}@gmail.com` : this.loggedinUser.email,
+            to: isIncoming ? this.loggedinUser.email : `${name.split(' ')[0].toLowerCase()}@gmail.com`,
             labels: []
         }
         if (email.to === this.loggedinUser.email
@@ -79,7 +80,7 @@ export class EmailService {
     query(filterBy: FilterBy = {}): Observable<{ entities: Email[], totalPages: number }> {
         this.store.dispatch(new LoadingEmails());
         // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(ENTITY, filterBy) as Promise<{ entities: Email[], totalPages: number }> )
+        return from(storageService.query(ENTITY, filterBy) as Promise<{ entities: Email[], totalPages: number }>)
         // return new Observable((observer) => observer.next(emails));
     }
 
@@ -103,6 +104,14 @@ export class EmailService {
 
     save(email: Email): Observable<Email> {
         const method = (email._id) ? 'put' : 'post'
+        console.log('SERVICE:', method, 'email:', email)
+        if (!email._id) email = {
+            ...email,
+            from: this.loggedinUser.email,
+            name: this.loggedinUser.fullname,
+            isRead: true,
+            labels: [],
+        }
         const prmSavedEmail = storageService[method](ENTITY, email)
         // console.log('EmailService: Saving Email ===> effect');
         return from(prmSavedEmail) as Observable<Email>
