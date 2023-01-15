@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Actions, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { Observable, pluck, Subscription, take } from 'rxjs';
-import { Email } from 'src/app/models/email';
-import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions';
-import { State } from 'src/app/store/store';
+import { Component } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import { Actions, ofType } from '@ngrx/effects'
+import { Store } from '@ngrx/store'
+import { Observable, pluck, Subscription, take } from 'rxjs'
+import { Email } from 'src/app/models/email'
+import { FilterBy } from 'src/app/models/filterBy'
+import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, LoadEmails, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions'
+import { State } from 'src/app/store/store'
 
 @Component({
   selector: 'email-compose',
@@ -21,13 +22,14 @@ export class EmailComposeComponent {
     private router: Router,
     private route: ActivatedRoute) {
     this.email$ = this.store.select('emailState').pipe(pluck('email'))
+    this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'))
 
   }
 
-  @Input() id!: string
   email: Email = { to: '', subject: '', body: '' }
   subscription: Subscription | null = null;
   email$: Observable<Email | null>
+  filterBy$: Observable<FilterBy>
   composeForm!: FormGroup
   isMini = false
   isFull = false
@@ -36,39 +38,31 @@ export class EmailComposeComponent {
 
   ngOnInit() {
     this.buildForm()
-     this.route.queryParams.subscribe(({compose})=>{
-      // console.log('PARAMS!',compose)
-      // if (compose!=='new')
-      // this.store.dispatch(new LoadEmail(this.id))
-     })
-    if (this.id !== 'new') {
-      this.store.dispatch(new LoadEmail(this.id))
-    }
-    this.actions$.pipe(ofType(LOADED_EMAIL), take(1)).subscribe(({ email }: any) => {
+    this.route.queryParams.subscribe(({ compose }) => {
+      if (this.email._id !== compose) {
+        if (compose === 'new') {
+          this.email = { to: '', subject: '', body: '' }
+          this.title = 'New Message'
+          this.buildForm()
+        }
+        else this.store.dispatch(new LoadEmail(compose))
+      }
+    })
+    this.actions$.pipe(ofType(LOADED_EMAIL)).subscribe(({ email }: any) => {
       this.email = JSON.parse(JSON.stringify(email))
-      if (email.subject) this.title = email.subject
+      this.title = email.subject || 'New Message'
       this.buildForm()
     })
-    // this.subscription = this.email$.subscribe(email => {
-    //   console.log('EMAIL$$$$:', email)
-    //   this.email = (email && this.id !== 'new') ?
-    //     JSON.parse(JSON.stringify(email))
-    //     : { to: '', subject: '', body: '' }
-    //   this.composeForm = this.fb.group({
-    //     to: [this.email.to, [Validators.required], []],
-    //     subject: [this.email.subject, [Validators.required], []],
-    //     body: [this.email.body, [Validators.required], []]
-    //   })
-    // })
   }
+
   buildForm() {
     this.composeForm = this.fb.group({
       to: [this.email.to, [Validators.required], []],
       subject: [this.email.subject, [Validators.required], []],
       body: [this.email.body, [Validators.required], []]
     })
-
   }
+
   autoDrafts() {
     if (this.draftInterval) return
     this.draftInterval = window.setInterval(() => this.save(false, false), 10000)
@@ -77,6 +71,7 @@ export class EmailComposeComponent {
   close() {
     this.updateUrl()
   }
+
   updateUrl(id?: string) {
     this.router.navigate(
       [],
@@ -87,16 +82,15 @@ export class EmailComposeComponent {
   }
 
   save(isSend = true, isClose = true) {
-    const controls = Object.values(this.composeForm.controls)
-    if (isSend && controls.some(v => v.status === 'INVALID'))
+    if (isSend && Object.values(this.composeForm.controls).some(v => v.status === 'INVALID'))
       return
     if (!isSend
       && this.email.to === this.composeForm.value.to
       && this.email.subject === this.composeForm.value.subject
       && this.email.body === this.composeForm.value.body)
       return isClose ? this.close() : null
-    this.title = 'Draft saving...'
 
+    this.title = 'Draft saving...'
     this.store.dispatch(new SaveEmail(
       {
         ...this.email,
@@ -106,21 +100,35 @@ export class EmailComposeComponent {
     ))
     if (!this.email._id) {
       this.actions$.pipe(ofType(ADDED_EMAIL)).subscribe(({ email }: any) => {
-        this.email = { ...email, ...this.composeForm.value }
-        this.updateUrl(email._id)
-        this.title = 'Draft saved'
-        setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        if (isSend) {
+          this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+            this.store.dispatch(new LoadEmails({ ...filterBy }))
+          })
+        }
+        else {
+          this.email = { ...email, ...this.composeForm.value }
+          this.updateUrl(email._id)
+          this.title = 'Draft saved'
+          setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        }
       })
     }
     else {
+
       this.actions$.pipe(ofType(UPDATED_EMAIL)).subscribe(({ email }: any) => {
-        this.email = { ...email, ...this.composeForm.value }
-        setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        if (isSend) {
+          this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+            this.store.dispatch(new LoadEmails({ ...filterBy }))
+          })
+        }
+        else {
+          this.email = { ...email, ...this.composeForm.value }
+          setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        }
       })
     }
     if (isClose) this.close()
   }
-
 
   ngOnDestroy() {
     this.subscription?.unsubscribe()

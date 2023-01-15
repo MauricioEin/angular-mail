@@ -18,17 +18,12 @@
 
         <footer class="flex space-between">
             <div>
+                <button [disabled]="composeForm.invalid" class="btn pill send-btn"  (click)="save()">Send</button>
                 <span class="btn pill send-btn" title="Send" (click)="save()">Send</span> <span class="btn blocked"
                     title="More send options">🔽</span>
-                <span class="btn blocked" title="Formatting options">A</span>
                 <span class="btn blocked" title="Attach files">📎</span>
-                <span class="btn blocked" title="Insert link">🔗</span>
                 <span class="btn blocked" title="Insert emoji">🙂</span>
-                <span class="btn blocked" title="Insert files using Drive">DRIVE</span>
-                <span class="btn blocked" title="Insert photo">🖼</span>
-                <span class="btn blocked" title="Toggle confidential mode">🔒</span>
-                <span class="btn blocked" title="Insert signature">🖋</span>
-                <span class="btn blocked" title="More options">more</span>
+                <!-- <span class="btn blocked" title="Insert files using Drive">DRIVE</span> -->
             </div>
             <span class="btn" (click)="close()" title="Discard draft">🗑</span>
         </footer>

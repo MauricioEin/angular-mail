@@ -12,6 +12,13 @@ export class EmailPreviewComponent {
   @Input() tab!: string;
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
   @Output() toggleTab = new EventEmitter<Email>()
+  link!: string
+  params!: {}
+
+  ngOnInit() {
+    this.link = this.tab === 'drafts' ? `/email/${this.tab}` : `/email/${this.tab}/${this.email!._id}`
+    if (this.tab === 'drafts') this.params = { compose: this.email!._id }
+  }
 
   onToggleCheckbox(ev: Event) {
     const target = ev.target as HTMLInputElement

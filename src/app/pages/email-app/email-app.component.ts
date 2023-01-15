@@ -22,7 +22,6 @@ export class EmailAppComponent implements OnInit {
   error$: Observable<string>
   addingNew = false
   isCompose = false
-  editingId = ''
 
 
   constructor(private store: Store<State>,
@@ -35,7 +34,7 @@ export class EmailAppComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(
       params => {
-        this.editingId = params['compose'] || ''
+        this.isCompose = !!params['compose']
       }
     )
 

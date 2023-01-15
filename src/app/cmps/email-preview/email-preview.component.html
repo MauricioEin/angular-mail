@@ -1,4 +1,4 @@
-<article routerLink="/email/{{tab}}/{{email!._id}}" class="email-preview " [class.unread]="!email!.isRead"
+<article [routerLink]="link" [queryParams]="params" class="email-preview" [class.unread]="!email!.isRead"
     [class.cheked]="">
 
     <span class="btn">

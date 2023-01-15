@@ -104,7 +104,7 @@ export class EmailService {
 
     save(email: Email): Observable<Email> {
         const method = (email._id) ? 'put' : 'post'
-        console.log('SERVICE:', method, 'email:', email)
+        // console.log('SERVICE:', method, 'email:', email)
         if (!email._id) email = {
             ...email,
             from: this.loggedinUser.email,
@@ -118,7 +118,7 @@ export class EmailService {
     }
 
     updateMany(emails: Email[]): Observable<Email[]> {
-        console.log('EmailService: updated Emails ===> effect');
+        // console.log('EmailService: updated Emails ===> effect');
         return from(storageService.putMany(ENTITY, emails) as Promise<Email[]>)
     }
 
