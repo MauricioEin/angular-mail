@@ -16,6 +16,13 @@
             <div class="icon-wrapper" (click)="onSetReadStat()">
                 <i class="fa-regular fa-envelope"></i>
             </div>
+            <div class="img-wrapper" (click)="onSetTab('starred')">
+                <img  src="../../../assets/icon-img/starred.png" alt="">
+            </div>
+            <div class="img-wrapper" (click)="onSetTab('important')">
+                <img  src="../../../assets/icon-img/important.png" alt="">
+            </div>
+
         </div>
 
         <!-- Paging section -->
@@ -34,7 +41,8 @@
     </header>
 
     <section class="grow">
-        <email-preview (toggleCheckbox)="toggleCheckbox($event)" *ngFor="let email of (emails$|async)" [email]="email"
+        <email-preview (toggleCheckbox)="toggleCheckbox($event)" (toggleTab)="toggleTab($event)"
+         *ngFor="let email of (emails$|async)" [email]="email"
             [tab]="tab"></email-preview>
 
     </section>

@@ -41,6 +41,20 @@
         i {
             color: #444;
         }
+
+    }
+    .img-wrapper{
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 3px;
+        img{
+            width: 18px;
+            height: 18px;
+        }
     }
 
     .icon-wrapper1 {

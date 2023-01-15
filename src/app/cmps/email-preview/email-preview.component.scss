@@ -7,6 +7,19 @@
     grid-template-columns: 25px 25px 25px 1fr 3fr  auto;
     gap: 5px;
     background-color: #f2f6fc;
+
+
+    .img-wrapper{
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 3px;
+        img{
+            width: 16px;
+        }
+    }
+
 }
 
 .email-preview .capitalized {
@@ -42,4 +55,7 @@
 .email-preview .btn {
     width: 30px;
     height: 30px;
+    display: flex;
+        justify-content: center;
+        align-items: center;
 }

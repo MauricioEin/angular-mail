@@ -1,14 +1,20 @@
-<article routerLink="/email/{{tab}}/{{email!._id}}" class="email-preview flex justify-between" [class.unread]="!email!.isRead"
+<article routerLink="/email/{{tab}}/{{email!._id}}" class="email-preview " [class.unread]="!email!.isRead"
     [class.cheked]="">
 
     <span class="btn">
-        <input (click)="$event.stopPropagation()" (change)="onToggleCheckbox($event)" class="checkbox" type="checkbox" title="Select">
+        <input (click)="$event.stopPropagation()" (change)="onToggleCheckbox($event)" class="checkbox" type="checkbox"
+            title="Select">
     </span>
-    <span class="btn">S</span>
-
-    <span class="btn">I</span>
+    <div class="img-wrapper" (click)="onToggleTab($event,'starred')">
+        <img *ngIf="!(email.tabs!.includes('starred'))" src="http://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_baseline_nv700_20dp.png" alt="">
+        <img *ngIf="(email.tabs!.includes('starred'))" src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png" alt="">
+    </div>
+    <div class="img-wrapper" (click)="onToggleTab($event,'important')">
+        <img *ngIf="!(email.tabs!.includes('important'))" src="https://www.gstatic.com/images/icons/material/system_gm/1x/label_important_outline_black_20dp.png" alt="">
+        <img *ngIf="(email.tabs!.includes('important'))" src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_important_fill_googyellow500_20dp.png" alt="">
+    </div>
+    
     <div class="capitalized">{{email!.name}}</div>
     <h4 class="flex align-center">{{email!.subject}}</h4>
-    <!-- <div>📎</div> -->
     <h5 class="flex align-center">{{email!.sentAt|date:'MMM dd'}}</h5>
 </article>

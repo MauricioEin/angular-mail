@@ -8,21 +8,27 @@ import { EmailListComponent } from 'src/app/pages/email-list/email-list.componen
   styleUrls: ['./email-preview.component.scss']
 })
 export class EmailPreviewComponent {
-  @Input() email!: Email ;
-  @Input() tab!: string ;
+  @Input() email!: Email;
+  @Input() tab!: string;
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
-  // constructor(private emailList: EmailListComponent) {
-  // }
+  @Output() toggleTab = new EventEmitter<Email>()
 
   onToggleCheckbox(ev: Event) {
-
     const target = ev.target as HTMLInputElement
     const payload: selectedEmail = { checked: target.checked, email: this.email }
     this.toggleCheckbox.emit(payload)
-
-
   }
 
+  onToggleTab(ev: Event, tab: string) {
+    ev.stopPropagation()
+    var copyEmail: Email = JSON.parse(JSON.stringify(this.email))
 
+    if (copyEmail.tabs?.includes(tab)) {
+      const idx = copyEmail.tabs.findIndex(t => t === tab)
+      copyEmail.tabs.splice(idx, 1)
+    } else copyEmail.tabs?.push(tab)
+
+    this.toggleTab.emit(copyEmail)
+  }
 
 }

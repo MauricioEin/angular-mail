@@ -53,15 +53,24 @@ export class EmailListComponent {
     }
   }
 
+  toggleTab(updated: Email): void {
+    this.store.dispatch(new UpdateEmails([updated]))
+    this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
+
+      this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+        this.store.dispatch(new LoadEmails({ ...filterBy }))
+      })
+    })
+  }
+
   onRemoveEmails() {
     console.log('emailList: dispatching remove');
     const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
-    //  when we wanna remove from collection
+    //  when remove from collection
     if (this.tab === 'trash' || this.tab === 'spam') {
       this.store.dispatch(new RemoveEmails(emails))
     }
-    // when we wanna change all to trash tab
-    // ['inbox','starred']
+    // when change all to trash tab
     else {
       emails.forEach(email => {
         let newTabs: string[] = email.tabs!.filter((tab, idx) => {
@@ -70,12 +79,12 @@ export class EmailListComponent {
         newTabs.push('trash')
 
         email.tabs = newTabs
-    
+
       })
 
       this.store.dispatch(new UpdateEmails(emails))
       this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
-        
+
         this.filterBy$.pipe(take(1)).subscribe(filterBy => {
           this.store.dispatch(new LoadEmails({ ...filterBy }))
         })
@@ -100,10 +109,33 @@ export class EmailListComponent {
     } else {
       emails.forEach(e => e.isRead = true)
     }
-    this.store.dispatch(new UpdateEmails(emails))
-    this.selectedEmails = []
 
+    this.store.dispatch(new UpdateEmails(emails))
+    this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
+      this.selectedEmails = []
+    })
   }
+
+  onSetTab(tab: string) {
+    const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
+    // when some email is already with the selected tab
+    if (emails.some(e => e.tabs?.includes(tab))) {
+      emails.forEach(e => {
+        const idx: number = e.tabs!.findIndex(t => t === tab)
+        if (idx !== -1) e.tabs!.splice(idx, 1)
+      })
+
+    } else {
+      emails.forEach(e => e.tabs?.push(tab))
+    }
+
+    this.store.dispatch(new UpdateEmails(emails))
+    this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
+      this.selectedEmails = []
+    })
+  }
+
+
 
 
 }

@@ -47,7 +47,7 @@ export class EmailService {
     private createEmails(): Email[] {
 
         let emails = []
-        for (var i = 0; i < 40; i++) {
+        for (var i = 0; i < 8; i++) {
             emails.push(this._createEmail())
         }
         return emails
@@ -57,7 +57,7 @@ export class EmailService {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: Math.random() > .5 ? ['important'] : ['spam', 'starred'],
+            tabs: Math.random() > .5 ? ['important','inbox'] : ['inbox'],
             name: isIncoming ? name : this.loggedinUser.fullname,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
