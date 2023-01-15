@@ -20,17 +20,26 @@
         <div>
             <!-- @click="isAddLabel=true" class="labels"> -->
             <header class="label-header flex space-between align-center">
-                <h4>Labels <button (click)="isLabelEdit=true">+</button></h4>
+                <h4>Labels </h4>
+                <button (click)="isLabelEdit=true">+</button>
                 <!-- <img  style="width:20px; height:20px" :src="getMailSvg('addLabel')" alt="" /> -->
             </header>
         </div>
 
-        <label-edit *ngIf="isLabelEdit" (close)="isLabelEdit=false"></label-edit>
 
-        <!-- <div @click="navToLabel(label)" v-if="labels" v-for="label in labels" :key="label">
-        <img style="width:20px; height:20px" :src="getMailSvg('folderLabel')" />
-        <span class="f-text">{{label}}</span>
-        </div> -->
+        <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" class="flex space-between">
+            <span class="flex align-center">
+                <img style="width:20px; height:20px" src="../../../assets/icon-img/label.png">
+                <span class="f-text">{{label.name}}</span>
+            </span>
+            <span>
+                <img style="width:20px; height:20px" src="../../../assets/icon-img/compose.png">
+                <img style="width:20px; height:20px" src="../../../assets/icon-img/trash.png"
+                    (click)="$event.preventDefault();removeLabel.emit(label._id)">
+            </span>
 
+        </div>
     </section>
+    <label-edit *ngIf="isLabelEdit" (close)="isLabelEdit=false"
+        (save)="saveLabel.emit($event);isLabelEdit=false"></label-edit>
 </section>

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, pluck, Subscription, take } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
-import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { LoadEmails, RemoveEmails, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
 import { Actions, ofType } from '@ngrx/effects';
+import { Label } from 'src/app/models/label';
 
 
 @Component({
@@ -15,31 +16,43 @@ import { Actions, ofType } from '@ngrx/effects';
   styleUrls: ['./email-list.component.scss']
 })
 export class EmailListComponent {
-  emails$!: Observable<Email[]>;
-  filterBy$!: Observable<FilterBy>;
-  totalPages$!: Observable<number>;
+  emails$: Observable<Email[]>;
+  filterBy$: Observable<FilterBy>;
+  totalPages$: Observable<number>;
+  labels$: Observable<Label[]>
 
 
   selectedEmails: Array<Email> = []
   tab: string = ''
+  label: string = ''
   subscription!: Subscription
 
 
   constructor(private store: Store<State>,
     private actions$: Actions,
+    private router: Router,
     private route: ActivatedRoute) {
 
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
     this.totalPages$ = this.store.select('emailState').pipe(pluck('totalPages'));
+    this.labels$ = this.store.select('emailState').pipe(pluck('labels'));
   }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
-      if (this.tab === params['tab']) return
-      this.tab = params['tab']
-      this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 10 }))
-
+      console.log('params:', params)
+      if (this.tab === params['tab'] || this.label === params['labelName']) return
+      if (params['tab']) {
+        this.tab = params['tab']
+        this.label = ''
+        this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 10 }))
+      }
+      else if (params['labelName']) {
+        this.label = params['labelName']
+        this.tab = ''
+        this.loadByLabel()
+      }
     })
   }
 
@@ -72,7 +85,7 @@ export class EmailListComponent {
 
       this.store.dispatch(new UpdateEmails(emails))
       this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
-        
+
         this.filterBy$.pipe(take(1)).subscribe(filterBy => {
           this.store.dispatch(new LoadEmails({ ...filterBy }))
         })
@@ -101,6 +114,16 @@ export class EmailListComponent {
     this.selectedEmails = []
   }
 
+
+  loadByLabel(): void {
+    this.labels$.pipe(take(1)).subscribe(labels => {
+      const labelId = labels.find(label => label.name === this.label)?._id || ''
+      if (labelId)
+        this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: labelId, pageSize: 10 }))
+      else
+        this.router.navigateByUrl('/email/inbox')
+    })
+  }
 
 }
 

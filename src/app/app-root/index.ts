@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, Observable, pluck, tap, from } from 'rxjs';
 import { FilterBy } from '../models/filterBy';
-import { LoadEmails } from '../store/actions/email.actions';
+import { LoadEmails, LoadLabels } from '../store/actions/email.actions';
 import { State } from '../store/store';
 import { of, pipe } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -17,6 +17,13 @@ import { filter } from 'rxjs/operators';
  `,
 })
 export class AppComponent {
+
   title = 'Angular Email'
+  constructor(private store: Store<State>) { }
+
+  ngOnInit() {
+    this.store.dispatch(new LoadLabels())
+  }
+
 
 }

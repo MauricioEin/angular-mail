@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Label } from 'src/app/models/label';
 
 @Component({
   selector: 'label-edit',
@@ -7,12 +8,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class LabelEditComponent {
   @Output() close = new EventEmitter<void>() 
+  @Output() save= new EventEmitter<Label>()
 
   labelName = ''
-  isAddLabel = true
-  createLabel() {
-    // eventBus.emit('createLabel', this.labelName)
-    this.isAddLabel = false
+  saveLabel() {
+    console.log('saving')
+    this.save.emit({name:this.labelName})
   }
   // getMailSvg(iconName) {
   //   return svgService.getMailSvg(iconName)

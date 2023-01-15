@@ -1,6 +1,7 @@
-import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, UPDATED_EMAILS, LOADED_EMAIL, SET_ERROR, SET_FILTER, SetFilter } from '../actions/email.actions';
+import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, UPDATED_EMAILS, LOADED_EMAIL, SET_ERROR, SET_FILTER, LOADED_LABELS, UPDATED_LABEL, ADDED_LABEL, REMOVED_LABEL } from '../actions/email.actions';
 import { Email } from 'src/app/models/email';
 import { FilterBy } from 'src/app/models/filterBy';
+import { Label } from 'src/app/models/label';
 
 export interface EmailState {
   emails: Email[];
@@ -8,7 +9,8 @@ export interface EmailState {
   isLoading: boolean;
   error: string;
   filterBy: FilterBy,
-  totalPages: number
+  totalPages: number,
+  labels: Label[]
 }
 
 const initialState: EmailState = {
@@ -22,7 +24,8 @@ const initialState: EmailState = {
     page: 0,
     pageSize: 10
   },
-  totalPages: 0
+  totalPages: 0,
+  labels: []
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -39,6 +42,10 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     case SET_ERROR: {
       const { error } = action;
       return { ...state, error, isLoading: false };
+    }
+    case LOADED_LABELS: {
+      const { labels } = action;
+      return { ...state, labels, isLoading: false, error: '' };
     }
     case LOADED_EMAILS: {
       const { emails, filterBy, totalPages } = action;
@@ -82,9 +89,26 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
         const idx = emails.findIndex(e => e._id === updated._id)
         emails.splice(idx, 1, updated)
       })
-
       return { ...state, emails, email: null, error: '' };
     }
+    case ADDED_LABEL: {
+      const { label } = action;
+      const labels = [...state.labels, label]
+      return { ...state, labels, error: '' };
+    }
+    case UPDATED_LABEL: {
+      const { label } = action;
+      const labels = state.labels.map(currLabel => (currLabel._id === label.id) ? label : currLabel)
+      return { ...state, labels, error: '' };
+    }
+
+    case REMOVED_LABEL: {
+      const { labelId } = action;
+      const labels = state.labels.filter(currLabel => currLabel._id !== labelId)
+      return { ...state, labels, error: '' };
+    }
+
+
     default:
       return state;
   }

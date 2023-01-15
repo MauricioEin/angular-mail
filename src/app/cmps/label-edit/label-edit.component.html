@@ -1,4 +1,4 @@
-<section *ngIf="isAddLabel" class="add-label flex column space-even">
+<section class="add-label flex column space-even">
     <div class="flex space-between align-center">
         <h2>New label</h2>
         <img (click)="close.emit()" 
@@ -12,7 +12,7 @@
     </div>
     <div class="action-btns flex ">
         <button (click)="close.emit()">Cancel</button>
-        <button class="create-btn" >Create</button>
+        <button class="create-btn" (click)="saveLabel()">Create</button>
     </div>
   
 </section>

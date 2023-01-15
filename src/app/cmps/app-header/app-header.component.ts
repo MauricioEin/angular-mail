@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { lastValueFrom, Observable, pluck, take } from 'rxjs';
+import { Observable, pluck, take } from 'rxjs';
 import { FilterBy } from 'src/app/models/filterBy';
-import { LoadEmails, SetFilter } from 'src/app/store/actions/email.actions';
+import { LoadEmails } from 'src/app/store/actions/email.actions';
 import { State } from 'src/app/store/store';
 
 

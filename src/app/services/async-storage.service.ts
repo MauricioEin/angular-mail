@@ -1,5 +1,6 @@
 import { Email } from "../models/email"
 import { FilterBy } from "../models/filterBy"
+import { Label } from "../models/label"
 import { EMAIL_KEY } from "./email.service"
 
 export const storageService = {
@@ -10,7 +11,9 @@ export const storageService = {
     remove,
     removeMany,
     makeId,
-    putMany
+    putMany,
+    postLabel,
+    putLabel
 }
 
 interface Entity {
@@ -25,15 +28,14 @@ async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): 
 
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     let totalPages = 0
-    if (entityType === EMAIL_KEY) {
-        if (Object.keys(filterBy).length)
-            [entities, totalPages] = _filter(entities, filterBy)
-    }
+    if (entityType === EMAIL_KEY && Object.keys(filterBy).length)
+        [entities, totalPages] = _filter(entities, filterBy)
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, { entities, totalPages }))
     }
     return { entities, totalPages }
 }
+
 function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
     const startIdx = filterBy.page! * filterBy.pageSize!
     const endIdx = startIdx + filterBy.pageSize!
@@ -41,7 +43,9 @@ function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
     const txtRegex = new RegExp(filterBy.txt!, 'i')
     entities = entities.filter((entity: Email) => {
         return (
-            entity.tabs?.includes(filterBy.tab!) &&
+            (entity.tabs?.includes(filterBy.tab!)
+                || entity.labels?.includes(filterBy.tab!))
+            &&
             (txtRegex.test(entity.subject) ||
                 txtRegex.test(entity.from!) ||
                 txtRegex.test(entity.to))
@@ -123,3 +127,18 @@ function makeId(length = 5) {
     return txt
 }
 
+async function postLabel(entityType: string, newLabel: Label): Promise<Label> {
+    newLabel = { ...newLabel, _id: makeId() }
+    const { entities } = await query(entityType)
+    entities.push(newLabel)
+    _save(entityType, entities)
+    return newLabel
+}
+
+async function putLabel(entityType: string, updatedEntity: Label): Promise<Label> {
+    const { entities } = await query(entityType)
+    const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
+    entities[_idx] = { ...entities[_idx], ...updatedEntity }
+    _save(entityType, entities)
+    return updatedEntity
+}

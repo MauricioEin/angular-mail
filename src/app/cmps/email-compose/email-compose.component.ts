@@ -23,7 +23,6 @@ export class EmailComposeComponent {
     private route: ActivatedRoute) {
     this.email$ = this.store.select('emailState').pipe(pluck('email'))
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'))
-
   }
 
   email: Email = { to: '', subject: '', body: '' }

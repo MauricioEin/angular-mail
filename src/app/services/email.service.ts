@@ -11,6 +11,7 @@ import { UtilService } from './util.service';
 
 import { storageService } from './async-storage.service'
 import { FilterBy } from '../models/filterBy';
+import { Label } from '../models/label';
 
 export const EMAIL_KEY = 'email'
 export const LABEL_KEY = 'label'
@@ -56,11 +57,10 @@ export class EmailService {
     }
 
     remove(emailId: string): Observable<boolean> {
-
-        // throw new Error('Baba Ji')
         // console.log('EmailService: Removing Email ===> effect');
         return from(storageService.remove(EMAIL_KEY, emailId))
     }
+
     removeMany(emails: Email[]): Observable<Email[]> {
         // console.log('EmailService: Removing Emails ===> effect');
         return from(storageService.removeMany(EMAIL_KEY, emails) as Promise<Email[]>)
@@ -126,10 +126,21 @@ export class EmailService {
 
     // LABEL FUNCTIONS:
     getLabels() {
-        this.store.dispatch(new LoadingEmails()); // FIX TO LOADING LABELS!
-        // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(LABEL_KEY) as Promise<{ entities: Email[], totalPages: number }>)
+        return from(storageService.query(LABEL_KEY) as Promise<{ entities: Label[], totalPages: number }>)
         // return new Observable((observer) => observer.next(emails));
     }
+
+    saveLabel(label: Label): Observable<Label> {
+        const method = (label._id) ? 'putLabel' : 'postLabel'
+        const prmSavedLabel = storageService[method](LABEL_KEY, label)
+        // console.log('EmailService: Saving Email ===> effect');
+        return from(prmSavedLabel) as Observable<Label>
+    }
+
+    removeLabel(labelId: string): Observable<boolean> {
+        // console.log('EmailService: Removing Email ===> effect');
+        return from(storageService.remove(LABEL_KEY, labelId))
+    }
+
 }
 
