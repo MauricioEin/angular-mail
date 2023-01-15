@@ -36,7 +36,7 @@ export class EmailListComponent {
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
-      if (this.tab === params['tab']) return console.log('same')
+      if (this.tab === params['tab']) return
       this.tab = params['tab']
       this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 10 }))
 
@@ -54,7 +54,6 @@ export class EmailListComponent {
   }
 
   onRemoveEmails() {
-    console.log('emailList: dispatching remove');
     const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
     //  when we wanna remove from collection
     if (this.tab === 'trash' || this.tab === 'spam') {

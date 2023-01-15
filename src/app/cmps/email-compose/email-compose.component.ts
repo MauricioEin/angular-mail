@@ -37,7 +37,6 @@ export class EmailComposeComponent {
     this.buildForm()
     this.route.queryParams.subscribe(({ compose }) => {
       if (this.email._id !== compose) {
-        console.log('PARAMS CHANGED:',compose)
         if (compose === 'new') {
           this.email = { to: '', subject: '', body: '' }
           this.title = 'New Message'
@@ -47,7 +46,6 @@ export class EmailComposeComponent {
       }
     })
     this.actions$.pipe(ofType(LOADED_EMAIL)).subscribe(({ email }: any) => {
-      console.log('new mail:',email)
       this.email = JSON.parse(JSON.stringify(email))
       this.title = email.subject || 'New Message'
       this.buildForm()
