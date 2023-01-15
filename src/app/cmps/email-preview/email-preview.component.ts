@@ -8,21 +8,21 @@ import { EmailListComponent } from 'src/app/pages/email-list/email-list.componen
   styleUrls: ['./email-preview.component.scss']
 })
 export class EmailPreviewComponent {
-  @Input() email!: Email ;
-  @Input() tab!: string ;
+  @Input() email!: Email;
+  @Input() tab!: string;
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
-  // constructor(private emailList: EmailListComponent) {
-  // }
+  link!: string
+  params!: {}
+
 
   onToggleCheckbox(ev: Event) {
-
     const target = ev.target as HTMLInputElement
     const payload: selectedEmail = { checked: target.checked, email: this.email }
     this.toggleCheckbox.emit(payload)
-
-
   }
-
-
+  ngOnInit() {
+    this.link = this.tab === 'drafts' ? `/email/${this.tab}` : `/email/${this.tab}/${this.email!._id}`
+    if (this.tab === 'drafts') this.params = { compose: this.email!._id }
+  }
 
 }

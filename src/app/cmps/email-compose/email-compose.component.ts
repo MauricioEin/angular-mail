@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Actions, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { Observable, pluck, Subscription, take } from 'rxjs';
-import { Email } from 'src/app/models/email';
-import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions';
-import { State } from 'src/app/store/store';
+import { Component } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import { Actions, ofType } from '@ngrx/effects'
+import { Store } from '@ngrx/store'
+import { Observable, pluck, Subscription, take } from 'rxjs'
+import { Email } from 'src/app/models/email'
+import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions'
+import { State } from 'src/app/store/store'
 
 @Component({
   selector: 'email-compose',
@@ -37,6 +37,7 @@ export class EmailComposeComponent {
     this.buildForm()
     this.route.queryParams.subscribe(({ compose }) => {
       if (this.email._id !== compose) {
+        console.log('PARAMS CHANGED:',compose)
         if (compose === 'new') {
           this.email = { to: '', subject: '', body: '' }
           this.title = 'New Message'
@@ -45,9 +46,10 @@ export class EmailComposeComponent {
         else this.store.dispatch(new LoadEmail(compose))
       }
     })
-    this.actions$.pipe(ofType(LOADED_EMAIL), take(1)).subscribe(({ email }: any) => {
+    this.actions$.pipe(ofType(LOADED_EMAIL)).subscribe(({ email }: any) => {
+      console.log('new mail:',email)
       this.email = JSON.parse(JSON.stringify(email))
-      if (email.subject) this.title = email.subject
+      this.title = email.subject || 'New Message'
       this.buildForm()
     })
   }
