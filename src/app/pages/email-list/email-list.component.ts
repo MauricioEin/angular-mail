@@ -67,9 +67,7 @@ export class EmailListComponent {
           return !(tab === 'inbox' || tab === 'sent')
         })
         newTabs.push('trash')
-
         email.tabs = newTabs
-    
       })
 
       this.store.dispatch(new UpdateEmails(emails))
@@ -101,7 +99,6 @@ export class EmailListComponent {
     }
     this.store.dispatch(new UpdateEmails(emails))
     this.selectedEmails = []
-
   }
 
 

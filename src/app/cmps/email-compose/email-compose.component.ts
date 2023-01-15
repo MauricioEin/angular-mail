@@ -5,7 +5,8 @@ import { Actions, ofType } from '@ngrx/effects'
 import { Store } from '@ngrx/store'
 import { Observable, pluck, Subscription, take } from 'rxjs'
 import { Email } from 'src/app/models/email'
-import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions'
+import { FilterBy } from 'src/app/models/filterBy'
+import { ADDED_EMAIL, LOADED_EMAIL, LoadEmail, LoadEmails, SaveEmail, UPDATED_EMAIL } from 'src/app/store/actions/email.actions'
 import { State } from 'src/app/store/store'
 
 @Component({
@@ -21,12 +22,14 @@ export class EmailComposeComponent {
     private router: Router,
     private route: ActivatedRoute) {
     this.email$ = this.store.select('emailState').pipe(pluck('email'))
+    this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'))
 
   }
 
   email: Email = { to: '', subject: '', body: '' }
   subscription: Subscription | null = null;
   email$: Observable<Email | null>
+  filterBy$: Observable<FilterBy>
   composeForm!: FormGroup
   isMini = false
   isFull = false
@@ -79,16 +82,15 @@ export class EmailComposeComponent {
   }
 
   save(isSend = true, isClose = true) {
-    const controls = Object.values(this.composeForm.controls)
-    if (isSend && controls.some(v => v.status === 'INVALID'))
+    if (isSend && Object.values(this.composeForm.controls).some(v => v.status === 'INVALID'))
       return
     if (!isSend
       && this.email.to === this.composeForm.value.to
       && this.email.subject === this.composeForm.value.subject
       && this.email.body === this.composeForm.value.body)
       return isClose ? this.close() : null
-    this.title = 'Draft saving...'
 
+    this.title = 'Draft saving...'
     this.store.dispatch(new SaveEmail(
       {
         ...this.email,
@@ -98,16 +100,31 @@ export class EmailComposeComponent {
     ))
     if (!this.email._id) {
       this.actions$.pipe(ofType(ADDED_EMAIL)).subscribe(({ email }: any) => {
-        this.email = { ...email, ...this.composeForm.value }
-        this.updateUrl(email._id)
-        this.title = 'Draft saved'
-        setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        if (isSend) {
+          this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+            this.store.dispatch(new LoadEmails({ ...filterBy }))
+          })
+        }
+        else {
+          this.email = { ...email, ...this.composeForm.value }
+          this.updateUrl(email._id)
+          this.title = 'Draft saved'
+          setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        }
       })
     }
     else {
+
       this.actions$.pipe(ofType(UPDATED_EMAIL)).subscribe(({ email }: any) => {
-        this.email = { ...email, ...this.composeForm.value }
-        setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        if (isSend) {
+          this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+            this.store.dispatch(new LoadEmails({ ...filterBy }))
+          })
+        }
+        else {
+          this.email = { ...email, ...this.composeForm.value }
+          setTimeout(() => this.title = email.subject || 'New Message', 1500)
+        }
       })
     }
     if (isClose) this.close()
