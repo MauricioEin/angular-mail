@@ -1,5 +1,6 @@
 import { Email } from "../models/email"
 import { FilterBy } from "../models/filterBy"
+import { EMAIL_KEY } from "./email.service"
 
 export const storageService = {
     query,
@@ -21,11 +22,13 @@ interface Res {
 }
 
 async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): Promise<{ entities: Entity[], totalPages: number }> {
+
     let entities = JSON.parse(localStorage.getItem(entityType) || 'null') || []
     let totalPages = 0
-    if (Object.keys(filterBy).length)
-        [entities, totalPages] = _filter(entities, filterBy)
-
+    if (entityType === EMAIL_KEY) {
+        if (Object.keys(filterBy).length)
+            [entities, totalPages] = _filter(entities, filterBy)
+    }
     if (delay) {
         return new Promise((resolve) => setTimeout(resolve, delay, { entities, totalPages }))
     }

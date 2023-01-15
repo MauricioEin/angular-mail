@@ -37,7 +37,6 @@ export class EmailAppComponent implements OnInit {
         this.isCompose = !!params['compose']
       }
     )
-
   }
 
   openCompose() {
@@ -47,7 +46,6 @@ export class EmailAppComponent implements OnInit {
         relativeTo: this.route,
         queryParams: { compose: 'new' },
       })
-
   }
   removeEmail(emailId: string) {
     this.store.dispatch(new RemoveEmail(emailId));

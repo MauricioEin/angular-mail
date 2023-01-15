@@ -7,16 +7,17 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class FolderListComponent {
   @Output() compose = new EventEmitter<null>()
-  folders=[
-    {name:'inbox'},
-    {name:'starred'},
-    {name:'important'},
-    {name:'sent'},
-    {name:'drafts'},
-    {name:'spam'},
-    {name:'trash'},
+  folders = [
+    { name: 'inbox' },
+    { name: 'starred' },
+    { name: 'important' },
+    { name: 'sent' },
+    { name: 'drafts' },
+    { name: 'spam' },
+    { name: 'trash' },
   ]
+  isLabelEdit = false
 
-  setTab=(folder:string)=>{console.log('setting tab:', folder)}
+  setTab = (folder: string) => { console.log('setting tab:', folder) }
 
 }

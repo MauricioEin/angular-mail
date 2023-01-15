@@ -30,6 +30,7 @@ import { SearchInputComponent } from './cmps/search-input/search-input.component
 import { HeaderSvgComponent } from './svg-cmps/header-svg/header-svg.component';
 import { FolderListSvgComponent } from './svg-cmps/folder-list-svg/folder-list-svg.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { LabelEditComponent } from './cmps/label-edit/label-edit.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
     HeaderSvgComponent,
     FolderListSvgComponent,
     CapitalizePipe,
+    LabelEditComponent,
    
   ],
   imports: [
