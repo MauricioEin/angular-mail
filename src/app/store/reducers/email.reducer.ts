@@ -29,44 +29,36 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
   switch (action.type) {
     case SET_LOADING: {
       const { isLoading } = action;
-      // console.log(`Reducer: Setting isLoading to ${isLoading}`);
       return { ...state, isLoading, error: '' };
     }
     case SET_FILTER: {
       const { filterBy } = action;
-      console.log(`Reducer: Setting filter`);
       return { ...state, filterBy: { ...state.filterBy, ...filterBy }, error: '' };
     }
 
     case SET_ERROR: {
       const { error } = action;
-      console.log(`Reducer: Setting email error`, error);
       return { ...state, error, isLoading: false };
     }
     case LOADED_EMAILS: {
       const { emails, filterBy, totalPages } = action;
-      // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
       return { ...state, emails, filterBy, totalPages, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
       const { email } = action;
-      console.log(`Reducer: Setting loaded email ${email._id}`);
       return { ...state, email, error: '' };
-
     }
     case REMOVED_EMAIL: {
       const { emailId } = action;
-      console.log('Reducer: Removing email:', emailId);
       const emails = state.emails.filter(email => email._id !== emailId)
       return { ...state, emails, error: '' };
     }
     case REMOVED_EMAILS: {
       const { removedEmails } = action;
-      console.log('Reducer finish move of removing many')
       const emails: Email[] = JSON.parse(JSON.stringify(state.emails))
-      removedEmails.forEach((removed:Email)=>{
-        const idx=emails.findIndex(e=>e._id===removed._id)
-        emails.splice(idx,1)
+      removedEmails.forEach((removed: Email) => {
+        const idx = emails.findIndex(e => e._id === removed._id)
+        emails.splice(idx, 1)
       })
 
       return { ...state, emails, error: '' };
@@ -74,19 +66,16 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
 
     case ADDED_EMAIL: {
       const { email } = action;
-      console.log('Reducer: Adding email:', email);
       const emails = [...state.emails, email]
       return { ...state, emails, error: '' };
     }
     case UPDATED_EMAIL: {
       const { email } = action;
-      console.log('Reducer: Updating email:', email);
       const emails = state.emails.map(currEmail => (currEmail._id === email.id) ? email : currEmail)
       return { ...state, emails, email: null, error: '' };
     }
     case UPDATED_EMAILS: {
       const { updatedEmails } = action;
-      console.log('Reducer: Updating emails:', updatedEmails);
       const emails: Email[] = JSON.parse(JSON.stringify(state.emails))
 
       updatedEmails.forEach((updated: Email) => {

@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, Subscription, take } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
-import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { LoadEmails, RemoveEmail, RemoveEmails, SetFilter, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
+import { Actions, ofType } from '@ngrx/effects';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class EmailListComponent {
 
 
   constructor(private store: Store<State>,
+    private actions$: Actions,
     private route: ActivatedRoute) {
 
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
@@ -62,20 +64,21 @@ export class EmailListComponent {
     // ['inbox','starred']
     else {
       emails.forEach(email => {
-        let newTabs: string[] = email.tabs.filter((tab, idx) => {
-          // if (!(tab === 'inbox' || tab === 'sent'))  return tab
+        let newTabs: string[] = email.tabs!.filter((tab, idx) => {
           return !(tab === 'inbox' || tab === 'sent')
         })
         newTabs.push('trash')
 
         email.tabs = newTabs
-        console.log(email.tabs)
+    
       })
 
       this.store.dispatch(new UpdateEmails(emails))
-      this.filterBy$.pipe(take(1)).subscribe(filterBy => {
-        // debugger
-        this.store.dispatch(new LoadEmails({ ...filterBy }))
+      this.actions$.pipe(ofType(UPDATED_EMAILS)).subscribe(() => {
+        
+        this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+          this.store.dispatch(new LoadEmails({ ...filterBy }))
+        })
       })
     }
 
