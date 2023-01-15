@@ -9,7 +9,7 @@ export interface Email{
   sentAt:number,
   from:string,
   to:string,
-  labels:Array<string>
+  labels:string[]
 }
 
 

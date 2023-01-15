@@ -67,9 +67,9 @@ export class AppEffects {
       switchMap((action) =>
         this.emailService.removeMany(action['emails']).pipe(
           tap(() => console.log('Effects: emails removed by service ===> Reducer')),
-          map((emails) => ({
+          map((removedEmails) => ({
             type: REMOVED_EMAILS,
-            emails
+            removedEmails
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)

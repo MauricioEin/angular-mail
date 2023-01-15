@@ -45,8 +45,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case LOADED_EMAILS: {
       const { emails, filterBy, totalPages } = action;
-      
-      // console.log(`Reducer: Setting loaded emails (${emails.length}) emails`);
+   
       return { ...state, emails, filterBy, totalPages, isLoading: false, error: '' };
     }
     case LOADED_EMAIL: {
@@ -62,8 +61,14 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
       return { ...state, emails, error: '' };
     }
     case REMOVED_EMAILS: {
-      const { emails } = action;
+      const { removedEmails } = action;
       console.log('Reducer finish move of removing many')
+      const emails: Email[] = JSON.parse(JSON.stringify(state.emails))
+      removedEmails.forEach((removed:Email)=>{
+        const idx=emails.findIndex(e=>e._id===removed._id)
+        emails.splice(idx,1)
+      })
+
       return { ...state, emails, error: '' };
     }
 

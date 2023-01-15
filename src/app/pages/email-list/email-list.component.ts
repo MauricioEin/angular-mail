@@ -16,6 +16,7 @@ import { FilterBy } from 'src/app/models/filterBy';
 export class EmailListComponent {
   emails$!: Observable<Email[]>;
   filterBy$!: Observable<FilterBy>;
+  totalPages$!: Observable<number>;
 
 
   selectedEmails: Array<Email> = []
@@ -28,6 +29,7 @@ export class EmailListComponent {
 
     this.emails$ = this.store.select('emailState').pipe(pluck('emails'));
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
+    this.totalPages$ = this.store.select('emailState').pipe(pluck('totalPages'));
   }
 
   ngOnInit() {
@@ -51,9 +53,40 @@ export class EmailListComponent {
 
   onRemoveEmails() {
     console.log('emailList: dispatching remove');
-    // todo ask about async await for the dispatch
-    this.store.dispatch(new RemoveEmails(this.selectedEmails))
+    const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
+    //  when we wanna remove from collection
+    if (this.tab === 'trash' || this.tab === 'spam') {
+      this.store.dispatch(new RemoveEmails(emails))
+    }
+    // when we wanna change all to trash tab
+    // ['inbox','starred']
+    else {
+      emails.forEach(email => {
+        let newTabs: string[] = email.tabs.filter((tab, idx) => {
+          // if (!(tab === 'inbox' || tab === 'sent'))  return tab
+          return !(tab === 'inbox' || tab === 'sent')
+        })
+        newTabs.push('trash')
+
+        email.tabs = newTabs
+        console.log(email.tabs)
+      })
+
+      this.store.dispatch(new UpdateEmails(emails))
+      this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+        // debugger
+        this.store.dispatch(new LoadEmails({ ...filterBy }))
+      })
+    }
+
     this.selectedEmails = []
+  }
+
+  setPage(diff: number) {
+    this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+      const { page } = filterBy
+      this.store.dispatch(new LoadEmails({ ...filterBy, page: page! + diff }))
+    })
   }
 
   onSetReadStat() {
@@ -64,18 +97,12 @@ export class EmailListComponent {
     } else {
       emails.forEach(e => e.isRead = true)
     }
-
     this.store.dispatch(new UpdateEmails(emails))
     this.selectedEmails = []
 
   }
 
-  setPage(diff: number) {
-    this.filterBy$.pipe(take(1)).subscribe(filterBy => {
-      const { page } = filterBy
 
-    })
-  }
 }
 
 
