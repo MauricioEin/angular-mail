@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
@@ -24,7 +24,6 @@ export class EmailComposeComponent {
 
   }
 
-  @Input() id!: string
   email: Email = { to: '', subject: '', body: '' }
   subscription: Subscription | null = null;
   email$: Observable<Email | null>
@@ -36,39 +35,31 @@ export class EmailComposeComponent {
 
   ngOnInit() {
     this.buildForm()
-     this.route.queryParams.subscribe(({compose})=>{
-      // console.log('PARAMS!',compose)
-      // if (compose!=='new')
-      // this.store.dispatch(new LoadEmail(this.id))
-     })
-    if (this.id !== 'new') {
-      this.store.dispatch(new LoadEmail(this.id))
-    }
+    this.route.queryParams.subscribe(({ compose }) => {
+      if (this.email._id !== compose) {
+        if (compose === 'new') {
+          this.email = { to: '', subject: '', body: '' }
+          this.title = 'New Message'
+          this.buildForm()
+        }
+        else this.store.dispatch(new LoadEmail(compose))
+      }
+    })
     this.actions$.pipe(ofType(LOADED_EMAIL), take(1)).subscribe(({ email }: any) => {
       this.email = JSON.parse(JSON.stringify(email))
       if (email.subject) this.title = email.subject
       this.buildForm()
     })
-    // this.subscription = this.email$.subscribe(email => {
-    //   console.log('EMAIL$$$$:', email)
-    //   this.email = (email && this.id !== 'new') ?
-    //     JSON.parse(JSON.stringify(email))
-    //     : { to: '', subject: '', body: '' }
-    //   this.composeForm = this.fb.group({
-    //     to: [this.email.to, [Validators.required], []],
-    //     subject: [this.email.subject, [Validators.required], []],
-    //     body: [this.email.body, [Validators.required], []]
-    //   })
-    // })
   }
+
   buildForm() {
     this.composeForm = this.fb.group({
       to: [this.email.to, [Validators.required], []],
       subject: [this.email.subject, [Validators.required], []],
       body: [this.email.body, [Validators.required], []]
     })
-
   }
+
   autoDrafts() {
     if (this.draftInterval) return
     this.draftInterval = window.setInterval(() => this.save(false, false), 10000)
@@ -77,6 +68,7 @@ export class EmailComposeComponent {
   close() {
     this.updateUrl()
   }
+
   updateUrl(id?: string) {
     this.router.navigate(
       [],
@@ -120,7 +112,6 @@ export class EmailComposeComponent {
     }
     if (isClose) this.close()
   }
-
 
   ngOnDestroy() {
     this.subscription?.unsubscribe()

@@ -6,5 +6,5 @@
             <router-outlet></router-outlet>
         </section>
     </main>
-    <email-compose *ngIf="editingId" [id]="editingId"></email-compose>
+    <email-compose *ngIf="isCompose"></email-compose>
 </section>
