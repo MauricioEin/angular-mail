@@ -32,9 +32,10 @@
 
 }
 
-.email-compose .body-input {
+.email-compose textarea {
     height: 280px;
     overflow: auto;
+    resize: none;
 }
 
 .email-compose .btn {

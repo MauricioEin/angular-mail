@@ -34,31 +34,31 @@ async function query(entityType: string, filterBy: FilterBy = {}, delay = 300): 
 }
 
 async function get(entityType: string, entityId: string): Promise<Entity> {
-    const {entities} = await query(entityType)
+    const { entities } = await query(entityType)
     const entity = entities.find(entity => entity._id === entityId)
     if (!entity) throw new Error(`Cannot get, Item ${entityId} of type: ${entityType} does not exist`)
     return entity;
 }
 
 async function post(entityType: string, newEntity: Email): Promise<Email> {
-    newEntity = { ...newEntity, _id: makeId(), sentAt:Date.now()}
-    console.log('StoSer newEntity:',newEntity)
-    const {entities} = await query(entityType)
+    newEntity = { ...newEntity, _id: makeId(), sentAt: Date.now() }
+    console.log('StoSer newEntity:', newEntity)
+    const { entities } = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
     return newEntity
 }
 
 async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
-    const {entities} = await query(entityType)
+    const { entities } = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
-    entities[_idx] = updatedEntity
+    entities[_idx] = { ...entities[_idx], ...updatedEntity }
     _save(entityType, entities)
     return updatedEntity
 }
 
 async function putMany(entityType: string, updatedEntities: Email[]): Promise<Email[]> {
-    const {entities} = await query(entityType)
+    const { entities } = await query(entityType)
     const updatedEmails: Email[] = []
     updatedEntities.forEach(updated => {
         const _idx = entities.findIndex(e => e._id === updated._id)
@@ -71,7 +71,7 @@ async function putMany(entityType: string, updatedEntities: Email[]): Promise<Em
 }
 
 async function remove(entityType: string, entityId: string): Promise<boolean> {
-    const {entities} = await query(entityType)
+    const { entities } = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === entityId)
     if (_idx !== -1) entities.splice(_idx, 1)
     else throw new Error(`Cannot remove, item ${entityId} of type: ${entityType} does not exist`)
@@ -79,7 +79,7 @@ async function remove(entityType: string, entityId: string): Promise<boolean> {
     return true;
 }
 async function removeMany(entityType: string, removedEntities: Email[]): Promise<Email[]> {
-    var {entities} = await query(entityType)
+    var { entities } = await query(entityType)
     // entities = JSON.parse(JSON.stringify(entities))
     removedEntities.forEach(removed => {
         const _idx = entities.findIndex(e => e._id === removed._id)
@@ -119,8 +119,6 @@ function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
                 txtRegex.test(entity.to))
         )
     })
-    console.log('entities:',entities)
-    console.log('pageSize:',filterBy.pageSize)
     const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
     return [entities.slice(startIdx, endIdx), totalPages]
 

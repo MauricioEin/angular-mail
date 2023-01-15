@@ -9,6 +9,7 @@ import { Email } from '../../models/email';
 // import { Email } from 'src/app/models/email';
 import { LoadEmails, RemoveEmail, LoadEmail } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'email-app',
@@ -21,14 +22,33 @@ export class EmailAppComponent implements OnInit {
   error$: Observable<string>
   addingNew = false
   isCompose = false
+  editingId = ''
 
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<State>,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.isLoading$ = this.store.select('emailState').pipe(pluck('isLoading'));
     this.error$ = this.store.select('emailState').pipe(pluck('error'));
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(
+      params => {
+        this.editingId = params['compose'] || ''
+      }
+    )
+
+  }
+
+  openCompose() {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { compose: 'new' },
+      })
+
   }
   removeEmail(emailId: string) {
     this.store.dispatch(new RemoveEmail(emailId));

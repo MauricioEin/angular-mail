@@ -1,6 +1,6 @@
 <section class="email-compose fixed" [class.mini]="isMini" [class.full]="isFull">
     <header class="flex space-between">
-        <div>New Message</div>
+        <div>{{title}}</div>
 
         <div>
             <span class="btn blocked" title="Minimize" (click)="isMini=!isMini">-</span>
@@ -9,23 +9,17 @@
         </div>
     </header>
     <main *ngIf="!isMini">
-        <form class="flex column" #form [formGroup]="composeForm" (ngSubmit)="save()">
+        <form class="flex column" #form [formGroup]="composeForm" (ngSubmit)="save()" (input)="autoDrafts()">
             <input type="email" formControlName="to" placeholder="Recipients" />
             <input type="text" formControlName="subject" placeholder="Subject" />
-            <input class="body-input" type="text" formControlName="body" />
+            <textarea type="text" formControlName="body"></textarea>
             <button [disabled]="composeForm.invalid">Save</button>
-    
-<!-- 
-            <input [(ngModel)]="recipients" type="text" placeholder="Recipients">
-            <input [(ngModel)]="subject" type="text" placeholder="Subject">
-            <textarea [(ngModel)]="body">
-        </textarea> -->
         </form>
 
         <footer class="flex space-between">
             <div>
-                <span class="btn pill send-btn" title="Send" (click)="save()">Send</span> <span
-                    class="btn blocked" title="More send options">🔽</span>
+                <span class="btn pill send-btn" title="Send" (click)="save()">Send</span> <span class="btn blocked"
+                    title="More send options">🔽</span>
                 <span class="btn blocked" title="Formatting options">A</span>
                 <span class="btn blocked" title="Attach files">📎</span>
                 <span class="btn blocked" title="Insert link">🔗</span>
@@ -36,7 +30,7 @@
                 <span class="btn blocked" title="Insert signature">🖋</span>
                 <span class="btn blocked" title="More options">more</span>
             </div>
-            <span class="btn" (click)="close.emit()" title="Discard draft">🗑</span>
+            <span class="btn" (click)="close()" title="Discard draft">🗑</span>
         </footer>
     </main>
 </section>

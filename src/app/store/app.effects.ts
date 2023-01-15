@@ -20,7 +20,7 @@ export class AppEffects {
       tap(() => console.log('Effects: load emails ==> service')),
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
-          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer. FILTERBY:', action.filterBy)),
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer.')),
           map(({entities:emails, totalPages}) => ({
             type: LOADED_EMAILS,
             emails,
@@ -36,6 +36,29 @@ export class AppEffects {
           })
         )
       )
+    );
+  });
+
+  loadEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LOAD_EMAIL),
+      tap(() => console.log('Effects: load email ==> service')),
+      switchMap((action) =>
+        this.emailService.getById(action.emailId).pipe(
+          tap(() => console.log('Effects: Got email from service ===> Reducer')),
+          map((email) => ({
+            type: LOADED_EMAIL,
+            email
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      ),
     );
   });
 
@@ -111,10 +134,10 @@ export class AppEffects {
       ofType(SAVE_EMAIL),
       switchMap((action) =>
         this.emailService.save(action.email).pipe(
-          tap(() => console.log('Effects: Item saved by service, inform the ===> Reducer')),
-          map((savedItem) => ({
+          tap(() => console.log('Effects: Email saved by service, inform the ===> Reducer')),
+          map((savedEmail) => ({
             type: (action.email._id) ? UPDATED_EMAIL : ADDED_EMAIL,
-            email: savedItem,
+            email: savedEmail,
           })),
           catchError((error) => {
             console.log('Effect: Caught error ===> Reducer', error)
