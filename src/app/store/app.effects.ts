@@ -6,7 +6,7 @@ import { EmailService } from '../services/email.service';
 import {
   EmailAction, SET_ERROR, SAVE_EMAIL, ADDED_EMAIL, UPDATED_EMAIL, LOAD_EMAILS, LOADED_EMAILS,
   REMOVE_EMAIL, REMOVED_EMAIL, REMOVE_EMAILS, REMOVED_EMAILS, LOAD_EMAIL, LOADED_EMAIL, SET_FILTER,
-  UPDATE_EMAILS, UPDATED_EMAILS
+  UPDATE_EMAILS, UPDATED_EMAILS, LOAD_LABELS, LOADED_LABELS, ADDED_LABEL, UPDATED_LABEL, SAVE_LABEL, REMOVE_LABEL, REMOVED_LABEL
 } from './actions/email.actions'; // dont forger SET_ERROR after deleting emails imports
 import { Email } from '../models/email';
 
@@ -21,7 +21,7 @@ export class AppEffects {
       switchMap((action) =>
         this.emailService.query(action.filterBy).pipe(
           tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer.')),
-          map(({entities:emails, totalPages}) => ({
+          map(({ entities: emails, totalPages }) => ({
             type: LOADED_EMAILS,
             emails,
             filterBy: action.filterBy,
@@ -149,10 +149,76 @@ export class AppEffects {
 
         )
       )
-    );
+    )
   })
 
+  loadLabels$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LOAD_LABELS),
+      tap(() => console.log('Effects: load labels ==> service')),
+      switchMap((action) =>
+        this.emailService.getLabels().pipe(
+          tap(() => console.log('Effects: Got emails from service, send it to ===> Reducer.')),
+          map(({ entities: labels }) => ({
+            type: LOADED_LABELS,
+            labels,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      )
+    )
+  })
 
+  saveLabel$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SAVE_LABEL),
+      switchMap((action) =>
+        this.emailService.saveLabel(action.label).pipe(
+          tap(() => console.log('Effects: Label saved by service, inform the ===> Reducer')),
+          map((savedLabel) => ({
+            type: (action.label._id) ? UPDATED_LABEL : ADDED_LABEL,
+            label: savedLabel,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+
+        )
+      )
+    )
+  })
+
+  removeLabel$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(REMOVE_LABEL),
+      switchMap((action) =>
+        this.emailService.removeLabel(action.labelId).pipe(
+          tap(() => console.log('Effects: label removed by service ===> Reducer')),
+          map(() => ({
+            type: REMOVED_LABEL,
+            labelId: action.labelId,
+          })),
+          catchError((error) => {
+            console.log('Effect: Caught error ===> Reducer', error)
+            return of({
+              type: SET_ERROR,
+              error: error.toString(),
+            })
+          })
+        )
+      ),
+    );
+  })
 
   constructor(
     private actions$: Actions<EmailAction>,

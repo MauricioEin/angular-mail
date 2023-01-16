@@ -1,0 +1,18 @@
+<section class="add-label flex column space-even">
+    <div class="flex space-between align-center">
+        <h2>New label</h2>
+        <img (click)="close.emit()" 
+        [src]="" alt="" />
+        <!-- style="width:20px; height:20px"  -->
+    </div>
+
+    <div class="flex column">
+        <span>Please enter a new label name:</span>
+        <input type="text" [(ngModel)]="labelName" />
+    </div>
+    <div class="action-btns flex ">
+        <button (click)="close.emit()">Cancel</button>
+        <button class="create-btn" (click)="saveLabel()">Create</button>
+    </div>
+  
+</section>

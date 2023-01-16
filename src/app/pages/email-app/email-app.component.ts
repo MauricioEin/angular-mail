@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { pluck, take } from 'rxjs/operators';
 
 import { State } from '../../store/store';
 
 import { Email } from '../../models/email';
 // import { Email } from 'src/app/models/email';
-import { LoadEmails, RemoveEmail, LoadEmail } from 'src/app/store/actions/email.actions';
+import { RemoveEmail, LoadEmail, SaveLabel, RemoveLabel, REMOVED_LABEL, LoadLabels } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Label } from 'src/app/models/label';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'email-app',
@@ -18,6 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EmailAppComponent implements OnInit {
 
+  labels$: Observable<Label[]>
   isLoading$: Observable<boolean>
   error$: Observable<string>
   addingNew = false
@@ -25,10 +28,13 @@ export class EmailAppComponent implements OnInit {
 
 
   constructor(private store: Store<State>,
+    private actions$: Actions,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,) {
+    this.labels$ = this.store.select('emailState').pipe(pluck('labels'));
     this.isLoading$ = this.store.select('emailState').pipe(pluck('isLoading'));
     this.error$ = this.store.select('emailState').pipe(pluck('error'));
+
   }
 
   ngOnInit(): void {
@@ -37,7 +43,6 @@ export class EmailAppComponent implements OnInit {
         this.isCompose = !!params['compose']
       }
     )
-
   }
 
   openCompose() {
@@ -47,12 +52,17 @@ export class EmailAppComponent implements OnInit {
         relativeTo: this.route,
         queryParams: { compose: 'new' },
       })
-
   }
   removeEmail(emailId: string) {
     this.store.dispatch(new RemoveEmail(emailId));
   }
   editEmail(emailId: string) {
     this.store.dispatch(new LoadEmail(emailId));
+  }
+  saveLabel(label: Label) {
+    this.store.dispatch(new SaveLabel(label))
+  }
+  removeLabel(labelId: string) {
+    this.store.dispatch(new RemoveLabel(labelId))
   }
 }

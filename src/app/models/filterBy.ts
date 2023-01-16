@@ -5,4 +5,5 @@ export interface FilterBy {
   tab?: string
   page?: number
   pageSize?:number
+  label?:string
 }

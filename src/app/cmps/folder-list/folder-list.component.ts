@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Label } from 'src/app/models/label';
 
 @Component({
   selector: 'folder-list',
@@ -7,16 +8,19 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class FolderListComponent {
   @Output() compose = new EventEmitter<null>()
-  folders=[
-    {name:'inbox'},
-    {name:'starred'},
-    {name:'important'},
-    {name:'sent'},
-    {name:'drafts'},
-    {name:'spam'},
-    {name:'trash'},
+  @Output() saveLabel = new EventEmitter<Label>()
+  @Output() removeLabel = new EventEmitter<string>()
+  @Input() labels!: Label[] | null
+  folders = [
+    { name: 'inbox' },
+    { name: 'starred' },
+    { name: 'important' },
+    { name: 'sent' },
+    { name: 'drafts' },
+    { name: 'spam' },
+    { name: 'trash' },
   ]
+  isLabelEdit = false
 
-  setTab=(folder:string)=>{console.log('setting tab:', folder)}
-
+  setTab = (folder: string) => { console.log('setting tab:', folder) }
 }

@@ -11,13 +11,17 @@ import { UtilService } from './util.service';
 
 import { storageService } from './async-storage.service'
 import { FilterBy } from '../models/filterBy';
+import { Label } from '../models/label';
 
-const ENTITY = 'email'
+export const EMAIL_KEY = 'email'
+export const LABEL_KEY = 'label'
 
 @Injectable({
     providedIn: 'root',
 })
 export class EmailService {
+
+
     loggedinUser = {
         email: 'user@gmail.com',
         fullname: 'Best User'
@@ -27,24 +31,63 @@ export class EmailService {
         private http: HttpClient,
         private utilService: UtilService) {
 
-        // http.get('http://www.filltext.com/?rows=10&id={index}&name={username}')
-        // .subscribe(res => {
-        //   console.log('RES', res);
-        // })
-
-        // If empty - load test data to storage
-        // const emails = demoMails
-        const emails = JSON.parse(localStorage.getItem(ENTITY) || 'null');
-
+        const emails = JSON.parse(localStorage.getItem(EMAIL_KEY) || 'null');
         if (!emails || emails.length === 0) {
-            localStorage.setItem(ENTITY, JSON.stringify(this.createEmails()))
+            localStorage.setItem(EMAIL_KEY, JSON.stringify(this._createEmails()))
         }
 
+        const labels = JSON.parse(localStorage.getItem(LABEL_KEY) || 'null');
+        if (!labels || labels.length === 0) {
+            localStorage.setItem(LABEL_KEY, '[]')
+        }
 
     }
 
+    query(filterBy: FilterBy = {}): Observable<{ entities: Email[], totalPages: number }> {
+        this.store.dispatch(new LoadingEmails());
+        // console.log('EmailService: Return Emails ===> effect');
+        return from(storageService.query(EMAIL_KEY, filterBy) as Promise<{ entities: Email[], totalPages: number }>)
+        // return new Observable((observer) => observer.next(emails));
+    }
 
-    private createEmails(): Email[] {
+    getById(emailId: string): Observable<Email> {
+        // console.log('EmailService: Return Email ===> effect');
+        return from(storageService.get(EMAIL_KEY, emailId) as Promise<Email>)
+        // return from(axios.get(URL + emailId) as Promise<Email>)
+    }
+
+    remove(emailId: string): Observable<boolean> {
+        // console.log('EmailService: Removing Email ===> effect');
+        return from(storageService.remove(EMAIL_KEY, emailId))
+    }
+
+    removeMany(emails: Email[]): Observable<Email[]> {
+        // console.log('EmailService: Removing Emails ===> effect');
+        return from(storageService.removeMany(EMAIL_KEY, emails) as Promise<Email[]>)
+    }
+
+
+    save(email: Email): Observable<Email> {
+        const method = (email._id) ? 'put' : 'post'
+        // console.log('SERVICE:', method, 'email:', email)
+        if (!email._id) email = {
+            ...email,
+            from: this.loggedinUser.email,
+            name: this.loggedinUser.fullname,
+            isRead: true,
+            labels: [],
+        }
+        const prmSavedEmail = storageService[method](EMAIL_KEY, email)
+        // console.log('EmailService: Saving Email ===> effect');
+        return from(prmSavedEmail) as Observable<Email>
+    }
+
+    updateMany(emails: Email[]): Observable<Email[]> {
+        // console.log('EmailService: updated Emails ===> effect');
+        return from(storageService.putMany(EMAIL_KEY, emails) as Promise<Email[]>)
+    }
+
+    private _createEmails(): Email[] {
 
         let emails = []
         for (var i = 0; i < 8; i++) {
@@ -77,49 +120,26 @@ export class EmailService {
         return email
     }
 
-    query(filterBy: FilterBy = {}): Observable<{ entities: Email[], totalPages: number }> {
-        this.store.dispatch(new LoadingEmails());
-        // console.log('EmailService: Return Emails ===> effect');
-        return from(storageService.query(ENTITY, filterBy) as Promise<{ entities: Email[], totalPages: number }>)
+
+
+
+
+    // LABEL FUNCTIONS:
+    getLabels() {
+        return from(storageService.query(LABEL_KEY) as Promise<{ entities: Label[], totalPages: number }>)
         // return new Observable((observer) => observer.next(emails));
     }
 
-    getById(emailId: string): Observable<Email> {
-        // console.log('EmailService: Return Email ===> effect');
-        return from(storageService.get(ENTITY, emailId) as Promise<Email>)
-        // return from(axios.get(URL + emailId) as Promise<Email>)
-    }
-
-    remove(emailId: string): Observable<boolean> {
-
-        // throw new Error('Baba Ji')
-        // console.log('EmailService: Removing Email ===> effect');
-        return from(storageService.remove(ENTITY, emailId))
-    }
-    removeMany(emails: Email[]): Observable<Email[]> {
-        // console.log('EmailService: Removing Emails ===> effect');
-        return from(storageService.removeMany(ENTITY, emails) as Promise<Email[]>)
-    }
-
-
-    save(email: Email): Observable<Email> {
-        const method = (email._id) ? 'put' : 'post'
-        // console.log('SERVICE:', method, 'email:', email)
-        if (!email._id) email = {
-            ...email,
-            from: this.loggedinUser.email,
-            name: this.loggedinUser.fullname,
-            isRead: true,
-            labels: [],
-        }
-        const prmSavedEmail = storageService[method](ENTITY, email)
+    saveLabel(label: Label): Observable<Label> {
+        const method = (label._id) ? 'putLabel' : 'postLabel'
+        const prmSavedLabel = storageService[method](LABEL_KEY, label)
         // console.log('EmailService: Saving Email ===> effect');
-        return from(prmSavedEmail) as Observable<Email>
+        return from(prmSavedLabel) as Observable<Label>
     }
 
-    updateMany(emails: Email[]): Observable<Email[]> {
-        // console.log('EmailService: updated Emails ===> effect');
-        return from(storageService.putMany(ENTITY, emails) as Promise<Email[]>)
+    removeLabel(labelId: string): Observable<boolean> {
+        // console.log('EmailService: Removing Email ===> effect');
+        return from(storageService.remove(LABEL_KEY, labelId))
     }
 
 }
