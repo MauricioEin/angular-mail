@@ -28,11 +28,9 @@ export class EmailDetailsComponent {
 
 
   ngOnInit() {
-    console.log('location:', this.location)
     const { snapshot } = this.route
     this.email = snapshot.data['email']
     this.store.dispatch(new UpdateEmails([{...this.email, isRead:true}]))
-
   }
 
   updateLabels(labels: string[] | null) {

@@ -46,7 +46,7 @@ function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
             (entity.tabs?.includes(filterBy.tab!)
                 || entity.labels?.includes(filterBy.tab!))
             &&
-            !entity.tabs?.includes('trash')
+            (!entity.tabs?.includes('trash') || filterBy.tab === 'trash')
             &&
             (txtRegex.test(entity.subject) ||
                 txtRegex.test(entity.from!) ||

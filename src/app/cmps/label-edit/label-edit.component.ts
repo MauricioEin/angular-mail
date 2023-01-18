@@ -12,7 +12,6 @@ export class LabelEditComponent {
 
   labelName = ''
   saveLabel() {
-    console.log('saving')
     this.save.emit({name:this.labelName})
   }
   // getMailSvg(iconName) {
