@@ -26,10 +26,10 @@ export class EmailDetailsComponent {
     this.email = this.route.snapshot.data['email']
   }
 
-  updateLabels(labels: string[]) {
-    console.log('lables:', labels)
-    this.store.dispatch(new UpdateEmails([{ ...this.email, labels }]))
-    this.isLabelMenu=false
+  updateLabels(labels: string[] | null) {
+    if (labels)
+      this.store.dispatch(new UpdateEmails([{ ...this.email, labels }]))
+    this.isLabelMenu = false
   }
 
 }

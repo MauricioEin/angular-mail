@@ -4,8 +4,8 @@
         <img style="width:20px; height:20px" src="../../../assets/icons/spam.png" alt="" />
         <img style="width:20px; height:20px" src="../../../assets/icons/trash.png" alt="" />
         <img style="width:20px; height:20px" src="../../../assets/icons/unread.png" alt="" />
-        <section class="labels-container">
-            <img (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
+        <section class="">
+            <img name="label-trigger" (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
                 src="../../../assets/icons/categories.png" />
             <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]"
                 [emailLabels]="email.labels||[]" (update)="updateLabels($event)"></label-selector>

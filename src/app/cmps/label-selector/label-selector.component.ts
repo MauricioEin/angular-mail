@@ -10,13 +10,24 @@ import { Label } from 'src/app/models/label';
 export class LabelSelectorComponent {
   @Input() labels!: Label[]
   @Input() emailLabels!: string[]
-  @Output() update = new EventEmitter<string[]>()
+  @Output() update = new EventEmitter<string[] | null>()
   selectionMap: any = {}
 
   ngOnInit() {
     this.labels.forEach(label => {
       this.selectionMap[label._id!] = this.emailLabels.includes(label._id!)
     })
+    window.addEventListener('click', this.closeSelector)
+
+  }
+  ngOnDestroy() {
+    window.removeEventListener('click', this.closeSelector)
+
+  }
+  closeSelector = (event: MouseEvent) => {
+    const target = event.target as HTMLImageElement
+    if (target.name !== 'label-trigger')
+      this.update.emit()
   }
 
   updateLabels() {

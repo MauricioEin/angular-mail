@@ -1,4 +1,4 @@
-<form class="labels-list"  (submit)="updateLabels()">
+<form class="labels-list" (click)="$event.stopPropagation()" (submit)="updateLabels()">
     <header>Label as:</header>
     <div *ngFor="let label of labels" class="label-item flex align-center">
         <input type="checkbox" [(ngModel)]="selectionMap[label._id!]" [ngModelOptions]="{standalone: true}" />
