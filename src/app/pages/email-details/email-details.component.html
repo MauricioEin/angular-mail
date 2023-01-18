@@ -1,30 +1,38 @@
 <section className="email-details full-height flex column">
-    <section  class="action-bar flex align-center">
-        <!-- <img style="width:20px; height:20px" @click="backToList" :src="getMailSvg('back')" alt="" />
-        <div  @click="setTabToTrash('trash')" v-html="getMailSvg('trash')"></div>
-        <img style="width:20px; height:20px" @click="toggleStarTab()" :src="getMailSvg('star')" alt="" />
-        <img style="width:20px; height:20px" @click="toggleReadProp()" :src="getMailSvg('readStat')" alt="" /> -->
+    <section class="action-bar flex align-center">
+        <img style="width:20px; height:20px" src="../../../assets/icons/back.png" alt="" />
+        <img style="width:20px; height:20px" src="../../../assets/icons/spam.png" alt="" />
+        <img style="width:20px; height:20px" src="../../../assets/icons/trash.png" alt="" />
+        <img style="width:20px; height:20px" src="../../../assets/icons/unread.png" alt="" />
+        <section class="labels-container">
+            <img (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
+                src="../../../assets/icons/categories.png" />
+            <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]"
+                [emailLabels]="email.labels||[]" (update)="updateLabels($event)"></label-selector>
+        </section>
+        labels: {{email.labels}}
     </section>
 
     <section class="details-content">
         <section class="labels-bar flex align-center">
-           <h2>{{email.subject}}</h2> 
-           <div  class="labels-det flex align-center">
-               <span *ngFor="let label of email.labels">
-                   {{label}}
+            <h2>{{email.subject}}</h2>
+            <div class="labels-det flex align-center">
+                <span *ngFor="let label of email.labels">
+                    {{label}}
                 </span>
             </div>
         </section>
         <header class="flex">
-            <h4> 
-                <span>{{email.name}}</span> 
-                <span class="small"> &lt;{{email.from}}&gt;</span></h4>
+            <h4>
+                <span>{{email.name}}</span>
+                <span class="small"> &lt;{{email.from}}&gt;</span>
+            </h4>
             //todo more detailed date format
             <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>
         </header>
         <p>{{email.body}}</p>
     </section>
-    
+
     <footer>
         <button>Replay</button>
         <button>Forward</button>
