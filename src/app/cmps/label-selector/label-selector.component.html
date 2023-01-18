@@ -1,0 +1,10 @@
+<form class="labels-list" (click)="$event.stopPropagation()" (submit)="updateLabels()">
+    <header>Label as:</header>
+    <div *ngFor="let label of labels" class="label-item flex align-center">
+        <input type="checkbox" [(ngModel)]="selectionMap[label._id!]" [ngModelOptions]="{standalone: true}" />
+        <span>{{label.name}}</span>
+    </div>
+    <div class="label-actions flex align-center">
+        <button class="" type="submit">Apply</button>
+    </div>
+</form>

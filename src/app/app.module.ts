@@ -33,6 +33,7 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { LabelEditComponent } from './cmps/label-edit/label-edit.component';
 import { FirstWordPipe } from './pipes/first-word.pipe';
 
+import { LabelSelectorComponent } from './cmps/label-selector/label-selector.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { FirstWordPipe } from './pipes/first-word.pipe';
     CapitalizePipe,
     FirstWordPipe,
     LabelEditComponent,
+    LabelSelectorComponent,
    
   ],
   imports: [
