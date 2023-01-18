@@ -10,7 +10,6 @@
             <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]"
                 [emailLabels]="email.labels||[]" (update)="updateLabels($event)"></label-selector>
         </section>
-        labels: {{email.labels}}
     </section>
 
     <section class="details-content">
