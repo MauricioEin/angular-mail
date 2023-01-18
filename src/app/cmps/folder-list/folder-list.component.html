@@ -3,7 +3,7 @@
         <div class="compose flex align-center center" (click)="compose.emit()">
             <!-- @click="composeEmail()"> -->
             <div class="compose-icon">
-                <img src="../../../assets/icon-img/compose.png">
+                <img src="../../../assets/icons/compose.png">
             </div>
             <span class="com-text">Compose</span>
         </div>
@@ -13,7 +13,7 @@
 
         <div *ngFor="let folder of folders" routerLink="/email/{{folder.name}}" routerLinkActive="active"
             [title]="folder.name | capitalize">
-            <img style="width:20px; height:20px" src="../../../assets/icon-img/{{folder.name}}.png">
+            <img style="width:20px; height:20px" src="../../../assets/icons/{{folder.name}}.png">
             <span class="f-text">{{folder.name|capitalize}}</span>
         </div>
 
@@ -29,12 +29,12 @@
 
         <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" class="flex space-between">
             <span class="flex align-center">
-                <img style="width:20px; height:20px" src="../../../assets/icon-img/label.png">
+                <img style="width:20px; height:20px" src="../../../assets/icons/label.png">
                 <span class="f-text">{{label.name}}</span>
             </span>
             <span>
-                <img style="width:20px; height:20px" src="../../../assets/icon-img/compose.png">
-                <img style="width:20px; height:20px" src="../../../assets/icon-img/trash.png"
+                <img style="width:20px; height:20px" src="../../../assets/icons/compose.png">
+                <img style="width:20px; height:20px" src="../../../assets/icons/trash.png"
                     (click)="$event.preventDefault();removeLabel.emit(label._id)">
             </span>
 
