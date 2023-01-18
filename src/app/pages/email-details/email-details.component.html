@@ -1,14 +1,15 @@
 <section className="email-details full-height flex column">
     <section class="action-bar flex align-center">
-        <img style="width:20px; height:20px" src="../../../assets/icons/back.png" alt="" />
-        <img style="width:20px; height:20px" src="../../../assets/icons/spam.png" alt="" />
-        <img style="width:20px; height:20px" src="../../../assets/icons/trash.png" alt="" />
-        <img style="width:20px; height:20px" src="../../../assets/icons/unread.png" alt="" />
+        <img (click)="goBack()" style="width:20px; height:20px"
+            src="../../../assets/icons/back.png" alt="" />
+        <img (click)="onSpam()" style="width:20px; height:20px" src="../../../assets/icons/spam.png" alt="" />
+        <img (click)="onTrash()" style="width:20px; height:20px" src="../../../assets/icons/trash.png" alt="" />
+        <img (click)="onUnread()" style="width:20px; height:20px" src="../../../assets/icons/unread.png" alt="" />
         <section class="">
             <img name="label-trigger" (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
                 src="../../../assets/icons/categories.png" />
-            <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]"
-                [emailLabels]="email.labels||[]" (update)="updateLabels($event)"></label-selector>
+            <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]" [emailLabels]="email.labels||[]"
+                (update)="updateLabels($event)"></label-selector>
         </section>
     </section>
 

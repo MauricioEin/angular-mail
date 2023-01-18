@@ -1,4 +1,4 @@
-import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, UPDATED_EMAILS, LOADED_EMAIL, SET_ERROR, SET_FILTER, LOADED_LABELS, UPDATED_LABEL, ADDED_LABEL, REMOVED_LABEL } from '../actions/email.actions';
+import { SET_LOADING, LOADED_EMAILS, REMOVED_EMAIL, REMOVED_EMAILS, ADDED_EMAIL, UPDATED_EMAIL, UPDATED_EMAILS, LOADED_EMAIL, SET_ERROR, SET_FILTER, LOADED_LABELS, UPDATED_LABEL, ADDED_LABEL, REMOVED_LABEL, SET_FOLDER } from '../actions/email.actions';
 import { Email } from 'src/app/models/email';
 import { FilterBy } from 'src/app/models/filterBy';
 import { Label } from 'src/app/models/label';
@@ -10,7 +10,8 @@ export interface EmailState {
   error: string;
   filterBy: FilterBy,
   totalPages: number,
-  labels: Label[]
+  labels: Label[],
+  folder: string
 }
 
 const initialState: EmailState = {
@@ -25,7 +26,8 @@ const initialState: EmailState = {
     pageSize: 24
   },
   totalPages: 0,
-  labels: []
+  labels: [],
+  folder: ''
 };
 
 export function reducer(state: EmailState = initialState, action: any): EmailState {
@@ -37,6 +39,10 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     case SET_FILTER: {
       const { filterBy } = action;
       return { ...state, filterBy: { ...state.filterBy, ...filterBy }, error: '' };
+    }
+    case SET_FOLDER: {
+      const { folder } = action;
+      return { ...state, folder, error: '' };
     }
 
     case SET_ERROR: {

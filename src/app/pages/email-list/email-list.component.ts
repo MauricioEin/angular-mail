@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, Subscription, take } from 'rxjs';
 import { Email, selectedEmail } from 'src/app/models/email';
 import { State } from '../../store/store';
-import { LoadEmails, RemoveEmails, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { LoadEmails, RemoveEmails, SetFolder, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { FilterBy } from 'src/app/models/filterBy';
 import { Actions, ofType } from '@ngrx/effects';
 import { Label } from 'src/app/models/label';
@@ -20,6 +20,7 @@ export class EmailListComponent {
   filterBy$: Observable<FilterBy>;
   totalPages$: Observable<number>;
   labels$: Observable<Label[]>
+  folder$: Observable<string>
 
 
   selectedEmails: Array<Email> = []
@@ -37,21 +38,29 @@ export class EmailListComponent {
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'));
     this.totalPages$ = this.store.select('emailState').pipe(pluck('totalPages'));
     this.labels$ = this.store.select('emailState').pipe(pluck('labels'));
+    this.folder$ = this.store.select('emailState').pipe(pluck('folder'));
   }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
-      console.log('params:', params)
-      if (this.tab === params['tab'] || this.label === params['labelName']) return
-      if (params['tab']) {
-        this.tab = params['tab']
-        this.label = ''
-        this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 25 }))
-      }
-      else if (params['labelName']) {
-        this.label = params['labelName']
-        this.tab = ''
-        this.loadByLabel()
+      let stateFolder
+      this.folder$.pipe(take(1)).subscribe(folder => stateFolder = folder)
+      this.tab = params['tab'] || ''
+      this.label = params['labelName'] || ''
+
+      if (stateFolder === (params['tab'] || params['labelName']))
+        this.filterBy$.pipe(take(1)).subscribe(filterBy => {
+          this.store.dispatch(new LoadEmails(filterBy))
+        })
+      else {
+        if (params['tab']) {
+          this.store.dispatch(new SetFolder(this.tab))
+          this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 25 }))
+        }
+        else if (params['labelName']) {
+          this.store.dispatch(new SetFolder(this.label))
+          this.loadByLabel()
+        }
       }
     })
   }
@@ -114,10 +123,10 @@ export class EmailListComponent {
   onSetReadStat() {
     const emails: Email[] = JSON.parse(JSON.stringify(this.selectedEmails))
     // if all were read
-    if (emails.every(email => email.isRead)) {
-      emails.forEach(e => e.isRead = false)
-    } else {
+    if (emails.some(email => !email.isRead)) {
       emails.forEach(e => e.isRead = true)
+    } else {
+      emails.forEach(e => e.isRead = false)
     }
 
     this.store.dispatch(new UpdateEmails(emails))
