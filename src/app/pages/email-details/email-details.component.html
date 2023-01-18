@@ -16,10 +16,8 @@
     <section class="details-content">
         <section class="labels-bar flex align-center">
             <h2>{{email.subject}}</h2>
-            <div class="labels-det flex align-center">
-                <span *ngFor="let label of email.labels">
-                    {{label}}
-                </span>
+            <div class="flex align-center">
+                <label-tag *ngFor="let label of emailLabels" [label]="label" (remove)="removeLabel($event)"></label-tag>
             </div>
         </section>
         <header class="flex">

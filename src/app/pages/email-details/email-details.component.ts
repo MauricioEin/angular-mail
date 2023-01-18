@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
@@ -25,12 +25,23 @@ export class EmailDetailsComponent {
   email!: Email
   isLabelMenu = false
   labels$: Observable<Label[]>
+  emailLabels!: Label[]
+
 
 
   ngOnInit() {
     const { snapshot } = this.route
     this.email = snapshot.data['email']
     this.store.dispatch(new UpdateEmails([{ ...this.email, isRead: true }]))
+    this.labels$.subscribe((labels) => {
+      this.emailLabels = labels.filter(label => this.email.labels?.includes(label._id!))
+    })
+  }
+
+  setEmailLabels() {
+    this.labels$.pipe(take(1)).subscribe((labels) => {
+      this.emailLabels = labels.filter(label => this.email.labels?.includes(label._id!))
+    })
   }
 
   updateLabels(labels: string[] | null) {
@@ -38,10 +49,22 @@ export class EmailDetailsComponent {
       this.store.dispatch(new UpdateEmails([{ ...this.email, labels }]))
       this.actions$.pipe(ofType(UPDATED_EMAILS), take(1)).subscribe(() => {
         this.email = { ...this.email, labels }
+        this.setEmailLabels()
       })
-
     }
     this.isLabelMenu = false
+  }
+
+  removeLabel(labelId: string) {
+    console.log('removing:', labelId)
+    const labels = this.email.labels!.filter(label => label !== labelId)
+    this.store.dispatch(new UpdateEmails([{ ...this.email, labels }]))
+    this.actions$.pipe(ofType(UPDATED_EMAILS), take(1)).subscribe(() => {
+      this.email = { ...this.email, labels }
+      this.setEmailLabels()
+    })
+
+
   }
 
   goBack() {
