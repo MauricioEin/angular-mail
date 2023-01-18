@@ -2,7 +2,10 @@
 
     <header class="list-header flex align-center space-between">
         <div class="sub1 flex align-center">
-            <input type="checkbox">
+            <div class="input-wrapper">
+                <input type="checkbox">
+
+            </div>
             <div class="icon-wrapper">
                 <i class="fa-solid fa-rotate-right fa-sm"></i>
             </div>
@@ -40,7 +43,7 @@
 
     </header>
 
-    <section class="grow">
+    <section class="grow list-content">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" (toggleTab)="toggleTab($event)"
          *ngFor="let email of (emails$|async)" [email]="email"
             [tab]="tab"></email-preview>

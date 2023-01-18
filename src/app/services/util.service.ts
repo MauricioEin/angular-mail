@@ -15,7 +15,7 @@ export class UtilService{
     }
     
     makeLorem(wordCount = 100):string {
-        const words = ['The sky', 'above', 'baba', 'roti', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', 'All', 'this happened', 'more or less', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', 'It', 'was', 'a pleasure', 'to', 'burn']
+        const words = ['sky','bonus','finance','dollar','cv','action','bonus','possible','now', 'above', 'baba', 'roti', 'the port', 'was', 'television', 'tuned', 'to', 'channel', 'All', 'happened','this', 'more','random', 'I', 'had', 'story', 'bit', 'people','various','from', 'and', 'generally', 'happens','cases','interview','problem', 'such', 'time','each', 'it', 'was', 'different','story', 'It', 'was', 'pleasure', 'to', 'burn']
         var txt = ''
         while (wordCount > 0) {
             wordCount--

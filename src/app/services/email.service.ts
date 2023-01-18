@@ -24,7 +24,7 @@ export class EmailService {
 
     loggedinUser = {
         email: 'user@gmail.com',
-        fullname: 'Best User'
+        fullname: 'User who'
     }
 
     constructor(private store: Store<EmailState>,
@@ -90,7 +90,7 @@ export class EmailService {
     private _createEmails(): Email[] {
 
         let emails = []
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 40; i++) {
             emails.push(this._createEmail())
         }
         return emails
@@ -100,7 +100,7 @@ export class EmailService {
         const name = this.utilService.makeName()
         const email = {
             _id: this.utilService.makeId(),
-            tabs: Math.random() > .5 ? ['important','inbox'] : ['inbox'],
+            tabs: isIncoming ? [Math.random() > .5 ? 'starred' : '' , 'inbox'] : [Math.random() > .5 ? 'important' : '' ,'sent'],
             name: isIncoming ? name : this.loggedinUser.fullname,
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
@@ -119,8 +119,6 @@ export class EmailService {
 
         return email
     }
-
-
 
 
 

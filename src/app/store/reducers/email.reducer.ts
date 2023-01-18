@@ -22,7 +22,7 @@ const initialState: EmailState = {
     txt: '',
     tab: 'inbox',
     page: 0,
-    pageSize: 10
+    pageSize: 24
   },
   totalPages: 0,
   labels: []

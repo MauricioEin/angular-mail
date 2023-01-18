@@ -31,6 +31,8 @@ import { HeaderSvgComponent } from './svg-cmps/header-svg/header-svg.component';
 import { FolderListSvgComponent } from './svg-cmps/folder-list-svg/folder-list-svg.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { LabelEditComponent } from './cmps/label-edit/label-edit.component';
+import { FirstWordPipe } from './pipes/first-word.pipe';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { LabelEditComponent } from './cmps/label-edit/label-edit.component';
     HeaderSvgComponent,
     FolderListSvgComponent,
     CapitalizePipe,
+    FirstWordPipe,
     LabelEditComponent,
    
   ],

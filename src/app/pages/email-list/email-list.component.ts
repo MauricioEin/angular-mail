@@ -46,7 +46,7 @@ export class EmailListComponent {
       if (params['tab']) {
         this.tab = params['tab']
         this.label = ''
-        this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 10 }))
+        this.store.dispatch(new LoadEmails({ txt: '', page: 0, tab: this.tab, pageSize: 25 }))
       }
       else if (params['labelName']) {
         this.label = params['labelName']
