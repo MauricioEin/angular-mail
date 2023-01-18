@@ -104,7 +104,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case UPDATED_LABEL: {
       const { label } = action;
-      const labels = state.labels.map(currLabel => (currLabel._id === label.id) ? label : currLabel)
+      const labels = state.labels.map(currLabel => (currLabel._id === label._id) ? label : currLabel)
       return { ...state, labels, error: '' };
     }
 

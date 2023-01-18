@@ -18,14 +18,11 @@
         </div>
 
         <div>
-            <!-- @click="isAddLabel=true" class="labels"> -->
             <header class="label-header flex space-between align-center">
                 <h4>Labels </h4>
                 <button (click)="isLabelEdit=true">+</button>
-                <!-- <img  style="width:20px; height:20px" :src="getMailSvg('addLabel')" alt="" /> -->
             </header>
         </div>
-
 
         <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" class="flex space-between">
             <span class="flex align-center">
@@ -33,13 +30,14 @@
                 <span class="f-text">{{label.name}}</span>
             </span>
             <span>
-                <img style="width:20px; height:20px" src="../../../assets/icons/compose.png">
+                <img style="width:20px; height:20px" src="../../../assets/icons/compose.png"
+                    (click)="$event.stopPropagation(); isLabelEdit = true; labelToEdit = label">
                 <img style="width:20px; height:20px" src="../../../assets/icons/trash.png"
-                    (click)="$event.preventDefault();removeLabel.emit(label._id)">
+                    (click)="$event.stopPropagation(); removeLabel.emit(label._id)">
             </span>
 
         </div>
     </section>
-    <label-edit *ngIf="isLabelEdit" (close)="isLabelEdit=false"
-        (save)="saveLabel.emit($event);isLabelEdit=false"></label-edit>
+    <label-edit *ngIf="isLabelEdit" [label]="labelToEdit" (close)="closeLabelEdit()"
+        (save)="saveLabel.emit($event);closeLabelEdit()"></label-edit>
 </section>

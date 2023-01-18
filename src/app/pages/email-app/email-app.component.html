@@ -1,7 +1,8 @@
 <section class="flex column">
     <app-header></app-header>
     <main>
-        <folder-list (compose)="openCompose()" [labels]="(labels$|async)" (saveLabel)="saveLabel($event)" (removeLabel)="removeLabel($event)"></folder-list>
+        <folder-list (compose)="openCompose()" [labels]="(labels$|async)" (saveLabel)="saveLabel($event)"
+            (removeLabel)="removeLabel($event)"></folder-list>
         <section class="main-container">
             <router-outlet></router-outlet>
         </section>

@@ -23,7 +23,6 @@ export class EmailAppComponent implements OnInit {
   labels$: Observable<Label[]>
   isLoading$: Observable<boolean>
   error$: Observable<string>
-  addingNew = false
   isCompose = false
 
 
