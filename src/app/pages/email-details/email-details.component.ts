@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, take } from 'rxjs';
 import { Email } from 'src/app/models/email';
 import { Label } from 'src/app/models/label';
-import { LOADED_EMAILS, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { LOADED_EMAILS, LoadEmail, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { State } from 'src/app/store/store';
 
 @Component({
@@ -30,12 +30,17 @@ export class EmailDetailsComponent {
   ngOnInit() {
     const { snapshot } = this.route
     this.email = snapshot.data['email']
-    this.store.dispatch(new UpdateEmails([{...this.email, isRead:true}]))
+    this.store.dispatch(new UpdateEmails([{ ...this.email, isRead: true }]))
   }
 
   updateLabels(labels: string[] | null) {
-    if (labels)
+    if (labels) {
       this.store.dispatch(new UpdateEmails([{ ...this.email, labels }]))
+      this.actions$.pipe(ofType(UPDATED_EMAILS), take(1)).subscribe(() => {
+        this.email = { ...this.email, labels }
+      })
+
+    }
     this.isLabelMenu = false
   }
 
@@ -63,7 +68,7 @@ export class EmailDetailsComponent {
   }
   updateAndClose(email: Email) {
     this.store.dispatch(new UpdateEmails([email]))
-    this.actions$.pipe(ofType(UPDATED_EMAILS),take(1)).subscribe(() => {
+    this.actions$.pipe(ofType(UPDATED_EMAILS), take(1)).subscribe(() => {
       this.goBack()
     })
   }
