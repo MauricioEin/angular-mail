@@ -20,7 +20,7 @@
         </form>
     </main>
 
-    <footer class="flex space-between align-center">
+    <footer  *ngIf="!isMini" class="flex space-between align-center">
         <button [disabled]="composeForm.invalid" class="send-btn" (click)="save()">Send</button>
         <span class="delete pointer grey-hover" (click)="close()" title="Discard draft">
             <img src="assets/icons/trash.png">
