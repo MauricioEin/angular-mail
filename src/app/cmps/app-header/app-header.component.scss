@@ -1,12 +1,15 @@
+@import '../../../assets/style/setup/vars';
+
 .app-header {
-  height: 64px;
-  padding: 8px;
+  $header-padding:8px;
+  height: $header-height;
+  padding: $header-padding;
   // background-color: lightcoral;
 
 
   .sub1 {
-    width: 208px;
     padding-inline-end: 30px;
+    width:$nav-width - $header-padding;
 
     .hum-wrapper {
       padding: 12px;
@@ -31,8 +34,13 @@
   .sub3{
 
     .sub3-wrapper{
-      padding:  8px;
+      padding:  12px;
       margin: 0 2px;
     }
+  }
+
+  .menu-wrapper{
+    padding:12px;
+    margin-inline: 4px;
   }
 }

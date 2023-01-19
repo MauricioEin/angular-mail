@@ -12,9 +12,7 @@ import { filter } from 'rxjs/operators';
   selector: 'app-root',
   template: `
   <section class="app-root">
-    <div class="container">
     <router-outlet></router-outlet>
-    </div>
   </section>
  `,
 })
