@@ -1,8 +1,10 @@
+@import '../../../assets/style/setup/vars';
+
 .email-folder-list {
     background-color: #f6f8fc;
     width: 256px;
-    width: 70px;
 }
+
 
 .email-folder-list>* {
     cursor: pointer;
@@ -57,6 +59,29 @@
 
 .folders-nav {
     background-color: inherit;
+    height: calc(100vh - $header-height - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+
+    &::-webkit-scrollbar {
+        background: transparent;
+        height: 8px;
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+        border: none;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(32, 33, 36, 0.38);
+    }
 }
 
 .folders-nav>* {
@@ -68,7 +93,7 @@
     font-size: 14px;
     background-color: inherit;
 
-    &:not(.label-header):not(.active):hover{
+    &:not(.label-header):not(.active):hover {
         background-color: #ebebeb;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -116,10 +141,12 @@
         margin-inline-start: 5px;
         transition: .1s;
     }
-    &:hover .actions img{
+
+    &:hover .actions img {
         opacity: .7;
 
     }
+
     &.active {
         background-color: #e1e3e1 !important;
         border-top-right-radius: 20px;
