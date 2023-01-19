@@ -18,7 +18,8 @@
 
         <section class="labels-bar flex align-center">
             <h2>{{email.subject}}</h2>
-            <div class="img-wrapper flex align-center" (click)="onToggleTab('important')" [class.active]="email.tabs!.includes('important')">
+            <div class="img-wrapper flex align-center" (click)="onToggleTab('important')"
+                [class.active]="email.tabs!.includes('important')">
                 <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('important'))"
                     src="https://www.gstatic.com/images/icons/material/system_gm/1x/label_important_outline_black_20dp.png"
                     alt="">
@@ -30,15 +31,34 @@
             </div>
         </section>
 
-        <header class="flex">
-            <h4>
-                <span>{{email.name}}</span>
-                <span class="small"> &lt;{{email.from}}&gt;</span>
-            </h4>
-            //todo more detailed date format
-            <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>
-        </header>
-        <p>{{email.body}}</p>
+        <main class="flex">
+            <img class="user-img" src="assets/img/user.png">
+            <div class="email-body">
+
+                <header class="flex">
+                    <div class="from-to flex column">
+                    <h4>
+                        <span>{{email.name}}</span>
+                        <span class="small"> &lt;{{email.from}}&gt;</span>
+                    </h4>
+                    <p class="small">to {{email.to}}</p>
+
+                </div>
+                    <span class="small flex ">{{email.sentAt | date: 'MMM dd, yyyy, hh:mm a' }}
+                        <div class="img-wrapper flex" (click)="onToggleTab('starred')"
+                            [class.active]="email.tabs!.includes('starred')">
+                            <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('starred'))"
+                                src="http://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_baseline_nv700_20dp.png"
+                                alt="">
+                            <img class="grey-hover pointer" *ngIf="(email.tabs!.includes('starred'))"
+                                src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png" alt="">
+                        </div>
+                    </span>
+
+                </header>
+                <p>{{email.body}}</p>
+            </div>
+        </main>
     </section>
 
     <footer>
