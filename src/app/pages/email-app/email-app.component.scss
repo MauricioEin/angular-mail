@@ -1,4 +1,4 @@
-// @import url('../../../assets/style/setup/_vars.scss');
+@import '../../../assets/style/setup/_vars.scss';
 
 main {
   display: flex;
@@ -7,5 +7,6 @@ main {
 
   .main-container {
     width: 100%;
+    height: calc(100vh - $header-height - 16px)
   }
 }
