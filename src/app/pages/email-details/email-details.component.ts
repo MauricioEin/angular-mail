@@ -95,4 +95,15 @@ export class EmailDetailsComponent {
       this.goBack()
     })
   }
+  onToggleTab(tab: string) {
+    const tabs = [...this.email.tabs!]
+    const idx = tabs.indexOf(tab)
+    idx === -1 ? tabs.push(tab) : tabs.splice(idx, 1)
+    const email = { ...this.email, tabs }
+    this.store.dispatch(new UpdateEmails([email]))
+    this.actions$.pipe(ofType(UPDATED_EMAILS), take(1)).subscribe(() => {
+      this.email.tabs = email.tabs
+    })
+  }
+
 }

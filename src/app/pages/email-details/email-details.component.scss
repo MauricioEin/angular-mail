@@ -2,7 +2,7 @@
     background-color: white;
     padding: 14px 16px;
     border-radius: 16px;
-    color:#222;
+    color: #222;
 }
 
 .email-details>* {
@@ -10,8 +10,9 @@
 }
 
 .action-bar {
-    position:relative;
-    gap:5px;
+    position: relative;
+    gap: 5px;
+
     * {
         margin-inline: 10px;
         cursor: pointer;
@@ -30,11 +31,16 @@
 
 .details-content .labels-bar {
     padding: 20px 0 8px 56px;
+
+    h2 {
+        font-weight: 500;
+        font-size: 22px;
+    }
+    img{
+        margin-inline: 10px;
+    }
 }
 
-.labels-bar h2 {
-    font-weight: 500;
-}
 
 .labels-det>* {
     margin-inline-start: 10px;

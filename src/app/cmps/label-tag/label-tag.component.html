@@ -1,4 +1,6 @@
-<div  class="label-tag" [style.color]="label.clr||''">
-    <span [routerLink]="'/email/label/'+label.name" class="label-name">{{label.name}}</span>
-    <span class="label-remove" (click)="remove.emit(label._id)">x</span>
+<div class="label-tag" [style.color]="label.clr||''">
+    <span [routerLink]="'/email/label/'+label.name" class="label-name flex align-center"
+        title="Search for all messages with label {{label.name}}">{{label.name}}</span>
+    <span class="label-remove flex align-center" (click)="remove.emit(label._id)"
+        title="Remove label {{label.name}} from this conversation">x</span>
 </div>

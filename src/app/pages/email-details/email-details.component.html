@@ -1,4 +1,5 @@
 <section class="email-details full-height flex column">
+
     <section class="action-bar flex align-center">
         <img class="grey-hover" (click)="goBack()" style="width:20px; height:20px" src="assets/icons/back.png" alt="" />
         <img class="grey-hover" (click)="onSpam()" style="width:20px; height:20px" src="assets/icons/spam.png" alt="" />
@@ -11,13 +12,24 @@
         <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]" [emailLabels]="email.labels||[]"
             (update)="updateLabels($event)"></label-selector>
     </section>
+
+
     <section class="details-content">
+
         <section class="labels-bar flex align-center">
             <h2>{{email.subject}}</h2>
+            <div class="img-wrapper flex align-center" (click)="onToggleTab('important')" [class.active]="email.tabs!.includes('important')">
+                <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('important'))"
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/label_important_outline_black_20dp.png"
+                    alt="">
+                <img class="grey-hover pointer" *ngIf="(email.tabs!.includes('important'))"
+                    src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_important_fill_googyellow500_20dp.png" alt="">
+            </div>
             <div class="flex align-center">
                 <label-tag *ngFor="let label of emailLabels" [label]="label" (remove)="removeLabel($event)"></label-tag>
             </div>
         </section>
+
         <header class="flex">
             <h4>
                 <span>{{email.name}}</span>
