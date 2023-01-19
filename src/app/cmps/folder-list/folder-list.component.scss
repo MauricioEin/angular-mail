@@ -6,23 +6,28 @@
 
 .email-folder-list>* {
     cursor: pointer;
-    margin-bottom: 10px;
     background-color: white;
+
+    &:not(.compose-wrapper) {
+        margin-bottom: 10px;
+    }
 }
 
 
 .compose-wrapper {
     height: 56px;
 
-    margin: 16px 0 16px 0;
-    padding-inline-start: 10px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    padding-inline-start: 8px;
     background: inherit;
 }
 
 .compose-icon {
     /* margin-inline-end: 20px; */
-    height: 20px;
-    img{
+    height: 24px;
+
+    img {
 
         height: 100%;
     }
@@ -47,7 +52,8 @@
 }
 
 .compose:hover {
-    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);}
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
+}
 
 .folders-nav {
     background-color: inherit;
@@ -62,11 +68,10 @@
     font-size: 14px;
     background-color: inherit;
 
-    &:hover {
+    &:not(.label-header):not(.active):hover {
         background-color: #ebebeb;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
-
     }
 
     &.active {
@@ -74,12 +79,12 @@
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
         font-weight: bold;
-        color:#001d35;
+        color: #001d35;
     }
 }
 
 .f-text {
-    margin-inline-start: 24px;
+    margin-inline-start: 18px;
 }
 
 .labels {
@@ -88,12 +93,33 @@
     padding-inline-start: 25px;
 }
 
-.labels header {
+.label-header {
     width: 100%;
+    margin-top: 28px;
+    cursor: default;
+
+    img {
+        cursor: pointer;
+    }
 }
 
-.labels header h4 {
-    display: none;
+.label-header h4 {
+    // display: none;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.label {
+
+    .actions img {
+        opacity: 0;
+        margin-inline-start: 5px;
+        transition: .1s;
+    }
+    &:hover .actions img{
+        opacity: .7;
+
+    };
 }
 
 @media (min-width:800px) {
@@ -103,7 +129,7 @@
     }
 
     .compose {
-        padding: 0 24px 0 18px;
+        padding: 0 24px 0 16px;
         width: unset;
     }
 
@@ -112,7 +138,7 @@
     }
 
     .compose-icon {
-        margin-inline-end: 20px;
+        margin-inline-end: 16px;
     }
 
     .labels {
