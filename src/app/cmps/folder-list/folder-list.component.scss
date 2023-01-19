@@ -6,7 +6,7 @@
 
 .email-folder-list>* {
     cursor: pointer;
-    background-color: white;
+    // background-color: white;
 
     &:not(.compose-wrapper) {
         margin-bottom: 10px;
@@ -68,7 +68,7 @@
     font-size: 14px;
     background-color: inherit;
 
-    &:not(.label-header):not(.active):hover {
+    &:not(.label-header):not(.active):hover{
         background-color: #ebebeb;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -119,7 +119,12 @@
     &:hover .actions img{
         opacity: .7;
 
-    };
+    }
+    &.active {
+        background-color: #e1e3e1 !important;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
 }
 
 @media (min-width:800px) {
