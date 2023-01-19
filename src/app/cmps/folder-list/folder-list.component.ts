@@ -21,6 +21,10 @@ export class FolderListComponent {
     { name: 'trash' },
   ]
   isLabelEdit = false
+  labelToEdit: Label | null = null
 
-  setTab = (folder: string) => { console.log('setting tab:', folder) }
+  closeLabelEdit() {
+    this.isLabelEdit = false
+    this.labelToEdit = null
+  }
 }

@@ -46,7 +46,7 @@
     <section class="grow list-content">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" (toggleTab)="toggleTab($event)"
          *ngFor="let email of (emails$|async)" [email]="email"
-            [tab]="tab"></email-preview>
+            [tab]="tab" [label]="label"></email-preview>
 
     </section>
 </section>

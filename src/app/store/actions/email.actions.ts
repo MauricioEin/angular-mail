@@ -6,6 +6,7 @@ import { Label } from 'src/app/models/label';
 export const SET_LOADING = '[email] loading';
 export const SET_ERROR = '[email] error';
 export const SET_FILTER = '[email] filter';
+export const SET_FOLDER = '[email] folder';
 export const LOAD_LABELS = '[label]s load';
 export const LOAD_EMAILS = '[email]s load';
 export const LOAD_EMAIL = '[email] load';
@@ -121,6 +122,11 @@ export class LoadingEmails implements Action {
 export class EmailError implements Action {
   readonly type = SET_ERROR;
   constructor(public error: string) { }
+}
+
+export class SetFolder implements Action {
+  readonly type = SET_FOLDER
+  constructor(public folder: string) { }
 }
 
 export class RemovedLabel implements Action {

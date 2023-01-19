@@ -10,14 +10,18 @@ import { EmailListComponent } from 'src/app/pages/email-list/email-list.componen
 export class EmailPreviewComponent {
   @Input() email!: Email;
   @Input() tab!: string;
+  @Input() label!: string;
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
   @Output() toggleTab = new EventEmitter<Email>()
   link!: string
   params!: {}
 
   ngOnInit() {
-    this.link = this.tab === 'drafts' ? `/email/${this.tab}` : `/email/${this.tab}/${this.email!._id}`
-    if (this.tab === 'drafts') this.params = { compose: this.email!._id }
+    if (this.label) this.link = `/email/label/${this.label}/${this.email!._id}`
+    else {
+      this.link = this.tab === 'drafts' ? `/email/${this.tab}` : `/email/${this.tab}/${this.email!._id}`
+      if (this.tab === 'drafts') this.params = { compose: this.email!._id }
+    }
   }
 
   onToggleCheckbox(ev: Event) {

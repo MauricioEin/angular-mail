@@ -34,6 +34,7 @@ import { LabelEditComponent } from './cmps/label-edit/label-edit.component';
 import { FirstWordPipe } from './pipes/first-word.pipe';
 
 import { LabelSelectorComponent } from './cmps/label-selector/label-selector.component';
+import { LabelTagComponent } from './cmps/label-tag/label-tag.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { LabelSelectorComponent } from './cmps/label-selector/label-selector.com
     FirstWordPipe,
     LabelEditComponent,
     LabelSelectorComponent,
+    LabelTagComponent,
    
   ],
   imports: [
