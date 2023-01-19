@@ -7,7 +7,6 @@ import { LoadingEmails } from '../store/actions/email.actions';
 import { EmailState } from '../store/reducers/email.reducer';
 import { UtilService } from './util.service';
 
-// import * as demoMails from '../../assets/data/demoMails.json' 
 
 import { storageService } from './async-storage.service'
 import { FilterBy } from '../models/filterBy';
@@ -20,7 +19,6 @@ export const LABEL_KEY = 'label'
     providedIn: 'root',
 })
 export class EmailService {
-
 
     loggedinUser = {
         email: 'user@gmail.com',
