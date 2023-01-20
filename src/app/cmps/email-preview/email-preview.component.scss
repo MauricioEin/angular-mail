@@ -5,7 +5,7 @@
     cursor: pointer;
     box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
     display: grid;
-    grid-template-columns: 25px 25px 25px 1fr 3fr auto;
+    grid-template-columns: 25px 25px 30px 1fr 3fr auto;
     gap: 2px;
     background-color: #f2f6fc;
     color: rgb(33, 33, 33);
@@ -32,11 +32,12 @@
         &:not(.active) {
             opacity: .3;
         }
+
+    }
+    .draft{
+        color:#dd4b39;
     }
 
-    .capitalized {
-        padding-inline-start: 10px;
-    }
 
     .checkbox {
         cursor: pointer;

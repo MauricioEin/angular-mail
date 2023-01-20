@@ -44,7 +44,7 @@
                     <p class="small">to {{email.to}}</p>
 
                 </div>
-                    <span class="small flex ">{{email.sentAt | date: 'MMM dd, yyyy, hh:mm a' }}
+                    <span class="small flex ">{{email.savedAt | date: 'MMM dd, yyyy, hh:mm a' }}
                         <div class="img-wrapper flex" (click)="onToggleTab('starred')"
                             [class.active]="email.tabs!.includes('starred')">
                             <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('starred'))"
@@ -62,36 +62,11 @@
     </section>
 
     <footer>
-        <button>Replay</button>
+        <button>Reply</button>
         <button>Forward</button>
     </footer>
 
 
 
-    <!-- <main>
-        <h1>{{email.subject}}<span class="btn" ><img class="importance-label"
-            src="assets/img/label-important.svg" [class.labelImportant]="email.tab.includes('important')"
-            /></span>
-           // @click="onImportant" // 
-        </h1>
-        <div class="email-info flex justify-between">
-            <div class="flex">
-                <h2 class="capitalized">{{email.from.split('@')[0]}}</h2>
-                <p>&lt;{{email.from}}></p>
-            </div>
-            <div class="flex">
-                <p>{{email.sentAt|date:'MMM dd, yyyy'}}</p>
-                <span class="btn"><input class="star" type="checkbox"
-                    [checked]="email.tab.includes('starred')"></span>
-                   // @change="onStar"//
 
-                <span class="btn">Reply</span>
-                <span class="btn">More</span>
-            </div>
-        </div>
-        <p>{{email.body}}</p>
-        <button class="pill blocked">↩ Reply</button>
-        <button class="pill blocked">↪ Forward</button>
-    </main>
-    <main class="empty"></main> -->
 </section>

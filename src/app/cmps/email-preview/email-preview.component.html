@@ -11,15 +11,18 @@
         <img *ngIf="(email.tabs!.includes('starred'))"
             src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png" alt="">
     </div>
-    <div class="img-wrapper" (click)="onToggleTab($event,'important')" [class.active]="email.tabs!.includes('important')">
+    <div class="img-wrapper" (click)="onToggleTab($event,'important')"
+        [class.active]="email.tabs!.includes('important')">
         <img *ngIf="!(email.tabs!.includes('important'))"
             src="https://www.gstatic.com/images/icons/material/system_gm/1x/label_important_outline_black_20dp.png"
             alt="">
         <img *ngIf="(email.tabs!.includes('important'))"
             src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_important_fill_googyellow500_20dp.png" alt="">
     </div>
-
-    <h4 class="capitalized flex align-center">{{email!.name!|firstWord}}</h4>
-    <h4 class="flex align-center">{{email!.subject}} <span>&nbsp;-&nbsp;{{(email!.body).slice(0,8)}}...</span></h4>
-    <h5 class="flex align-center">{{email!.sentAt|date:'MMM dd'}}</h5>
+    <h4 class="capitalized flex align-center" [class.draft]="email.tabs!.includes('drafts')">
+        {{email.tabs!.includes('drafts')? 'Draft':email!.name! }}</h4>
+    <h4 class="flex align-center">{{email!.subject || '(no subject)'}}
+        <span>&nbsp;-&nbsp;{{(email!.body).slice(0,30)}}...</span>
+    </h4>
+    <h5 class="flex align-center">{{email!.savedAt|date:'MMM dd'}}</h5>
 </article>
