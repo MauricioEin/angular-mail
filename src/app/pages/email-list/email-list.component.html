@@ -7,7 +7,7 @@
 
             </div>
             <div class="icon-wrapper">
-                <i class="fa-solid fa-rotate-right fa-sm"></i>
+                <i class="fa-solid fa-rotate-right fa-sm" (click)="ngOnInit()"></i>
             </div>
         </div>
 
@@ -20,10 +20,10 @@
                 <i class="fa-regular fa-envelope"></i>
             </div>
             <div class="img-wrapper" (click)="onSetTab('starred')">
-                <img  src="assets/icons/starred.png" alt="">
+                <img src="assets/icons/starred.png" alt="">
             </div>
             <div class="img-wrapper" (click)="onSetTab('important')">
-                <img  src="assets/icons/important.png" alt="">
+                <img src="assets/icons/important.png" alt="">
             </div>
 
         </div>
@@ -45,8 +45,7 @@
 
     <section class="grow list-content">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" (toggleTab)="toggleTab($event)"
-         *ngFor="let email of (emails$|async)" [email]="email"
-            [tab]="tab" [label]="label"></email-preview>
+            *ngFor="let email of (emails$|async)" [email]="email" [tab]="tab" [label]="label"></email-preview>
 
     </section>
 </section>

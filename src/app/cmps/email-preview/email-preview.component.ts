@@ -11,6 +11,7 @@ export class EmailPreviewComponent {
   @Input() email!: Email;
   @Input() tab!: string;
   @Input() label!: string;
+  
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
   @Output() toggleTab = new EventEmitter<Email>()
   link!: string

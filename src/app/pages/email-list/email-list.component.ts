@@ -21,6 +21,7 @@ export class EmailListComponent {
   totalPages$: Observable<number>;
   labels$: Observable<Label[]>
   folder$: Observable<string>
+  isLoading$: Observable<boolean>
 
 
   selectedEmails: Array<Email> = []
@@ -39,6 +40,7 @@ export class EmailListComponent {
     this.totalPages$ = this.store.select('emailState').pipe(pluck('totalPages'));
     this.labels$ = this.store.select('emailState').pipe(pluck('labels'));
     this.folder$ = this.store.select('emailState').pipe(pluck('folder'));
+    this.isLoading$ = this.store.select('emailState').pipe(pluck('isLoading'));
   }
 
   ngOnInit() {
