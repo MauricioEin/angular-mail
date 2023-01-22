@@ -103,7 +103,7 @@ export class EmailService {
             subject: this.utilService.makeLorem(3),
             body: this.utilService.makeLorem(40),
             isRead: (Math.random() > .5 && isIncoming) ? false : true,
-            sentAt: Date.now(),
+            savedAt: Date.now(),
             from: isIncoming ? `${name.split(' ')[0].toLowerCase()}@gmail.com` : this.loggedinUser.email,
             to: isIncoming ? this.loggedinUser.email : `${name.split(' ')[0].toLowerCase()}@gmail.com`,
             labels: []

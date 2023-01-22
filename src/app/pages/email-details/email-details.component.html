@@ -1,67 +1,72 @@
-<section className="email-details full-height flex column">
+<section class="email-details full-height flex column">
+
     <section class="action-bar flex align-center">
-        <img (click)="goBack()" style="width:20px; height:20px"
-            src="assets/icons/back.png" alt="" />
-        <img (click)="onSpam()" style="width:20px; height:20px" src="assets/icons/spam.png" alt="" />
-        <img (click)="onTrash()" style="width:20px; height:20px" src="assets/icons/trash.png" alt="" />
-        <img (click)="onUnread()" style="width:20px; height:20px" src="assets/icons/unread.png" alt="" />
-        <section class="">
-            <img name="label-trigger" (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
-                src="assets/icons/categories.png" />
-            <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]" [emailLabels]="email.labels||[]"
-                (update)="updateLabels($event)"></label-selector>
-        </section>
+        <img class="grey-hover" (click)="goBack()" style="width:20px; height:20px" src="assets/icons/back.png" alt="" />
+        <img class="grey-hover" (click)="onSpam()" style="width:20px; height:20px" src="assets/icons/spam.png" alt="" />
+        <img class="grey-hover" (click)="onTrash()" style="width:20px; height:20px" src="assets/icons/trash.png"
+            alt="" />
+        <img class="grey-hover" (click)="onUnread()" style="width:20px; height:20px" src="assets/icons/unread.png"
+            alt="" />
+        <img class="grey-hover" name="label-trigger" (click)="isLabelMenu=!isLabelMenu" style="width:20px; height:20px"
+            src="assets/icons/categories.png" />
+        <label-selector *ngIf="isLabelMenu" [labels]="(labels$|async)||[]" [emailLabels]="email.labels||[]"
+            (update)="updateLabels($event)"></label-selector>
     </section>
 
+
     <section class="details-content">
+
         <section class="labels-bar flex align-center">
             <h2>{{email.subject}}</h2>
+            <div class="img-wrapper flex align-center" (click)="onToggleTab('important')"
+                [class.active]="email.tabs!.includes('important')">
+                <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('important'))"
+                    src="https://www.gstatic.com/images/icons/material/system_gm/1x/label_important_outline_black_20dp.png"
+                    alt="">
+                <img class="grey-hover pointer" *ngIf="(email.tabs!.includes('important'))"
+                    src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_important_fill_googyellow500_20dp.png" alt="">
+            </div>
             <div class="flex align-center">
                 <label-tag *ngFor="let label of emailLabels" [label]="label" (remove)="removeLabel($event)"></label-tag>
             </div>
         </section>
-        <header class="flex">
-            <h4>
-                <span>{{email.name}}</span>
-                <span class="small"> &lt;{{email.from}}&gt;</span>
-            </h4>
-            //todo more detailed date format
-            <span class="small">{{email.sentAt | date: 'MMM dd, yyyy' }}</span>
-        </header>
-        <p>{{email.body}}</p>
+
+        <main class="flex">
+            <img class="user-img" src="assets/img/user.png">
+            <div class="email-body">
+
+                <header class="flex">
+                    <div class="from-to flex column">
+                    <h4>
+                        <span>{{email.name}}</span>
+                        <span class="small"> &lt;{{email.from}}&gt;</span>
+                    </h4>
+                    <p class="small">to {{email.to}}</p>
+
+                </div>
+                    <span class="small flex ">{{email.savedAt | date: 'MMM dd, yyyy, hh:mm a' }}
+                        <div class="img-wrapper flex" (click)="onToggleTab('starred')"
+                            [class.active]="email.tabs!.includes('starred')">
+                            <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('starred'))"
+                                src="http://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_baseline_nv700_20dp.png"
+                                alt="">
+                            <img class="grey-hover pointer" *ngIf="(email.tabs!.includes('starred'))"
+                                src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png" alt="">
+                        </div>
+                    </span>
+
+                </header>
+                <p>{{email.body}}</p>
+            </div>
+        </main>
     </section>
 
     <footer>
-        <button>Replay</button>
+        <button>Reply</button>
         <button>Forward</button>
     </footer>
 
 
 
-    <!-- <main>
-        <h1>{{email.subject}}<span class="btn" ><img class="importance-label"
-            src="assets/img/label-important.svg" [class.labelImportant]="email.tab.includes('important')"
-            /></span>
-           // @click="onImportant" // 
-        </h1>
-        <div class="email-info flex justify-between">
-            <div class="flex">
-                <h2 class="capitalized">{{email.from.split('@')[0]}}</h2>
-                <p>&lt;{{email.from}}></p>
-            </div>
-            <div class="flex">
-                <p>{{email.sentAt|date:'MMM dd, yyyy'}}</p>
-                <span class="btn"><input class="star" type="checkbox"
-                    [checked]="email.tab.includes('starred')"></span>
-                   // @change="onStar"//
 
-                <span class="btn">Reply</span>
-                <span class="btn">More</span>
-            </div>
-        </div>
-        <p>{{email.body}}</p>
-        <button class="pill blocked">↩ Reply</button>
-        <button class="pill blocked">↪ Forward</button>
-    </main>
-    <main class="empty"></main> -->
 </section>

@@ -4,8 +4,8 @@
     margin-inline-end: 10px;
 
     .search-wrapper{
-        padding: 8px;
-        margin: 0 3px;
+        padding: 8px 13px;
+        margin:3px;
         i{
             color: #5f6368;
         }
@@ -14,7 +14,7 @@
     input{
         border: 0;
         background-color: inherit;
-        padding-inline-start: 6px;
+        font-size:16px;
         &:focus-visible{
            outline: 0;
            

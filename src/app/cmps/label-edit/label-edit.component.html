@@ -1,17 +1,17 @@
 <section class="add-label flex column space-even">
-    <div class="flex space-between align-center">
+    <header class="flex space-between align-center">
         <h2>{{label?'Edit':'New'}} label</h2>
-        <img (click)="close.emit()" 
-        [src]="" alt="" />
-    </div>
+        <img class="grey-hover" (click)="close.emit()" 
+        src="assets/icons/close.png" alt="" />
+    </header>
 
     <div class="flex column">
-        <span>Please enter a new label name:</span>
+        <span>{{label?'Label name:':'Please enter a new label name:'}}</span>
         <input type="text" [(ngModel)]="labelName" />
     </div>
-    <div class="action-btns flex ">
-        <button (click)="close.emit()">Cancel</button>
-        <button class="create-btn" (click)="saveLabel()">{{label?'Save':'Create'}}</button>
+    <div class="action-btns flex">
+        <button class="cancel-btn flex align-center justify-center" (click)="close.emit()">Cancel</button>
+        <button class="create-btn flex align-center justify-center" (click)="saveLabel()">{{label?'Save':'Create'}}</button>
     </div>
-  
 </section>
+<div class="back-screen"></div>

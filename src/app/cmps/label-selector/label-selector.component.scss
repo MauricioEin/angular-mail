@@ -1,0 +1,46 @@
+.labels-list {
+    padding-block: 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%), 0px 5px 5px -3px rgb(0 0 0 / 20%);
+    line-height: 20px;
+    position: absolute;
+    left: 190px;
+    top: 20px;
+    background-color: white;
+    width: 276px;
+
+    * {
+        color: #222;
+    }
+
+    header {
+        padding: 8px 8px 12px;
+    }
+
+    .label-item {
+        padding: 6px 20px;
+        gap: 8px;
+    }
+
+    .apply {
+        padding: 6px 48px;
+        background-color: white;
+        border:none;
+        width: 100%;
+        text-align: start;
+
+    }
+
+    .label-item:hover,
+    .apply:hover {
+        background-color: rgb(238, 238, 238);
+    }
+
+    .separator{
+        border-top: 1px solid #ebebeb;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+}

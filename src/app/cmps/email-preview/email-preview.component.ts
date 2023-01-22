@@ -11,10 +11,12 @@ export class EmailPreviewComponent {
   @Input() email!: Email;
   @Input() tab!: string;
   @Input() label!: string;
+  
   @Output() toggleCheckbox = new EventEmitter<selectedEmail>()
   @Output() toggleTab = new EventEmitter<Email>()
   link!: string
   params!: {}
+  isChecked = false
 
   ngOnInit() {
     if (this.label) this.link = `/email/label/${this.label}/${this.email!._id}`
@@ -28,6 +30,7 @@ export class EmailPreviewComponent {
     const target = ev.target as HTMLInputElement
     const payload: selectedEmail = { checked: target.checked, email: this.email }
     this.toggleCheckbox.emit(payload)
+    this.isChecked = target.checked
   }
 
   onToggleTab(ev: Event, tab: string) {

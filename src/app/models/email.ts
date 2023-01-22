@@ -6,7 +6,7 @@ export interface Email{
   subject:string,
   body:string,
   isRead?:boolean,
-  sentAt?:number,
+  savedAt?:number,
   from?:string,
   to:string,
   labels?:Array<string>

@@ -1,7 +1,7 @@
 <section class="search-input flex align-center">
-<div class="search-wrapper">
-    <i  class="fa-solid fa-magnifying-glass"></i>
-</div>
+    <div class="search-wrapper flex  ">
+        <header-svg [icon]="'search'"></header-svg>
+    </div>
 <input [(ngModel)]="txt" (input)="onInput()" class="grow" placeholder="Search mail"  type="text">
 
 </section>

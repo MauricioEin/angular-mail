@@ -1,11 +1,41 @@
+@import '../../../assets/style/setup/vars';
+
 .email-list {
     border-radius: 16px;
-    padding-bottom: 16px;
+    $marginBottom: 16px;
+    margin-bottom: $marginBottom;
     background-color: rgba(255, 255, 255, 0.7);
     height: 100%;
 
-    .list-content{
+    .list-content {
         overflow-y: scroll;
+        height: 200px;
+
+        &::-webkit-scrollbar {
+            width: 12px;
+            height: 16px;
+        }
+
+        &::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        &::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .2);
+            -webkit-box-shadow: inset 1px 1px 0px rgb(0 0 0 / 10%), inset 0px -1px 0px rgb(0 0 0 / 7%);
+
+            &:hover {
+                background-color: rgba(0, 0, 0, .4);
+                cursor: default;
+
+            }
+        }
     }
 
     .list-header {
@@ -20,20 +50,21 @@
             }
         }
 
-        .paging-wrapper{
-            .paging-counter{
+        .paging-wrapper {
+            .paging-counter {
                 font-size: 12px;
                 margin-inline-end: 12px;
             }
 
-            span{
+            span {
                 padding-top: 1px;
                 color: #5e5e5e;
             }
-            button{
+
+            button {
                 background-color: inherit;
                 border: 0;
-                
+
             }
         }
     }
@@ -53,7 +84,8 @@
         }
 
     }
-    .img-wrapper{
+
+    .img-wrapper {
         cursor: pointer;
         width: 36px;
         height: 36px;
@@ -61,20 +93,22 @@
         justify-content: center;
         align-items: center;
         padding-bottom: 3px;
-        img{
+
+        img {
             width: 18px;
             height: 18px;
         }
     }
 
-    .input-wrapper{
+    .input-wrapper {
         width: 25px;
         height: 25px;
         margin-inline-end: 20px;
     }
+
     .icon-wrapper1 {
         i {
-          color: #5e5e5e; 
+            color: #5e5e5e;
         }
     }
 

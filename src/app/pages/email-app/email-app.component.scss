@@ -1,12 +1,12 @@
-// @import url('../../../assets/style/setup/_vars.scss');
+@import '../../../assets/style/setup/_vars.scss';
 
-main{
+main {
   display: flex;
-  gap:30px;
-  padding:20px;
-  height:100vh;
+  padding-inline-end: 16px;
+  height: 100vh;
 
-  .main-container{
+  .main-container {
     width: 100%;
+    height: calc(100vh - $header-height - 16px)
   }
 }

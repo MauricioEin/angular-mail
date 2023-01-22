@@ -17,7 +17,8 @@ export const storageService = {
 }
 
 interface Entity {
-    _id?: string
+    _id?: string,
+    savedAt?: number
 }
 interface Res {
     emails: Email[]
@@ -67,17 +68,17 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
 }
 
 async function post(entityType: string, newEntity: Email): Promise<Email> {
-    newEntity = { ...newEntity, _id: makeId(), sentAt: Date.now() }
+    newEntity = { ...newEntity, _id: makeId(), savedAt: Date.now() }
     const { entities } = await query(entityType)
     entities.push(newEntity)
     _save(entityType, entities)
     return newEntity
 }
 
-async function put(entityType: string, updatedEntity: Entity): Promise<Entity> {
+async function put(entityType: string, updatedEntity: Email): Promise<Entity> {
     const { entities } = await query(entityType)
     const _idx = entities.findIndex(entity => entity._id === updatedEntity._id)
-    entities[_idx] = { ...entities[_idx], ...updatedEntity }
+    entities[_idx] = { ...entities[_idx], ...updatedEntity, savedAt: Date.now() }
     _save(entityType, entities)
     return updatedEntity
 }

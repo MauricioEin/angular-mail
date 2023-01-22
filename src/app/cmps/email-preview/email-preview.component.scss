@@ -5,9 +5,17 @@
     cursor: pointer;
     box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
     display: grid;
-    grid-template-columns: 25px 25px 25px 1fr 3fr auto;
+    grid-template-columns: 25px 25px 30px 1fr 3fr auto;
     gap: 2px;
     background-color: #f2f6fc;
+    color: rgb(33, 33, 33);
+    &.checked{
+        background-color: #c2dbff;
+        .checkbox {
+            opacity: 1;
+        }
+    
+    }
 
 
     .img-wrapper {
@@ -20,13 +28,20 @@
             width: 18px;
             height: 18px;
         }
+
+        &:not(.active) {
+            opacity: .3;
+        }
+
     }
-    .capitalized {
-        padding-inline-start: 10px;
+    .draft{
+        color:#dd4b39;
     }
+
 
     .checkbox {
         cursor: pointer;
+        opacity: .3;
     }
 
     .btn {
@@ -35,27 +50,37 @@
         align-items: center;
     }
 
-    h4,h5 {
-        color: rgb(96, 96, 96);
+    h4,
+    h5 {
         font-weight: 200;
 
-        span{
+        span {
             font-size: 12px;
         }
     }
 
+
     &.unread {
         background-color: #ffffff66;
-        h4,h5{
+
+        h4,
+        h5 {
             font-weight: 600;
         }
     }
 
+    &:not(.unread) h5 {
+        color: #5f6368;
+    }
+
     &:hover {
-        box-shadow: inset 0.4px 0 0 #dadce0, inset -0.4px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+        position: relative;
+        box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+z-index: 20;
+        .img-wrapper,
+        .checkbox {
+            opacity: 1;
+        }
+
     }
 }
-
-
-
-

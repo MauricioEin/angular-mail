@@ -1,31 +1,30 @@
-<section class="email-compose fixed" [class.mini]="isMini" [class.full]="isFull">
-    <header class="flex space-between">
+<section class="email-compose fixed flex column space-between" [class.mini]="isMini" [class.full]="isFull">
+    <header class="flex space-between" (click)="isMini=!isMini">
         <div>{{title}}</div>
 
-        <div>
-            <span class="btn blocked" title="Minimize" (click)="isMini=!isMini">-</span>
-            <span class="btn blocked" title="Full screen" (click)="isFull=!isFull;isMini=false">↕</span>
-            <span class="btn" title="Save & close" (click)="save(false)">x</span>
+        <div class="flex align-center">
+            <span title="{{isMini?'Maximize':'Minimize'}}"><img class="square-hover"
+                    src="assets/icons/{{isMini?'maximize':'minimize'}}.png"></span>
+            <span title="{{isFull?'Exit full screen':'Full screen'}}" class="square-hover"
+                (click)="$event.stopPropagation();isFull=!isFull;isMini=false"><img
+                    src="assets/icons/{{isFull?'unfull':'full'}}.png"></span>
+            <span title="Save & close" (click)="$event.stopPropagation();save(false)"><img class="square-hover"
+                    src="assets/icons/close.png"></span>
         </div>
     </header>
     <main *ngIf="!isMini">
-        <form class="flex column" #form [formGroup]="composeForm" (ngSubmit)="save()" (input)="autoDrafts()">
+        <form class="flex column" #form [formGroup]="composeForm" (input)="autoDrafts()">
             <input type="email" formControlName="to" placeholder="Recipients" />
             <input type="text" formControlName="subject" placeholder="Subject" />
             <textarea type="text" formControlName="body"></textarea>
-            <button [disabled]="composeForm.invalid">Save</button>
         </form>
-
-        <footer class="flex space-between">
-            <div>
-                <button [disabled]="composeForm.invalid" class="btn pill send-btn"  (click)="save()">Send</button>
-                <span class="btn pill send-btn" title="Send" (click)="save()">Send</span> <span class="btn blocked"
-                    title="More send options">🔽</span>
-                <span class="btn blocked" title="Attach files">📎</span>
-                <span class="btn blocked" title="Insert emoji">🙂</span>
-                <!-- <span class="btn blocked" title="Insert files using Drive">DRIVE</span> -->
-            </div>
-            <span class="btn" (click)="close()" title="Discard draft">🗑</span>
-        </footer>
     </main>
+
+    <footer  *ngIf="!isMini" class="flex space-between align-center">
+        <button [disabled]="composeForm.invalid" class="send-btn" (click)="save()">Send</button>
+        <span class="delete pointer grey-hover" (click)="close()" title="Discard draft">
+            <img src="assets/icons/trash.png">
+        </span>
+    </footer>
 </section>
+<div *ngIf="isFull&&!isMini" class="back-screen" (click)="isFull=false"></div>

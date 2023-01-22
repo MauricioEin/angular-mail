@@ -54,3 +54,21 @@
 .full-width{
   width: 100%;
 }
+
+
+.pointer{
+  cursor: pointer;
+}
+
+
+// design helpers:
+
+.grey-hover:hover{
+  background-color: rgb(100 121 143 / 15%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 1px 8px rgb(100 121 143 / 15%);
+}
+
+.square-hover:hover{
+  background-color: rgb(100 121 143 / 15%);
+}

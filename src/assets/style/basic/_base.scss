@@ -5,10 +5,16 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: googleSans,sans-serif;
   line-height: 1.6;
+  letter-spacing: .03em;
 }
+input, textarea, button{
+  font-family: googleSans,sans-serif;
+  line-height: 1.6;
+  letter-spacing: .03em;
 
+}
 body {
   margin: 0;
   min-height: 100vh;

@@ -1,14 +1,15 @@
 <section class="app-header flex space-between align-center">
     <div class="sub1 full-height flex align-center">
-        <div class="hum-wrapper">
-            <i class="fa-solid fa-bars fa-lg"></i>
+        <div class="menu-wrapper flex ">
+            <header-svg [icon]="'menu'"></header-svg>
         </div>
-        
-        <img routerLink="/email" class="" src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="">
+
+        <img routerLink="/email" class=""
+            src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="">
     </div>
 
     <div class="sub2 grow">
-       <search-input (search)="setFilter($event)"></search-input>
+        <search-input (search)="setFilter($event)"></search-input>
     </div>
 
     <div class="sub3 flex align-center">
@@ -18,7 +19,7 @@
         <div class="sub3-wrapper flex ">
             <header-svg [icon]="'settings'"></header-svg>
         </div>
-        
+
     </div>
-  
+
 </section>
