@@ -44,7 +44,7 @@
                     <p class="small">to {{email.to}}</p>
 
                 </div>
-                    <span class="small flex ">{{email.savedAt | date: 'MMM dd, yyyy, hh:mm a' }}
+                    <span class="small flex ">{{email.savedAt | dateOrAgo }}
                         <div class="img-wrapper flex" (click)="onToggleTab('starred')"
                             [class.active]="email.tabs!.includes('starred')">
                             <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('starred'))"
