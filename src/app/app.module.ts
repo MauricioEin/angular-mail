@@ -35,6 +35,7 @@ import { FirstWordPipe } from './pipes/first-word.pipe';
 
 import { LabelSelectorComponent } from './cmps/label-selector/label-selector.component';
 import { LabelTagComponent } from './cmps/label-tag/label-tag.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { LabelTagComponent } from './cmps/label-tag/label-tag.component';
     LabelEditComponent,
     LabelSelectorComponent,
     LabelTagComponent,
+    DateFormatPipe,
    
   ],
   imports: [

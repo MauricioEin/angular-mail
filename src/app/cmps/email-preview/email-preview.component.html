@@ -22,7 +22,6 @@
     <h4 class="capitalized flex align-center" [class.draft]="email.tabs!.includes('drafts')">
         {{email.tabs!.includes('drafts')? 'Draft':email!.name! }}</h4>
     <h4 class="flex align-center">{{email!.subject || '(no subject)'}}
-        <span>&nbsp;-&nbsp;{{(email!.body).slice(0,30)}}...</span>
     </h4>
-    <h5 class="flex align-center">{{email!.savedAt|date:'MMM dd'}}</h5>
+    <h5 class="flex align-center">{{email!.savedAt|date:(email!.savedAt!|dateFormat)}}</h5>
 </article>
