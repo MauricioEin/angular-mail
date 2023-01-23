@@ -98,14 +98,15 @@ export class EmailService {
     private _createEmail(): Email {
         const isIncoming = Math.random() > .5 ? true : false
         const name = this.utilService.makeName()
+        const {subject,body} = this.utilService.generateEmailContent()
         const email = {
             _id: this.utilService.makeId(),
             tabs: isIncoming ? [Math.random() > .5 ? 'starred' : 'important', Math.random() > .3 ? 'inbox' : 'spam'] : [Math.random() > .5 ? 'important' : 'starred', 'sent'],
             name: isIncoming ? name : this.loggedinUser.fullname,
-            subject: this.utilService.makeLorem(3),
-            body: this.utilService.makeLorem(40),
+            subject,
+            body,
             isRead: (Math.random() > .5 && isIncoming) ? false : true,
-            savedAt: Date.now(),
+            savedAt: this.utilService.randomTimestamp(),
             from: isIncoming ? `${name.split(' ')[0].toLowerCase()}@gmail.com` : this.loggedinUser.email,
             to: isIncoming ? this.loggedinUser.email : `${name.split(' ')[0].toLowerCase()}@gmail.com`,
             labels: []
