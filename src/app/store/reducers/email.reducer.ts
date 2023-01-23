@@ -79,7 +79,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
 
     case ADDED_EMAIL: {
       const { email } = action;
-      const emails = [...state.emails, email]
+      const emails = [email,...state.emails]
       return { ...state, emails, error: '' };
     }
     case UPDATED_EMAIL: {

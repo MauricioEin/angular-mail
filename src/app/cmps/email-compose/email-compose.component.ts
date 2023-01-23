@@ -104,7 +104,7 @@ export class EmailComposeComponent {
             this.store.dispatch(new LoadEmails({ ...filterBy }))
           })
         }
-        else {
+        else if(this.route.snapshot.queryParams['compose']) {
           this.email = { ...email, ...this.composeForm.value }
           this.updateUrl(email._id)
           this.title = 'Draft saved'
