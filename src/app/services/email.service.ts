@@ -90,7 +90,7 @@ export class EmailService {
     private _createEmails(): Email[] {
 
         let emails = []
-        for (var i = 0; i < 60; i++) {
+        for (var i = 0; i < 80; i++) {
             emails.push(this._createEmail())
         }
         return emails
