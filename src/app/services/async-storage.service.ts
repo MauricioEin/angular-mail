@@ -55,6 +55,7 @@ function _filter(entities: Email[], filterBy: FilterBy): [Email[], number] {
         )
     })
     const totalPages = Math.ceil(entities.length / filterBy.pageSize!)
+    entities.sort((a,b)=>b.savedAt!-a.savedAt!)
     return [entities.slice(startIdx, endIdx), totalPages]
 
 }

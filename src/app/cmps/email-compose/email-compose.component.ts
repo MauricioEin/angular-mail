@@ -38,6 +38,7 @@ export class EmailComposeComponent {
   ngOnInit() {
     this.buildForm()
     this.route.queryParams.subscribe(({ compose }) => {
+      if(!compose) return
       if (this.email._id !== compose) {
         if (compose === 'new') {
           this.email = { to: '', subject: '', body: '' }
@@ -104,7 +105,7 @@ export class EmailComposeComponent {
             this.store.dispatch(new LoadEmails({ ...filterBy }))
           })
         }
-        else {
+        else if(this.route.snapshot.queryParams['compose']) {
           this.email = { ...email, ...this.composeForm.value }
           this.updateUrl(email._id)
           this.title = 'Draft saved'

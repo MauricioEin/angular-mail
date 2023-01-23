@@ -9,6 +9,20 @@
     gap: 2px;
     background-color: #f2f6fc;
     color: rgb(33, 33, 33);
+
+    &.unread {
+        background-color: #ffffff66;
+
+        h4,
+        h5 {
+            font-weight: 600;
+        }
+    }
+
+    &:not(.unread) h5 {
+        color: #5f6368;
+    }
+
     &.checked{
         background-color: #c2dbff;
         .checkbox {
@@ -57,20 +71,6 @@
         span {
             font-size: 12px;
         }
-    }
-
-
-    &.unread {
-        background-color: #ffffff66;
-
-        h4,
-        h5 {
-            font-weight: 600;
-        }
-    }
-
-    &:not(.unread) h5 {
-        color: #5f6368;
     }
 
     &:hover {
