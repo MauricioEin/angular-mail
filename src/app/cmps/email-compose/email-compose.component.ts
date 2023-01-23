@@ -38,6 +38,7 @@ export class EmailComposeComponent {
   ngOnInit() {
     this.buildForm()
     this.route.queryParams.subscribe(({ compose }) => {
+      if(!compose) return
       if (this.email._id !== compose) {
         if (compose === 'new') {
           this.email = { to: '', subject: '', body: '' }

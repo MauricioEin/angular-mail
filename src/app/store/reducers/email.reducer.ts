@@ -84,7 +84,7 @@ export function reducer(state: EmailState = initialState, action: any): EmailSta
     }
     case UPDATED_EMAIL: {
       const { email } = action;
-      const emails = state.emails.map(currEmail => (currEmail._id === email.id) ? email : currEmail)
+      const emails = state.emails.map(currEmail => (currEmail._id === email._id) ? email : currEmail)
       return { ...state, emails, email: null, error: '' };
     }
     case UPDATED_EMAILS: {
