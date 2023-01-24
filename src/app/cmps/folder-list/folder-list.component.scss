@@ -155,6 +155,10 @@
     margin-top: 28px;
     cursor: default;
 
+    .full & {
+        justify-content: space-between !important;
+    }
+
     img {
         cursor: pointer;
     }
@@ -233,9 +237,8 @@
         }
     }
 
-    .label {
+    .label, .label-header {
         justify-content: space-between !important;
-        align-items: center;
     }
 
     .ifFull {
