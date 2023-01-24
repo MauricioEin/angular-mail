@@ -203,50 +203,54 @@
     }
 }
 
-.email-folder-list:not(.full):hover {
-    width: $nav-width;
-    box-shadow: 2px 10px 10px 0 rgba(134, 134, 134, 0.545);
-    position: absolute;
-    z-index: 30;
+@media (min-width:900px) {
 
-    .compose-wrapper {
-        width: 142px;
-    }
+    .email-folder-list:not(.full):hover {
+        width: $nav-width;
+        box-shadow: 2px 10px 10px 0 rgba(134, 134, 134, 0.545);
+        position: absolute;
+        z-index: 30;
 
-    .compose {
-        justify-content: flex-start;
-    }
-
-    .folders-nav>* {
-        padding: 0 12px 0 26px;
-
-        justify-content: unset;
-        align-items: center;
-        width: 240px;
-        padding: 0 12px 0 26px;
-        margin: 0;
-
-        &:not(.label-header):not(.active):hover {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
+        .compose-wrapper {
+            width: 142px;
         }
 
-        &.active {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
+        .compose {
+            justify-content: flex-start;
+        }
+
+        .folders-nav>* {
+            padding: 0 12px 0 26px;
+
+            justify-content: unset;
+            align-items: center;
+            width: 240px;
+            padding: 0 12px 0 26px;
+            margin: 0;
+
+            &:not(.label-header):not(.active):hover {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            &.active {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        .label,
+        .label-header {
+            justify-content: space-between !important;
+        }
+
+        .ifFull {
+            display: flex;
         }
     }
 
-    .label, .label-header {
-        justify-content: space-between !important;
+    .place-holder {
+        position: relative;
+        min-width: 72px;
     }
-
-    .ifFull {
-        display: flex;
-    }
-}
-
-.place-holder {
-    position: relative;
-    min-width: 72px;
 }

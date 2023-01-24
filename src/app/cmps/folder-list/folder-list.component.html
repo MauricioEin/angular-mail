@@ -21,11 +21,11 @@
             <div class="label-header flex space-between align-center">
                 <h4 class="ifFull">Labels </h4>
                 <img class="grey-hover" style="width:20px; height:20px" (click)="isLabelEdit=true"
-                    src="assets/icons/plus.png">
+                    src="assets/icons/plus.png" title="Create new label">
             </div>
 
             <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" routerLinkActive="active"
-                class="label flex space-between">
+                class="label flex space-between" [title]="label.name">
                 <span class="flex align-center">
                     <img style="width:20px; height:20px" src="assets/icons/label.png">
                     <span class="f-text ifFull">{{label.name}}</span>
