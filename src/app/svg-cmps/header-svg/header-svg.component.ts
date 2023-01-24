@@ -7,6 +7,7 @@ import { Component,Input } from '@angular/core';
 })
 export class HeaderSvgComponent {
 @Input() icon!:string
+@Input() isGreyHover:boolean=true
 
 
 }

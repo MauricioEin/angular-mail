@@ -46,6 +46,11 @@
     <section class="grow list-content">
         <email-preview (toggleCheckbox)="toggleCheckbox($event)" (toggleTab)="toggleTab($event)"
             *ngFor="let email of (emails$|async)" [email]="email" [tab]="tab" [label]="label"></email-preview>
-
+        <div class="not-found" *ngIf="!(emails$|async)?.length">
+            <span class="search-wrapper flex  ">
+                <header-svg [icon]="'search'" [isGreyHover]="false"></header-svg>
+            </span>
+            <span>No messages matched your search.</span>
+        </div>
     </section>
 </section>
