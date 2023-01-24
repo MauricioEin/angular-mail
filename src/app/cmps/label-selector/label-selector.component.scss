@@ -9,6 +9,7 @@
     top: 20px;
     background-color: white;
     width: 276px;
+    cursor: default;
 
     * {
         color: #222;
@@ -21,23 +22,28 @@
     .label-item {
         padding: 6px 20px;
         gap: 8px;
+
     }
 
-    .apply {
+    button {
         padding: 6px 48px;
         background-color: white;
-        border:none;
+        border: none;
         width: 100%;
         text-align: start;
 
     }
 
-    .label-item:hover,
-    .apply:hover {
-        background-color: rgb(238, 238, 238);
+    .label-item:not(.empty),
+    button {
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(238, 238, 238);
+        }
     }
 
-    .separator{
+    .separator {
         border-top: 1px solid #ebebeb;
         margin-top: 6px;
         margin-bottom: 6px;

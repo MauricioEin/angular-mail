@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, take } from 'rxjs';
 import { Email } from 'src/app/models/email';
 import { Label } from 'src/app/models/label';
-import { UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { SaveLabel, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { State } from 'src/app/store/store';
 
 @Component({
@@ -25,6 +25,7 @@ export class EmailDetailsComponent {
   }
   email!: Email
   isLabelMenu = false
+  isLabelAdd=false
   labels$: Observable<Label[]>
   emailLabels!: Label[]
 
@@ -115,4 +116,9 @@ export class EmailDetailsComponent {
         queryParams: { compose: 'new', [mode]: this.email._id }
       })
   }
+
+  saveLabel(label: Label) {
+    this.isLabelAdd = false
+      this.store.dispatch(new SaveLabel(label))
+    }
 }

@@ -20,8 +20,5 @@ export class LabelEditComponent {
   saveLabel() {
     this.save.emit({ ...(this.label || {}), name: this.labelName })
   }
-  // getMailSvg(iconName) {
-  //   return svgService.getMailSvg(iconName)
-  // },
 }
 
