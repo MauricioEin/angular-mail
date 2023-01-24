@@ -5,13 +5,12 @@
     color: #222;
 }
 
-.email-details>* {
-    margin-bottom: 15px;
-}
+
 
 .action-bar {
     position: relative;
     gap: 5px;
+    padding-bottom: 15px;
 
     * {
         margin-inline: 10px;
@@ -103,7 +102,11 @@ main {
 
 .email-details footer {
     padding-inline-start: 56px;
-    * {
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         height: 36px;
         margin-inline-end: 8px;
         border-radius: 25px;
@@ -111,10 +114,16 @@ main {
         margin-top: 8px;
         padding: 0 16px;
         background-color: white;
-        &:hover{
+
+        &:hover {
             background-color: #f0f0f0;
         }
-    } 
+
+        img {
+            height: 20px;
+            width: 20px;
+        }
+    }
 }
 
 

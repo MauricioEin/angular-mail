@@ -37,14 +37,16 @@
 
                 <header class="flex">
                     <div class="from-to flex column">
-                    <h4>
-                        <span>{{email.name}}</span>
-                        <span class="small"> &lt;{{email.from}}&gt;</span>
-                    </h4>
-                    <p class="small">to {{email.to}}</p>
+                        <h4>
+                            <span>{{email.name}}</span>
+                            <span class="small"> &lt;{{email.from}}&gt;</span>
+                        </h4>
+                        <p class="small">to {{email.to}}</p>
 
-                </div>
-                    <span class="small flex ">{{email.savedAt | dateOrAgo }}
+                    </div>
+
+                    <div class="small flex ">
+                        <span>{{email.savedAt | dateOrAgo }}</span>
                         <div class="img-wrapper flex" (click)="onToggleTab('starred')"
                             [class.active]="email.tabs!.includes('starred')">
                             <img class="grey-hover pointer" *ngIf="!(email.tabs!.includes('starred'))"
@@ -53,7 +55,8 @@
                             <img class="grey-hover pointer" *ngIf="(email.tabs!.includes('starred'))"
                                 src="//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png" alt="">
                         </div>
-                    </span>
+                        <img class="grey-hover pointer" src="assets/icons/reply.png" (click)="compose('re')">
+                    </div>
 
                 </header>
                 <p>{{email.body}}</p>
@@ -62,8 +65,8 @@
     </section>
 
     <footer>
-        <button>Reply</button>
-        <button>Forward</button>
+        <button (click)="compose('re')"><img src="assets/icons/reply.png"> <span>Reply</span></button>
+        <button (click)="compose('fwd')"><img src="assets/icons/forward.png"> <span>Forward</span></button>
     </footer>
 
 
