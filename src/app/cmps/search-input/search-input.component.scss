@@ -1,23 +1,31 @@
-.search-input{
+.search-input {
     background-color: #eaf1fb;
     border-radius: 8px;
     margin-inline-end: 10px;
 
-    .search-wrapper{
+    @media (max-width: 400px) {
+        width: calc(100vw - 120px);
+    }
+
+
+    .search-wrapper {
         padding: 8px 13px;
-        margin:3px;
-        i{
+        margin: 3px;
+
+        i {
             color: #5f6368;
         }
     }
 
-    input{
+    input {
         border: 0;
         background-color: inherit;
-        font-size:16px;
-        &:focus-visible{
-           outline: 0;
-           
+        font-size: 16px;
+        max-width: calc(100% - 60px);
+
+        &:focus-visible {
+            outline: 0;
+
         }
     }
 }
