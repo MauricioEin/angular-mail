@@ -1,7 +1,6 @@
 .add-label {
     position: fixed;
-    width: 248px;
-    // height: 248px;
+width:90vw;    // height: 248px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -82,6 +81,5 @@
 @media (min-width:525px) {
     .add-label {
         width: 500px;
-        // height: 248px;
     }
 }

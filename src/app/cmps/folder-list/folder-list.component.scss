@@ -2,13 +2,21 @@
 
 .email-folder-list {
     background-color: #f6f8fc;
-    width: 256px;
-}
 
+    &.full {
+        width: $nav-width;
+
+    }
+
+    &:not(.full) {
+        .ifFull {
+            display: none;
+        }
+    }
+}
 
 .email-folder-list>* {
     cursor: pointer;
-    // background-color: white;
 
     &:not(.compose-wrapper) {
         margin-bottom: 10px;
@@ -18,40 +26,43 @@
 
 .compose-wrapper {
     height: 56px;
-
-    margin-top: 8px;
-    margin-bottom: 16px;
-    padding-inline-start: 8px;
+    width: 56px;
+    margin: 8px 8px 16px;
     background: inherit;
-}
 
-.compose-icon {
-    /* margin-inline-end: 20px; */
-    height: 24px;
-
-    img {
-
-        height: 100%;
+    .full & {
+        width: 142px;
     }
 }
 
+
+
 .compose {
-    width: 50px;
 
     background-color: #c2e7ff;
     font-size: 0.875em;
     font-weight: 600;
-    /* padding: 0 24px 0 10px; */
-    padding: 0 10px;
     height: 100%;
+    width: 100%;
     box-shadow: 0 1px 2px 0 #0000, 0 1px 3px 1px #0000;
     line-height: 2em;
     border-radius: 16px;
+    justify-content: center;
+
+    .full & {
+        justify-content: flex-start;
+    }
+
+    img {
+
+        height: 24px;
+        width: 24px;
+        margin-inline: 16px;
+    }
+
 }
 
-.com-text {
-    display: none;
-}
+
 
 .compose:hover {
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
@@ -87,24 +98,45 @@
 .folders-nav>* {
     display: flex;
     align-items: center;
-    width: 240px;
-    padding: 0 12px 0 26px;
     height: 32px;
     font-size: 14px;
     background-color: inherit;
+    width: 32px;
+    justify-content: center;
+    margin: auto;
+
+
+    .full & {
+        padding: 0 12px 0 26px;
+
+        justify-content: unset;
+        align-items: center;
+        width: 240px;
+        padding: 0 12px 0 26px;
+        margin: 0;
+    }
 
     &:not(.label-header):not(.active):hover {
         background-color: #ebebeb;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-radius: 20px;
+
+        .full & {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     }
 
     &.active {
         background-color: #d3e3fd;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        font-weight: bold;
+        border-radius: 20px;
         color: #001d35;
+
+        .full & {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        font-weight: bold;
     }
 }
 
@@ -122,6 +154,10 @@
     width: 100%;
     margin-top: 28px;
     cursor: default;
+
+    .full & {
+        justify-content: space-between !important;
+    }
 
     img {
         cursor: pointer;
@@ -152,33 +188,65 @@
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
     }
+
+    .full & {
+        justify-content: space-between !important;
+    }
 }
 
-@media (min-width:800px) {
-    .email-folder-list {
-        background-color: #f6f8fc;
-        width: 256px;
+
+@media (max-width:900px) {
+    .email-folder-list.full {
+        box-shadow: 2px 10px 10px 0 rgba(134, 134, 134, 0.545);
+        position: absolute;
+        z-index: 30;
+    }
+}
+
+.email-folder-list:not(.full):hover {
+    width: $nav-width;
+    box-shadow: 2px 10px 10px 0 rgba(134, 134, 134, 0.545);
+    position: absolute;
+    z-index: 30;
+
+    .compose-wrapper {
+        width: 142px;
     }
 
     .compose {
-        padding: 0 24px 0 16px;
-        width: unset;
+        justify-content: flex-start;
     }
 
-    .com-text {
-        display: inline;
+    .folders-nav>* {
+        padding: 0 12px 0 26px;
+
+        justify-content: unset;
+        align-items: center;
+        width: 240px;
+        padding: 0 12px 0 26px;
+        margin: 0;
+
+        &:not(.label-header):not(.active):hover {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &.active {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     }
 
-    .compose-icon {
-        margin-inline-end: 16px;
+    .label, .label-header {
+        justify-content: space-between !important;
     }
 
-    .labels {
-        padding-inline-start: 28px;
+    .ifFull {
+        display: flex;
     }
+}
 
-    .labels header h4 {
-        display: block;
-    }
-
+.place-holder {
+    position: relative;
+    min-width: 72px;
 }

@@ -11,6 +11,7 @@ export class FolderListComponent {
   @Output() saveLabel = new EventEmitter<Label>()
   @Output() removeLabel = new EventEmitter<string>()
   @Input() labels!: Label[] | null
+  @Input() isFull!: boolean
   folders = [
     { name: 'inbox' },
     { name: 'starred' },

@@ -1,7 +1,7 @@
 <section class="app-header flex space-between align-center">
     <div class="sub1 full-height flex align-center">
         <div class="menu-wrapper flex ">
-            <header-svg [icon]="'menu'"></header-svg>
+            <header-svg [icon]="'menu'" (click)="menuToggle.emit()"></header-svg>
         </div>
 
         <img routerLink="/email" class=""

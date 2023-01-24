@@ -1,45 +1,46 @@
-<section class="email-folder-list flex column">
-    <div class="compose-wrapper flex ">
-        <div class="compose flex align-center center" (click)="compose.emit()">
-            <!-- @click="composeEmail()"> -->
-            <div class="compose-icon">
+<div class="place-holder">
+    <section class="email-folder-list flex column" [class.full]="isFull">
+        <div class="compose-wrapper flex ">
+            <div class="compose flex align-center" (click)="compose.emit()">
+                <!-- @click="composeEmail()"> -->
                 <img src="assets/icons/compose.png">
+                <span class="com-text ifFull">Compose</span>
             </div>
-            <span class="com-text">Compose</span>
-        </div>
-    </div>
-
-    <section class="folders-nav">
-
-        <div *ngFor="let folder of folders" routerLink="/email/{{folder.name}}" routerLinkActive="active"
-            #rla="routerLinkActive" [title]="folder.name | capitalize">
-            <img style="width:20px; height:20px"
-                src="assets/icons/{{rla.isActive? 'in'+folder.name:folder.name}}.png">
-            <span class="f-text">{{folder.name|capitalize}}</span>
         </div>
 
-        <div class="label-header flex space-between align-center">
-            <h4>Labels </h4>
-            <img class="grey-hover" style="width:20px; height:20px" (click)="isLabelEdit=true"
-                src="assets/icons/plus.png">
-        </div>
+        <section class="folders-nav">
 
-        <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" routerLinkActive="active"
-            class="label flex space-between">
-            <span class="flex align-center">
-                <img style="width:20px; height:20px" src="assets/icons/label.png">
-                <span class="f-text">{{label.name}}</span>
-            </span>
-            <span class="actions flex align-center">
-                <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/compose.png"
-                    (click)="$event.stopPropagation(); isLabelEdit = true; labelToEdit = label">
-                <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/trash.png"
-                    (click)="$event.stopPropagation(); removeLabel.emit(label._id)">
-            </span>
+            <div *ngFor="let folder of folders" routerLink="/email/{{folder.name}}" routerLinkActive="active"
+                #rla="routerLinkActive" [title]="folder.name | capitalize">
+                <img style="width:20px; height:20px"
+                    src="assets/icons/{{rla.isActive? 'in'+folder.name:folder.name}}.png">
+                <span class="f-text ifFull">{{folder.name|capitalize}}</span>
+            </div>
+            <div></div>
 
-        </div>
+            <div class="label-header flex space-between align-center">
+                <h4 class="ifFull">Labels </h4>
+                <img class="grey-hover" style="width:20px; height:20px" (click)="isLabelEdit=true"
+                    src="assets/icons/plus.png">
+            </div>
+
+            <div *ngFor="let label of labels" routerLink="/email/label/{{label.name}}" routerLinkActive="active"
+                class="label flex space-between">
+                <span class="flex align-center">
+                    <img style="width:20px; height:20px" src="assets/icons/label.png">
+                    <span class="f-text ifFull">{{label.name}}</span>
+                </span>
+                <span class="actions flex align-center ifFull">
+                    <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/compose.png"
+                        (click)="$event.stopPropagation(); isLabelEdit = true; labelToEdit = label">
+                    <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/trash.png"
+                        (click)="$event.stopPropagation(); removeLabel.emit(label._id)">
+                </span>
+
+            </div>
+        </section>
+
+        <label-edit *ngIf="isLabelEdit" [label]="labelToEdit" (close)="closeLabelEdit()"
+            (save)="saveLabel.emit($event);closeLabelEdit()"></label-edit>
     </section>
-
-    <label-edit *ngIf="isLabelEdit" [label]="labelToEdit" (close)="closeLabelEdit()"
-        (save)="saveLabel.emit($event);closeLabelEdit()"></label-edit>
-</section>
+</div>

@@ -1,7 +1,7 @@
 @import '../../../assets/style/setup/vars';
 
 .app-header {
-  $header-padding:8px;
+  $header-padding: 8px;
   height: $header-height;
   padding: $header-padding;
   // background-color: lightcoral;
@@ -9,38 +9,53 @@
 
   .sub1 {
     padding-inline-end: 30px;
-    width:$nav-width - $header-padding;
+    width: $nav-width - $header-padding;
+
+    @media (max-width: 900px) {
+      width: fit-content;
+
+      padding-inline-end: 10px;
+    }
 
     .hum-wrapper {
       padding: 12px;
       margin: 0 4px;
-      i{
-        color:#5f6368
+
+      i {
+        color: #5f6368
       }
     }
 
     img {
       width: 109px;
       height: 40px;
+
+      @media (max-width: 570px) {
+        width: 32px;
+        object-fit: cover;
+        object-position: left;
+      }
     }
 
   }
 
-  // wrapper of the search input cmp
-  //   .sub2{
-  //  
-  //   }
 
-  .sub3{
+  .sub3 {
 
-    .sub3-wrapper{
-      padding:  12px;
+    .sub3-wrapper {
+      padding: 12px;
       margin: 0 2px;
+
+      @media (max-width: 490px) {
+        display: none;
+      }
+
     }
   }
 
-  .menu-wrapper{
-    padding:12px;
+  .menu-wrapper {
+    padding: 12px;
     margin-inline: 4px;
   }
+
 }
