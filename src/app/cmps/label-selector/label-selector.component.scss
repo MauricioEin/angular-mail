@@ -10,6 +10,11 @@
     background-color: white;
     width: 276px;
     cursor: default;
+    @media (max-width:580px){
+        left:auto;
+        right:20px;
+        z-index: 20;
+    }
 
     * {
         color: #222;
