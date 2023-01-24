@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { OutletContext } from '@angular/router';
 import { Label } from 'src/app/models/label';
 
 @Component({
@@ -11,6 +10,7 @@ export class LabelSelectorComponent {
   @Input() labels!: Label[]
   @Input() emailLabels!: string[]
   @Output() update = new EventEmitter<string[] | null>()
+  @Output() create = new EventEmitter<null>()
   selectionMap: any = {}
 
   ngOnInit() {

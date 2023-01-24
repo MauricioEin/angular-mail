@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common'
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -34,11 +35,15 @@ export class EmailComposeComponent {
   isFull = false
   title = 'New Message'
   draftInterval: number | null = null
+  mode = ''
 
   ngOnInit() {
     this.buildForm()
-    this.route.queryParams.subscribe(({ compose }) => {
-      if(!compose) return
+    this.route.queryParams.subscribe(({ compose, re, fwd }) => {
+      this.mode = re ? 're' : fwd ? 'fwd' : ''
+      if (re || fwd) {
+        this.store.dispatch(new LoadEmail(re || fwd))
+      }
       if (this.email._id !== compose) {
         if (compose === 'new') {
           this.email = { to: '', subject: '', body: '' }
@@ -49,9 +54,28 @@ export class EmailComposeComponent {
       }
     })
     this.actions$.pipe(ofType(LOADED_EMAIL)).subscribe(({ email }: any) => {
-      this.email = JSON.parse(JSON.stringify(email))
-      this.title = email.subject || 'New Message'
+      if (this.mode) {
+        this.email = this.buildRefEmail(this.mode, email)
+        // let to, subject, body
+        // if (this.mode === 're') {
+        //   to = email.from
+        //   subject = 'Re: ' + email.subject
+        //   body = `\n\nOn ${email.savedAt}, ${email.name} <${email.from}> wrote:\n${email.body}`
+        // } else {
+        //   to = ''
+        //   subject = 'Fwd: ' + email.subject
+        //   body = `\n\n---------- Forwarded message ---------\nFrom: ${email.name} <${email.from}>\nDate: ${email.savedAt}\nSubject: ${email.subject}\nTo: <${email.to}>\n\n${email.body}`
+        // }
+        // this.email = {
+        //   to, subject, body
+        // }
+      }
+      else {
+        this.email = JSON.parse(JSON.stringify(email))
+        this.title = email.subject || 'New Message'
+      }
       this.buildForm()
+      if (this.mode) this.save(false, false, true)
     })
   }
 
@@ -61,6 +85,21 @@ export class EmailComposeComponent {
       subject: [this.email.subject, [Validators.required], []],
       body: [this.email.body, [Validators.required], []]
     })
+  }
+
+  buildRefEmail(mode: string, email: Email): Email {
+    let datePipe = new DatePipe("en-US");
+    let to, subject, body
+    if (mode === 're') {
+      to = email.from!
+      subject = 'Re: ' + email.subject
+      body = `\n\nOn ${datePipe.transform(email.savedAt,'E, MMM d, yyyy, h:mm a')}, ${email.name} <${email.from}> wrote:\n${email.body}`
+    } else {
+      to = ''
+      subject = 'Fwd: ' + email.subject
+      body = `\n\n---------- Forwarded message ---------\nFrom: ${email.name} <${email.from}>\nDate: ${datePipe.transform(email.savedAt,'E, MMM d, yyyy, h:mm a')}\nSubject: ${email.subject}\nTo: <${email.to}>\n\n${email.body}`
+    }
+    return { to, subject, body }
   }
 
   autoDrafts() {
@@ -81,10 +120,11 @@ export class EmailComposeComponent {
       })
   }
 
-  save(isSend = true, isClose = true) {
+  save(isSend = true, isClose = true, isFirst = false) {
     if (isSend && Object.values(this.composeForm.controls).some(v => v.status === 'INVALID'))
       return
     if (!isSend
+      && !isFirst
       && this.email.to === this.composeForm.value.to
       && this.email.subject === this.composeForm.value.subject
       && this.email.body === this.composeForm.value.body)
@@ -105,7 +145,7 @@ export class EmailComposeComponent {
             this.store.dispatch(new LoadEmails({ ...filterBy }))
           })
         }
-        else if(this.route.snapshot.queryParams['compose']) {
+        else if (this.route.snapshot.queryParams['compose']) {
           this.email = { ...email, ...this.composeForm.value }
           this.updateUrl(email._id)
           this.title = 'Draft saved'

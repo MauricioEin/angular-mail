@@ -1,4 +1,4 @@
-import { isPlatformBrowser, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, pluck, take } from 'rxjs';
 import { Email } from 'src/app/models/email';
 import { Label } from 'src/app/models/label';
-import { LOADED_EMAILS, LoadEmail, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
+import { SaveLabel, UPDATED_EMAILS, UpdateEmails } from 'src/app/store/actions/email.actions';
 import { State } from 'src/app/store/store';
 
 @Component({
@@ -17,6 +17,7 @@ import { State } from 'src/app/store/store';
 export class EmailDetailsComponent {
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private actions$: Actions,
     private location: Location,
     private store: Store<State>) {
@@ -24,6 +25,7 @@ export class EmailDetailsComponent {
   }
   email!: Email
   isLabelMenu = false
+  isLabelAdd=false
   labels$: Observable<Label[]>
   emailLabels!: Label[]
 
@@ -106,4 +108,17 @@ export class EmailDetailsComponent {
     })
   }
 
+  compose(mode:string) {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { compose: 'new', [mode]: this.email._id }
+      })
+  }
+
+  saveLabel(label: Label) {
+    this.isLabelAdd = false
+      this.store.dispatch(new SaveLabel(label))
+    }
 }
