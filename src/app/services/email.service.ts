@@ -22,7 +22,7 @@ export class EmailService {
 
     loggedinUser = {
         email: 'user@gmail.com',
-        fullname: 'User who'
+        fullname: 'Mail User'
     }
 
     constructor(private store: Store<EmailState>,

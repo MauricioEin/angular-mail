@@ -74,7 +74,7 @@ export class UtilService{
         }
     
      makeName():string {
-        const names = ['Roei Hillel', 'Ido Battis', 'Tal Itzhakov', 'Bar Gridish', 'Yossi Shasho','Moshe Abargel','Ben Cohen', 'Adi Suissa', 'Chen Movshovitz', 'Adva Cotani', 'Liron Bendor', 'Atalia Zahavy', 'Daniel Peretz']
+        const names = ['Roei Hillel', 'Ido Kagan', 'Tal Itzhakov', 'Bar Gilad', 'Yossi Ashur','Moshe Abargel','Ben Cohen', 'Adi Suissa', 'Chen Movshovitz', 'Adva Catz', 'Liel Bendor', 'Atalia Zahavy', 'Daniel Peretz']
         return names[Math.floor(Math.random() * names.length)]
     }
 
