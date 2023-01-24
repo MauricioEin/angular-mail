@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, pluck, take } from 'rxjs';
 import { FilterBy } from 'src/app/models/filterBy';
@@ -13,6 +13,7 @@ import { State } from 'src/app/store/store';
 })
 export class AppHeaderComponent implements OnInit {
   filterBy$!: Observable<FilterBy>
+  @Output() menuToggle = new EventEmitter<null>()
 
   constructor(private store: Store<State>) {
     this.filterBy$ = this.store.select('emailState').pipe(pluck('filterBy'))

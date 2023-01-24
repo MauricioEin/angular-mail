@@ -24,6 +24,7 @@ export class EmailAppComponent implements OnInit {
   isLoading$: Observable<boolean>
   error$: Observable<string>
   isCompose = false
+  isFullMenu = true
 
 
   constructor(private store: Store<State>,

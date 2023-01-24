@@ -1,11 +1,9 @@
-<section class="email-folder-list flex column">
+<section class="email-folder-list flex column" [class.full]="isFull">
     <div class="compose-wrapper flex ">
-        <div class="compose flex align-center center" (click)="compose.emit()">
+        <div class="compose flex align-center" (click)="compose.emit()">
             <!-- @click="composeEmail()"> -->
-            <div class="compose-icon">
                 <img src="assets/icons/compose.png">
-            </div>
-            <span class="com-text">Compose</span>
+            <span *ngIf="isFull" class="com-text">Compose</span>
         </div>
     </div>
 
@@ -15,11 +13,11 @@
             #rla="routerLinkActive" [title]="folder.name | capitalize">
             <img style="width:20px; height:20px"
                 src="assets/icons/{{rla.isActive? 'in'+folder.name:folder.name}}.png">
-            <span class="f-text">{{folder.name|capitalize}}</span>
+            <span *ngIf="isFull" class="f-text">{{folder.name|capitalize}}</span>
         </div>
 
         <div class="label-header flex space-between align-center">
-            <h4>Labels </h4>
+            <h4 *ngIf="isFull">Labels </h4>
             <img class="grey-hover" style="width:20px; height:20px" (click)="isLabelEdit=true"
                 src="assets/icons/plus.png">
         </div>
@@ -28,9 +26,9 @@
             class="label flex space-between">
             <span class="flex align-center">
                 <img style="width:20px; height:20px" src="assets/icons/label.png">
-                <span class="f-text">{{label.name}}</span>
+                <span *ngIf="isFull" class="f-text">{{label.name}}</span>
             </span>
-            <span class="actions flex align-center">
+            <span *ngIf="isFull" class="actions flex align-center">
                 <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/compose.png"
                     (click)="$event.stopPropagation(); isLabelEdit = true; labelToEdit = label">
                 <img class="grey-hover" style="width:20px; height:20px" src="assets/icons/trash.png"

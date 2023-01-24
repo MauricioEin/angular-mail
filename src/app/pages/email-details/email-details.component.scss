@@ -127,36 +127,3 @@ main {
 }
 
 
-/* Media Query */
-
-
-/* Mobile */
-
-@media (max-width:340px) {
-    .details-content {
-        font-size: .9em;
-    }
-
-    .email-details footer>* {
-        width: 80px;
-    }
-
-    .details-content .labels-bar {
-        margin-bottom: 20px;
-        padding-inline-start: 0;
-    }
-
-    .details-content header {
-        justify-content: flex-start;
-    }
-
-    .details-content header .small {
-        margin-inline-start: 10px;
-    }
-}
-
-@media (min-width:450px) {
-    .details-content p {
-        width: 73%;
-    }
-}
