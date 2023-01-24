@@ -26,18 +26,46 @@
 .details-content {
     flex: 1;
     max-height: 450px;
-}
 
-.details-content .labels-bar {
-    padding: 20px 0 8px 56px;
 
-    h2 {
-        font-weight: 500;
-        font-size: 22px;
+    .labels-bar {
+        padding: 20px 0 8px 56px;
+
+        @media (max-width: 500px) {
+            padding: 20px 0 8px;
+        }
+
+        h2 {
+            font-weight: 500;
+            font-size: 22px;
+        }
+
+        img {
+            margin-inline: 10px;
+        }
     }
 
-    img {
-        margin-inline: 10px;
+    header {
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        @media (max-width: 500px) {
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+
+        * {
+            line-height: 20px;
+        }
+
+        h4:not(:last-child) {
+            font-weight: 600;
+        }
+    }
+
+    p {
+        width: 95%;
+        line-height: 1.25;
     }
 }
 
@@ -56,12 +84,17 @@ main {
     padding-top: 20px;
     font-size: 14px;
 
+    @media (max-width: 500px) {
+        flex-direction: column;
+    }
+
     .user-img {
         height: 40px;
         width: 40px;
         border-radius: 50%;
         position: relative;
         top: -5px;
+
     }
 
     .small {
@@ -79,36 +112,25 @@ main {
     .email-body {
         flex-grow: 1;
         padding-inline: 16px;
+
+        @media (max-width: 500px) {
+            padding: 0;
+        }
     }
-}
-
-.details-content header {
-    justify-content: space-between;
-    margin-bottom: 30px;
-
-    * {
-        line-height: 20px;
-    }
-}
-
-.details-content header h4:not(:last-child) {
-    font-weight: 600;
-}
-
-.details-content p {
-    width: 95%;
-    line-height: 1.25;
 }
 
 .email-details footer {
-    padding-inline-start: 56px;
+    display:flex;
+    gap: 8px;
+    @media (min-width: 500px) {
+        padding-inline-start: 56px;
+    }
 
     button {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         height: 36px;
-        margin-inline-end: 8px;
         border-radius: 25px;
         border: 1px solid #7f7f7f;
         margin-top: 8px;
@@ -125,5 +147,3 @@ main {
         }
     }
 }
-
-
