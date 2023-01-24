@@ -64,6 +64,10 @@
             button {
                 background-color: inherit;
                 border: 0;
+                &:disabled{
+                    opacity:.5;
+                    cursor:default;
+                }
 
             }
         }

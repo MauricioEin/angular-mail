@@ -6,9 +6,9 @@
                 <input type="checkbox">
 
             </div> -->
-            <div class="icon-wrapper">
+            <!-- <div class="icon-wrapper">
                 <i class="fa-solid fa-rotate-right fa-sm" (click)="ngOnInit()"></i>
-            </div>
+            </div> -->
         </div>
 
         <!-- Actions bar -->
@@ -30,12 +30,12 @@
 
         <!-- Paging section -->
         <div class="paging-wrapper flex align-center">
-            <span class="paging-counter">{{(filterBy$!|async)!.page!+1}} of {{(totalPages$|async)}}</span>
+            <span class="paging-counter">{{(filterBy$!|async)!.page!+1}} of {{(totalPages$|async)||1}}</span>
 
             <button [disabled]="!(filterBy$!|async)!.page" class="icon-wrapper1" (click)="setPage(-1)">
                 <i class="fa-solid fa-chevron-left fa-xs"></i>
             </button>
-            <button [disabled]="(filterBy$!|async)!.page!+1===(totalPages$|async)" class="icon-wrapper1"
+            <button [disabled]="(filterBy$!|async)!.page!+1===((totalPages$|async)||1)" class="icon-wrapper1"
                 (click)="setPage(1)">
                 <i class="fa-solid fa-chevron-right fa-xs"></i>
             </button>

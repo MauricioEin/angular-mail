@@ -21,7 +21,7 @@ export class AppHeaderComponent implements OnInit {
   setFilter(txt: string) {
     
     this.filterBy$.pipe(take(1)).subscribe(filterBy=>{
-      this.store.dispatch(new LoadEmails({...filterBy, txt }))
+      this.store.dispatch(new LoadEmails({...filterBy, txt, page:0 }))
     })
   }
   
