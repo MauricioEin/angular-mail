@@ -4,7 +4,7 @@
 <p align="center">GitHub Pages: https://MauricioEin.github.com/angular-mail/</p>
 <p align="center">-only desktop desplay, not responsive yet-</p>
 
-<p align="center"><img width="80%" src="https://res.cloudinary.com/casep22/image/upload/v1674411176/angularmail_f3hbig.png"></p>
+<p align="center"><img width="80%" src="https://res.cloudinary.com/casep22/image/upload/v1674560737/gmail_kdfojx.jpg"></p>
 
 <br>
 <p>This gmail clone was built using TypeScript and Angular. It implements NgRx async state management. Styles written in SCSS.</p>
