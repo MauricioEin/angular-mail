@@ -1,7 +1,7 @@
 
 <h1 align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" width="30px"> Gmail clone app</h1>
 
-<p align="center">GitHub Pages: https://MauricioEin.github.com/angular-mail/</p>
+<p align="center">GitHub Pages: https://mauricioein.github.io/angular-mail/</p>
 <p align="center">-only desktop desplay, not responsive yet-</p>
 
 <p align="center"><img width="80%" src="https://res.cloudinary.com/casep22/image/upload/v1674560737/gmail_kdfojx.jpg"></p>
